@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "02e20a411e817514c34097c46353a51e65f5ad15",
+  "source_commit": "4d6fadc585e7bd0fe71fb56e888c7d5caf784cf0",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -162,7 +162,7 @@
     },
     {
       "path": "site/app.js",
-      "sha256": "8d9252f0fe1f60667570ff5ed9acd99f3398a964a77e0b9b0f40849fdaf153f0"
+      "sha256": "5055541bd277dd5cfd7c6fd2286d786404fd6346234d9d6d119360ac85da22de"
     },
     {
       "path": "site/favicon.svg",
@@ -174,7 +174,7 @@
     },
     {
       "path": "site/style.css",
-      "sha256": "58f6919809db4a4808cd3f8b326942a359dd6927a1bc6664438ee2dfe391d4d0"
+      "sha256": "0d1d921a2da21043af7ab3b0288f5be2465e17d46c83342bd3d2be8a569e9ef3"
     },
     {
       "path": "templates/tags.example.json",
