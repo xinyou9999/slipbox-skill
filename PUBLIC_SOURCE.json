@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "4d5155241b578369544dc639049dd59b6ab2f9a7",
+  "source_commit": "f2f975dcb65231d26338435e5065bc2dc563136b",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -130,7 +130,7 @@
     },
     {
       "path": "references/data-format.md",
-      "sha256": "f25c5bac02af8792a50971fecbeb051e6d910b08ee42b8066d13af5269972609"
+      "sha256": "487c2eb5c1d39fc3ce749fc3ee4202fd449f8e58d61c54d373b53883ce2d3e7a"
     },
     {
       "path": "references/tagging-policy.md",
@@ -146,7 +146,7 @@
     },
     {
       "path": "scripts/slipbox.py",
-      "sha256": "9fe3fb18aad97c185e2cd4588c48d32f650ddb492256d8faff2ba254f8de0b2b"
+      "sha256": "933731eb4f7cf26b4be0c4750282c8e7c4bdeb2ea08a08868c29f64204e9a18e"
     },
     {
       "path": "scripts/verify_release.py",
@@ -162,7 +162,7 @@
     },
     {
       "path": "tests/test_skill_core.py",
-      "sha256": "aaa2e4d8e5990d1a2c1159ac71bae0903758cb4c5ee14c32e1eda61601bba123"
+      "sha256": "6cebfaa428ff7b890ed6a921879fbc38504ed2acd6465949c7f17bce8c62eb69"
     },
     {
       "path": "tests/test_skill_distribution.py",

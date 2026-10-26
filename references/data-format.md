@@ -1,5 +1,9 @@
 # Slipbox data format
 
+## CLI encoding
+
+The command-line entrypoint emits UTF-8 on stdout and stderr, independent of the parent terminal's default code page. Process consumers should decode these streams explicitly as UTF-8 (for example, `subprocess.run(..., text=True, encoding="utf-8")`). Configure this before mutations so a successful write containing non-ASCII text cannot be reported as a failed command because of output encoding.
+
 ## Library layout
 
 ```text

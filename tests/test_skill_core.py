@@ -41,7 +41,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
             cwd=ROOT,
             env=self.env,
             input=stdin,
-            text=True,
+            text=True, encoding="utf-8",
             capture_output=True,
         )
         if ok and result.returncode != 0:
@@ -57,7 +57,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
             [sys.executable, str(CLI), *args, "--json"],
             cwd=ROOT,
             env=self.env,
-            text=True,
+            text=True, encoding="utf-8",
             capture_output=True,
         )
 
@@ -67,7 +67,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
             [sys.executable, str(CLI), *args],
             cwd=ROOT,
             env=self.env,
-            text=True,
+            text=True, encoding="utf-8",
             capture_output=True,
         )
 
@@ -166,7 +166,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
             'tags: ["工作", 2]\n---\ntext\n'
         )
         (self.home / "cards" / f"{card_id}.md").write_text(malformed, encoding="utf-8")
-        result = subprocess.run([sys.executable, str(CLI), "rebuild-index", "--json"], env=self.env, text=True, capture_output=True)
+        result = subprocess.run([sys.executable, str(CLI), "rebuild-index", "--json"], env=self.env, text=True, encoding="utf-8", capture_output=True)
         self.assertEqual(result.returncode, 2)
         self.assertIn("error", json.loads(result.stderr))
         self.assertNotIn("Traceback", result.stderr)
@@ -192,7 +192,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
                 f"{key}: {json.dumps(value, ensure_ascii=False)}" for key, value in metadata.items()
             ) + "\n---\n" + content + "\n", encoding="utf-8")
             failure = subprocess.run([sys.executable, str(CLI), "rebuild-index", "--json"], env=self.env,
-                                     text=True, capture_output=True)
+                                     text=True, encoding="utf-8", capture_output=True)
             self.assertEqual(failure.returncode, 2, failure.stdout + failure.stderr)
             self.assertIsInstance(json.loads(failure.stderr)["error"], str)
             self.assertNotIn("Traceback", failure.stderr)
@@ -214,7 +214,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
     def test_concurrent_tag_additions_do_not_get_lost(self):
         self.run_cli("init")
         processes = [subprocess.Popen([sys.executable, str(CLI), "tag-add", f"tag-{i}", "--json"], env=self.env,
-                                      text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) for i in range(12)]
+                                      text=True, encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE) for i in range(12)]
         completed = []
         for process in processes:
             stdout, stderr = process.communicate()
@@ -316,6 +316,9 @@ class SlipboxSkillCliTests(unittest.TestCase):
             error = self.run_cli("tag-add", "符号链接锁", ok=False)
             self.assertIn("symbolic link", error["error"])
             self.assertEqual(external.read_text(encoding="utf-8"), "{}\n")
+            # The rejected symlink is deliberately left untouched by the CLI.
+            # Remove this fixture before testing a directory at the same path.
+            lock.unlink()
 
         lock.mkdir()
         error = self.run_cli("tag-add", "目录锁", ok=False)
@@ -351,7 +354,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
         env = {**self.env, "SLIPBOX_CLI": str(CLI), "SLIPBOX_STATE": str(state)}
         children = [
             subprocess.Popen(
-                [sys.executable, str(child)], cwd=ROOT, env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                [sys.executable, str(child)], cwd=ROOT, env=env, text=True, encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
             for _ in range(3)
         ]
@@ -779,7 +782,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
                 [sys.executable, str(CLI), "init", "--json"],
                 cwd=ROOT,
                 env=env,
-                text=True,
+                text=True, encoding="utf-8",
                 capture_output=True,
             )
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -795,7 +798,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
             unrelated.mkdir(exist_ok=True)
             def invoke(*args):
                 completed = subprocess.run([sys.executable, str(script), *args, "--json"], cwd=unrelated, env=env,
-                                           text=True, capture_output=True)
+                                           text=True, encoding="utf-8", capture_output=True)
                 self.assertEqual(completed.returncode, 0, completed.stderr)
                 return json.loads(completed.stdout)
             invoke("init")
@@ -873,6 +876,16 @@ class SlipboxSkillCliTests(unittest.TestCase):
         found = json.loads(completed.stdout)
         self.assertEqual(found["cards"], [], "a literal --json query must not silently match every card")
         self.assertEqual(found["count"], 0)
+
+    def test_cli_json_is_utf8_even_when_the_parent_requests_ascii_streams(self):
+        env = {**os.environ, "SLIPBOX_HOME": str(self.home), "PYTHONIOENCODING": "ascii", "PYTHONUTF8": "0"}
+        for args in (("init",), ("tag-add", "学习"), ("add", "想法与卡片", "--tag", "学习"), ("search", "想法")):
+            with self.subTest(args=args):
+                result = subprocess.run([sys.executable, str(CLI), *args, "--json"], env=env, capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8"))
+                decoded = json.loads(result.stdout.decode("utf-8"))
+                self.assertNotIn("error", decoded)
+        self.assertEqual(decoded["cards"][0]["content"], "想法与卡片")
 
     def test_repository_contains_portable_skill_assets(self):
         self.assertTrue(any((ROOT / name).is_file() for name in ("README.en.md", "README.zh-CN.md")))

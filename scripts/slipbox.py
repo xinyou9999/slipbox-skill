@@ -1170,6 +1170,12 @@ def _parse_argv(argv: list[str]) -> tuple[argparse.Namespace, bool]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # JSON is a UTF-8 interface independent of the invoking Windows code page.
+    # Configure before mutation so successful writes cannot be misreported as
+    # failures merely because a returned tag/card contains non-ASCII text.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     raw = list(sys.argv[1:] if argv is None else argv)
     try:
         args, json_output = _parse_argv(raw)
