@@ -7,6 +7,7 @@ slipbox is an AI-powered card note tool that works across agents. Use AI to capt
 A local Markdown Skill with governed tags and literal text retrieval; AI assistance comes from the host agent.
 
 ## Start
+- [Product website and demo](https://xinyou9999.github.io/slipbox-skill/): bilingual product tour; isolated sample notes, no real-library access or model calls.
 - [Approved product copy](docs/brand-copy.md): canonical Chinese and English positioning, tagline and description.
 - [Overview](README.md): product capabilities, limits and host evidence.
 - [Chinese overview](README.zh-CN.md): 简体中文说明。

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "779822f4d4c575b1b2f9da87e2ce1e35270e97f3",
+  "source_commit": "20b75ccee034fce5791acfffec7e84965e097020",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -19,6 +19,10 @@
     {
       "path": ".github/workflows/check.yml",
       "sha256": "145a3d3111ac9d0726a35e1fd7862d9f8b77f43469e21217de42a5a5f3c12b0e"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "sha256": "8f04e63101a61af4766b31714dbde6dbd9846e4787d293e0898b467b41e7ec00"
     },
     {
       "path": ".gitignore",
@@ -46,11 +50,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "64ca55f8349fde8c814d4afe1885e097a719969d099adecc525d16d17f679567"
+      "sha256": "a28ac6bedc1752465f21cefd792c1dc16cc6aba79b6090540542bb4163388546"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "b170f77f89170336fd0d889ba3f933fc8203f0dd9d607932239d05b63c126bf6"
+      "sha256": "7257542ad832aca9c29ae818d3b7653448bfc72b9454a45614d6cd9bf0388fa9"
     },
     {
       "path": "ROADMAP.md",
@@ -130,7 +134,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "bc326e7821161efec14541bff9e7861ebe38b8821e752d8e91ce0d46eed34c26"
+      "sha256": "0758f7c3afa397ded5a6c0359ba4d3a17d4158ba8847a7c1ab259e35414baf2f"
     },
     {
       "path": "references/data-format.md",
@@ -157,12 +161,32 @@
       "sha256": "d4a53030ea6b53407cd37e523ba52132dfd8471761e2cd12ab420ad58ceae793"
     },
     {
+      "path": "site/app.js",
+      "sha256": "8d9252f0fe1f60667570ff5ed9acd99f3398a964a77e0b9b0f40849fdaf153f0"
+    },
+    {
+      "path": "site/favicon.svg",
+      "sha256": "3e5edccc61c2f3338cadede65f8078d86d5c57bdcc185f9aff4a480f373ee3e3"
+    },
+    {
+      "path": "site/index.html",
+      "sha256": "3ae10620ba04a7acb589591b19a221825dc71bda93c160f1d5f92b610d7b87ae"
+    },
+    {
+      "path": "site/style.css",
+      "sha256": "59f9a77884516435e4a99f465f182cff455f9a5b1bdd06944490ceface37cada"
+    },
+    {
       "path": "templates/tags.example.json",
       "sha256": "1783fd7922e420d2814d5c7b407d3c6540bf4ed430d6131cc0caf60ad7f69a7f"
     },
     {
       "path": "tests/test_release_metadata.py",
       "sha256": "4242b00c2b1926bdbe90cfec8453a92aa914177c600d10045139856881b02302"
+    },
+    {
+      "path": "tests/test_site.js",
+      "sha256": "c8ad961b5e41153e437e5e9d9cb1f6f43bb4e71d3e755e57b7e57490b1168f2b"
     },
     {
       "path": "tests/test_skill_core.py",

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="slipbox is an AI-powered card note tool that works across agents. Capture, organize, and retrieve Markdown card notes with your agent.">
+  <meta name="theme-color" content="#f8f9fc">
+  <link rel="canonical" href="https://xinyou9999.github.io/slipbox-skill/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xinyou9999.github.io/slipbox-skill/">
+  <meta property="og:title" content="slipbox | AI-powered card notes across agents">
+  <meta property="og:description" content="Organize card notes with AI. Build your collection over time. Reuse it across agents.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/xinyou9999/slipbox-skill/main/assets/social-day.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>slipbox｜跨智能体的 AI 卡片笔记</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#demo" data-zh="跳到交互演示" data-en="Skip to interactive demo">跳到交互演示</a>
+  <header class="header wrap">
+    <a class="brand" href="#" aria-label="slipbox"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>slipbox<span class="version">v0.1</span></a>
+    <nav aria-label="Main"><a href="#demo" data-zh="体验" data-en="Try it">体验</a><a href="#how" data-zh="工作方式" data-en="How it works">工作方式</a><a href="#install" data-zh="安装" data-en="Install">安装</a></nav>
+    <div class="preferences"><button id="language" type="button" aria-label="Switch to English">EN</button><button id="theme" type="button" aria-label="切换深色主题" aria-pressed="false"><span aria-hidden="true">◐</span><span class="theme-label" data-zh="深色" data-en="Dark">深色</span></button><a class="github" href="https://github.com/xinyou9999/slipbox-skill" aria-label="GitHub source">GitHub <span aria-hidden="true">↗</span></a></div>
+  </header>
+  <main>
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span><span data-zh="slipbox｜跨智能体的 AI 卡片笔记" data-en="slipbox | AI-powered card notes across agents">slipbox｜跨智能体的 AI 卡片笔记</span></p>
+        <h1 data-zh="用 AI 整理卡片笔记，持续积累，跨智能体复用。" data-en="Organize card notes with AI. Build your collection over time. Reuse it across agents.">用 AI 整理卡片笔记，持续积累，跨智能体复用。</h1>
+        <p class="hero-description" data-zh="slipbox 是跨智能体的 AI 卡片笔记工具，让 AI 帮你记录、整理和调用，让同一套卡片在不同平台中持续复用。" data-en="slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.">slipbox 是跨智能体的 AI 卡片笔记工具，让 AI 帮你记录、整理和调用，让同一套卡片在不同平台中持续复用。</p>
+        <div class="hero-actions"><a class="button primary" href="#demo"><span data-zh="试试卡片笔记" data-en="Try card notes">试试卡片笔记</span><span aria-hidden="true">↓</span></a><a class="button secondary" href="#install" data-zh="安装到我的智能体" data-en="Install for my agent">安装到我的智能体</a></div>
+        <p class="hero-meta"><span data-zh="Markdown 为本" data-en="Markdown first">Markdown 为本</span><span>·</span><span data-zh="本地资料库" data-en="Local library">本地资料库</span><span>·</span><span data-zh="开源 Skill" data-en="Open-source Skill">开源 Skill</span></p>
+      </div>
+      <div class="hero-object" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <span class="host-ticket ticket-one">Codex</span><span class="host-ticket ticket-two">Hermes</span><span class="host-ticket ticket-three">OpenClaw</span><span class="host-ticket ticket-four">WorkBuddy</span>
+        <div class="paper-back back-two"></div><div class="paper-back back-one"></div>
+        <div class="hero-note"><div class="note-top"><span class="mini-mark">s.</span><span>001 / MARKDOWN</span></div><p class="note-kicker" data-zh="一个想法，一张卡片" data-en="One idea. One card.">一个想法，一张卡片</p><p class="note-body" data-zh="让思考留下来，\n在下一次需要时相遇。" data-en="Keep a thought.\nFind it when it matters.">让思考留下来，<br>在下一次需要时相遇。</p><div class="note-rule"></div><span class="pill"># ideas</span><span class="pill"># writing</span><span class="file-name">notes/001.md</span></div>
+        <span class="object-caption"><span class="status-dot"></span><span data-zh="同一套卡片 · 持续复用" data-en="One collection. Keep reusing it.">同一套卡片 · 持续复用</span></span>
+      </div>
+    </section>
+
+    <section class="demo-section wrap" id="demo" aria-labelledby="demo-title">
+      <div class="section-heading"><div><p class="eyebrow" data-zh="01 / 亲手试试" data-en="01 / A little room to think">01 / 亲手试试</p><h2 id="demo-title" data-zh="从一张卡片开始。" data-en="Start with a single card.">从一张卡片开始。</h2></div><p data-zh="写下来，贴上标签，再找回来。" data-en="Capture it. Tag it. Find it again.">写下来，贴上标签，再找回来。</p></div>
+      <div class="notebook">
+        <div class="notebook-top"><div class="notebook-name"><span class="status-dot"></span><strong data-zh="我的演示资料库" data-en="My demo library">我的演示资料库</strong><span class="small-badge" data-zh="交互演示" data-en="Interactive demo">交互演示</span></div><button id="reset" class="text-button" type="button" data-zh="↺ 重置示例" data-en="↺ Reset samples">↺ 重置示例</button></div>
+        <div class="notebook-layout">
+          <aside class="notebook-sidebar">
+            <label class="field-label" for="host" data-zh="演示中的宿主" data-en="Illustrated host">演示中的宿主</label>
+            <select id="host"><option>Codex</option><option>Hermes</option><option>OpenClaw</option><option>WorkBuddy</option></select>
+            <p class="sidebar-hint" data-zh="切换这里，卡片依然在。这里只演示复用方式，不连接智能体。" data-en="Switch hosts; the cards stay. This illustrates reuse and does not connect to an agent.">切换这里，卡片依然在。这里只演示复用方式，不连接智能体。</p>
+            <div class="sidebar-divider"></div><p class="field-label" data-zh="标签" data-en="Tags">标签</p><div id="tags" class="tag-list"></div>
+            <div class="library-file"><span aria-hidden="true">▤</span><div><strong>Markdown</strong><small data-zh="卡片是事实源" data-en="Cards are the source of truth">卡片是事实源</small></div></div>
+          </aside>
+          <div class="notebook-main">
+            <form id="capture-form" class="capture"><label for="note" class="field-label" data-zh="此刻，想记下什么？" data-en="What's on your mind?">此刻，想记下什么？</label><textarea id="note" rows="3" maxlength="2000" aria-describedby="capture-help" placeholder="一个想法、一段阅读心得，或下一步行动…… #ideas" data-placeholder-zh="一个想法、一段阅读心得，或下一步行动…… #ideas" data-placeholder-en="An idea, a reading note, or your next step… #ideas"></textarea><div class="capture-bottom"><span id="capture-help" data-zh="输入 #标签 手动分类 · 最多 2,000 字符" data-en="Add #tags to organize · 2,000 characters max">输入 #标签 手动分类 · 最多 2,000 字符</span><button class="button primary small" type="submit"><span data-zh="记录卡片" data-en="Save card">记录卡片</span><span aria-hidden="true">↵</span></button></div></form>
+            <div class="collection-tools"><label class="search"><span aria-hidden="true">⌕</span><span class="sr-only" data-zh="搜索卡片" data-en="Search cards">搜索卡片</span><input id="search" type="search" placeholder="搜索卡片或标签" data-placeholder-zh="搜索卡片或标签" data-placeholder-en="Search cards or tags"></label><span id="count" class="count" aria-live="polite" aria-atomic="true"></span></div>
+            <div id="cards" class="cards"></div>
+            <p id="empty" class="empty" hidden data-zh="还没有匹配的卡片。试试其他关键词或标签。" data-en="No matching cards. Try another word or tag.">还没有匹配的卡片。试试其他关键词或标签。</p>
+            <div class="preset"><div><span class="preset-icon" aria-hidden="true">✳</span><strong data-zh="AI 整理，是什么样？" data-en="What does AI organization look like?">AI 整理，是什么样？</strong><p data-zh="预设示例：给第一张阅读卡片补充 #ideas 标签。此处不调用模型；实际由宿主 AI 判断。" data-en="Preset example: add #ideas to the first reading card. No model is called here; your host AI makes the real decisions.">预设示例：给第一张阅读卡片补充 #ideas 标签。此处不调用模型；实际由宿主 AI 判断。</p></div><button id="example" type="button" class="button secondary small" data-zh="应用预设示例" data-en="Apply preset">应用预设示例</button></div>
+          </div>
+        </div>
+        <div class="notebook-footer"><span aria-hidden="true">◈</span><p data-zh="所有内容只在当前页面内存中，刷新即还原。不上传笔记，不调用 AI，也不保存卡片到浏览器。" data-en="Everything stays in this page's memory and resets on reload. No note uploads, AI calls, or browser storage of cards.">所有内容只在当前页面内存中，刷新即还原。不上传笔记，不调用 AI，也不保存卡片到浏览器。</p></div>
+      </div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <noscript><p>交互演示需要 JavaScript。安装链接仍可使用。 / JavaScript is required for the demo. Installation links remain available.</p></noscript>
+    </section>
+
+    <section class="how wrap" id="how" aria-labelledby="how-title"><div class="section-heading"><div><p class="eyebrow" data-zh="02 / 简单，也长久" data-en="02 / Simple by design">02 / 简单，也长久</p><h2 id="how-title" data-zh="智能体会变，积累留下来。" data-en="Agents change. Your collection stays.">智能体会变，积累留下来。</h2></div></div><div class="principles"><article><span class="step">01</span><h3 data-zh="随手记录" data-en="Capture naturally">随手记录</h3><p data-zh="在熟悉的智能体里，用自然语言记录想法。每张卡片是一份可读、可迁移的 Markdown 文件。" data-en="Ask your agent to save a thought. Each card is a readable, portable Markdown file.">在熟悉的智能体里，用自然语言记录想法。每张卡片是一份可读、可迁移的 Markdown 文件。</p><code>notes/20261026-001.md</code></article><article><span class="step">02</span><h3 data-zh="借助 AI 整理" data-en="Organize with your AI">借助 AI 整理</h3><p data-zh="由当前宿主的 AI 理解内容、维护标签，再按关键词与标签找回。Skill 本身不提供模型服务。" data-en="Your host's AI helps maintain tags. Retrieve cards by keywords and tags. The Skill does not provide a model service.">由当前宿主的 AI 理解内容、维护标签，再按关键词与标签找回。Skill 本身不提供模型服务。</p><code>#reading &nbsp; #ideas</code></article><article><span class="step">03</span><h3 data-zh="换个宿主，接着用" data-en="Bring your collection along">换个宿主，接着用</h3><p data-zh="让另一宿主访问同一本地资料库；或手动迁移 Markdown 卡片和标签库，重建索引后继续使用。" data-en="Give another host access to the same local library, or manually transfer Markdown cards and the tag library, then rebuild the index.">让另一宿主访问同一本地资料库；或手动迁移 Markdown 卡片和标签库，重建索引后继续使用。</p><code>Markdown → local index</code></article></div></section>
+
+    <section class="install wrap" id="install" aria-labelledby="install-title"><div class="install-intro"><p class="eyebrow" data-zh="03 / 给积累一个起点" data-en="03 / Make room for your next thought">03 / 给积累一个起点</p><h2 id="install-title" data-zh="带进你的智能体。" data-en="Bring it to your agent.">带进你的智能体。</h2><p data-zh="下载适合宿主的 Skill 包，按安装指南配置本地资料库。无需注册 slipbox 账号。" data-en="Download the Skill for your host and follow the guide to set up a local library. No slipbox account needed.">下载适合宿主的 Skill 包，按安装指南配置本地资料库。无需注册 slipbox 账号。</p><a class="inline-link" href="https://github.com/xinyou9999/slipbox-skill/blob/main/docs/INSTALL.md"><span data-zh="查看完整安装指南" data-en="Read the installation guide">查看完整安装指南</span> ↗</a><p class="install-evidence" data-zh="已发布 v0.1.0 · 宿主端到端安装尚未实测；DeepSeek harness 为实验性。" data-en="v0.1.0 released · Host end-to-end installation is untested; the DeepSeek harness is experimental.">已发布 v0.1.0 · 宿主端到端安装尚未实测；DeepSeek harness 为实验性。</p></div><div class="install-panel"><div class="download-row"><div><strong data-zh="通用 Skill" data-en="Generic Skill">通用 Skill</strong><small>Codex · Hermes · OpenClaw</small></div><div class="download-links"><a href="https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-zh.zip">中文 <span aria-hidden="true">↓</span></a><a href="https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-en.zip">English <span aria-hidden="true">↓</span></a></div></div><div class="download-row"><div><strong>WorkBuddy</strong><small data-zh="专用 Skill 包" data-en="Host-specific Skill bundle">专用 Skill 包</small></div><div class="download-links"><a href="https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-zh.zip">中文 <span aria-hidden="true">↓</span></a><a href="https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-en.zip">English <span aria-hidden="true">↓</span></a></div></div><div class="install-request"><label class="field-label" for="install-text" data-zh="把这段安装请求发给你的智能体" data-en="Give this installation request to your agent">把这段安装请求发给你的智能体</label><textarea id="install-text" readonly rows="4"></textarea><button id="copy" type="button" class="text-button" data-zh="复制安装请求 ↗" data-en="Copy installation request ↗">复制安装请求 ↗</button><span id="copy-status" role="status" aria-live="polite"></span></div></div></section>
+
+    <section class="faq wrap" aria-labelledby="faq-title"><h2 id="faq-title" data-zh="开始之前，你可能想知道。" data-en="A few things before you begin.">开始之前，你可能想知道。</h2><div><details><summary data-zh="这是在线笔记应用吗？" data-en="Is this a hosted note app?">这是在线笔记应用吗？</summary><p data-zh="slipbox 是安装到兼容智能体中的 Skill。本页只提供产品介绍与独立演示，不读写你的真实资料库。" data-en="slipbox is a Skill installed in a compatible agent. This page introduces it through a separate demo; it does not read or write your real library.">slipbox 是安装到兼容智能体中的 Skill。本页只提供产品介绍与独立演示，不读写你的真实资料库。</p></details><details><summary data-zh="我的笔记放在哪里？" data-en="Where do my notes live?">我的笔记放在哪里？</summary><p data-zh="实际使用时，Markdown 卡片与标签库保存在你配置的本地目录，SQLite 只作可重建的检索缓存。宿主 AI 如何处理笔记，取决于宿主及其模型配置。" data-en="Your real Markdown cards and tag library live in a local directory you configure. SQLite is a rebuildable search cache. How your host AI processes notes depends on its model and configuration.">实际使用时，Markdown 卡片与标签库保存在你配置的本地目录，SQLite 只作可重建的检索缓存。宿主 AI 如何处理笔记，取决于宿主及其模型配置。</p></details><details><summary data-zh="会自动跨设备同步吗？" data-en="Does it sync across devices automatically?">会自动跨设备同步吗？</summary><p data-zh="当前没有自动云同步。复用需要访问同一资料库，或手动迁移卡片和标签库并重建索引；也不代表所有宿主都已验证兼容。" data-en="There is no automatic cloud sync. Reuse requires access to the same library, or manual transfer of cards and tags followed by index rebuilding. It does not mean every host has verified compatibility.">当前没有自动云同步。复用需要访问同一资料库，或手动迁移卡片和标签库并重建索引；也不代表所有宿主都已验证兼容。</p></details></div></section>
+  </main>
+  <footer class="footer wrap"><a class="brand" href="#">slipbox<span class="footer-note" data-zh="让每次思考，都有下文。" data-en="Give every thought a next chapter.">让每次思考，都有下文。</span></a><div><a href="https://github.com/xinyou9999/slipbox-skill/blob/main/assets/cli-demo.gif" data-zh="真实 CLI 录屏" data-en="Real CLI walkthrough">真实 CLI 录屏</a><a href="https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0">v0.1.0</a><a href="https://github.com/xinyou9999/slipbox-skill">GitHub ↗</a></div></footer>
+</body>
+</html>

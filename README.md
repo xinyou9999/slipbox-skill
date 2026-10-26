@@ -6,7 +6,9 @@
 
 slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.
 
-[简体中文](README.zh-CN.md) · [Install](docs/INSTALL.md) · [Three-minute start](docs/QUICKSTART.md) · [Give this to your AI](docs/AI_INSTALL.md)
+[Website & interactive demo](https://xinyou9999.github.io/slipbox-skill/) · [简体中文](README.zh-CN.md) · [Install](docs/INSTALL.md) · [Three-minute start](docs/QUICKSTART.md) · [Give this to your AI](docs/AI_INSTALL.md)
+
+The website offers a bilingual, light/dark product tour with an in-memory demo. It does not connect to your real notes or call a model.
 
 ![Local CLI demo: capture, retrieve, review, inspect Markdown](assets/cli-demo.gif)
 

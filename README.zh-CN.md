@@ -6,7 +6,9 @@
 
 slipbox 是跨智能体的 AI 卡片笔记工具，让 AI 帮你记录、整理和调用，让同一套卡片在不同平台中持续复用。
 
-[English](README.md) · [安装](docs/INSTALL.md) · [三分钟体验](docs/QUICKSTART.md) · [复制给 AI 的安装说明](docs/AI_INSTALL.md)
+[产品首页与交互演示](https://xinyou9999.github.io/slipbox-skill/) · [English](README.md) · [安装](docs/INSTALL.md) · [三分钟体验](docs/QUICKSTART.md) · [复制给 AI 的安装说明](docs/AI_INSTALL.md)
+
+展示页提供中英文、浅深主题与卡片交互演示。演示内容仅保存在当前页面内存中，不连接真实笔记，不调用模型。
 
 ![真实本地 CLI 演示：记录、检索、回顾与查看 Markdown](assets/cli-demo.gif)
 
