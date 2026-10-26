@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "0a433d365e45cff7f239f883648dae081a90ec36",
+  "source_commit": "779822f4d4c575b1b2f9da87e2ce1e35270e97f3",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -30,7 +30,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "619ed7f5a379be024073a49e9c45b92776bca7279ae1e936d909754a85bb9c39"
+      "sha256": "ddc27fc48bf26579d655eecc77ce650c730dd41d116813e557117a10674ab27b"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
@@ -46,11 +46,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "92bf8fe6a8782fd838b5b4851400972d49f5a5e017923b8b7c483eabccbe198a"
+      "sha256": "64ca55f8349fde8c814d4afe1885e097a719969d099adecc525d16d17f679567"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "82084e9c6b5b0cd9085cbaead805f4aa86c7f65a45beae91bb558dc12bc79314"
+      "sha256": "b170f77f89170336fd0d889ba3f933fc8203f0dd9d607932239d05b63c126bf6"
     },
     {
       "path": "ROADMAP.md",
@@ -126,7 +126,7 @@
     },
     {
       "path": "docs/launch-kit.md",
-      "sha256": "a1e7103c2f22f92e18d807fb7794ff8bde7ab62911c90b4a0ac25564a6134c48"
+      "sha256": "e4fafec28f4dac0c3fc93e6e2b6ae1eacb37297cd07533034a6280a3f23af164"
     },
     {
       "path": "llms.txt",

@@ -34,11 +34,18 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 ## 开始使用
 
-1. 从**实际已发布版本**获取 ZIP，或从源码构建。
+1. 从 [v0.1.0 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0)获取 ZIP，或从源码构建。
 2. 按[安装文档](docs/INSTALL.md)选择宿主。
 3. 先做[隔离的三分钟体验](docs/QUICKSTART.md)，再请 Agent 真正记一张卡并找回来。
 
 也可把[安装请求](docs/AI_INSTALL.md)交给 AI：先识别平台和执行环境，再定位脚本、用合成卡片验证；不覆盖已有技能或私人笔记。
+
+| 安装包 | 简体中文 | English |
+|---|---|---|
+| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-en.zip) |
+| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-en.zip) |
+
+[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
 
 ## 宿主状态
 

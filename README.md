@@ -34,11 +34,18 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 
 ## Start here
 
-1. Download a ZIP from an **actually published release**, or [build one from source](#build-and-check).
+1. Download a ZIP from [v0.1.0](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0), or [build one from source](#build-and-check).
 2. Follow the [installation guide](docs/INSTALL.md) for your host.
 3. Try the [isolated quick start](docs/QUICKSTART.md), then ask your agent to save and retrieve one card.
 
 **Working with an AI assistant?** Paste the [installation request](docs/AI_INSTALL.md). It tells the assistant how to identify its host and environment, find the script, and verify a synthetic note without overwriting existing data.
+
+| Bundle | English | 简体中文 |
+|---|---|---|
+| Codex / Hermes / OpenClaw (generic) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-zh.zip) |
+| WorkBuddy | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-zh.zip) |
+
+[SHA-256 checksums](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/SHA256SUMS). Install through your host; this is a Skill, not a hosted note editor. Host evidence is listed below.
 
 ## Host status
 

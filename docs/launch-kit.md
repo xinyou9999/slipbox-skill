@@ -32,7 +32,7 @@ Suggested topics (verify relevance at release): `agent-skills`, `ai-agents`, `ze
 >
 > The demo uses the real Python CLI. Host installation routes are documented, but not yet certified by end-to-end tests. I'd especially appreciate installation reports and practical workflows.
 >
-> [Insert the confirmed public repository and release URL after publication.]
+> [Source](https://github.com/xinyou9999/slipbox-skill) · [Download v0.1.0](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0)
 
 ## 中文首发草稿
 
@@ -46,7 +46,7 @@ Suggested topics (verify relevance at release): `agent-skills`, `ai-agents`, `ze
 >
 > 欢迎试装，告诉我你用的宿主和版本、哪里卡住了，以及哪张卡片真正帮到了你。
 >
-> [公开后填写真实仓库和版本链接。]
+> [项目源码](https://github.com/xinyou9999/slipbox-skill) · [下载 v0.1.0](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0)
 
 ## Longer article outline
 
