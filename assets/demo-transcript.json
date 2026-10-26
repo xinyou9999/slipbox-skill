@@ -1,0 +1,138 @@
+{
+  "source": "actual_local_cli",
+  "synthetic_notes": true,
+  "steps": [
+    {
+      "title": "01 / Start a private library",
+      "argv": [
+        "python",
+        "<installed-script>",
+        "init",
+        "--json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "status": "initialized",
+        "home": "<temporary-library>",
+        "indexed": 0
+      },
+      "stderr": ""
+    },
+    {
+      "title": "02 / Give a tag a reusable meaning",
+      "argv": [
+        "python",
+        "<installed-script>",
+        "tag-add",
+        "decisions",
+        "--alias",
+        "decision",
+        "--description",
+        "Ideas about making decisions",
+        "--json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "name": "decisions",
+        "aliases": [
+          "decision"
+        ],
+        "description": "Ideas about making decisions",
+        "usage_count": 0
+      },
+      "stderr": ""
+    },
+    {
+      "title": "03 / Capture one thought",
+      "argv": [
+        "python",
+        "<installed-script>",
+        "add",
+        "A useful meeting note ends with a clear decision.",
+        "--tag",
+        "decision",
+        "--json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "id": "18a1468f0c764334a78f95d704663bdd",
+        "created_at": "2026-10-26T12:31:00.617Z",
+        "updated_at": "2026-10-26T12:31:00.617Z",
+        "tags": [
+          "decisions"
+        ],
+        "content": "A useful meeting note ends with a clear decision."
+      },
+      "stderr": ""
+    },
+    {
+      "title": "04 / Find it before the next meeting",
+      "argv": [
+        "python",
+        "<installed-script>",
+        "search",
+        "meeting",
+        "--tag",
+        "decisions",
+        "--json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "cards": [
+          {
+            "id": "18a1468f0c764334a78f95d704663bdd",
+            "content": "A useful meeting note ends with a clear decision.",
+            "created_at": "2026-10-26T12:31:00.617Z",
+            "updated_at": "2026-10-26T12:31:00.617Z",
+            "tags": [
+              "decisions"
+            ]
+          }
+        ],
+        "count": 1,
+        "limit": 50,
+        "offset": 0,
+        "has_more": false
+      },
+      "stderr": ""
+    },
+    {
+      "title": "05 / Review what changed this week",
+      "argv": [
+        "python",
+        "<installed-script>",
+        "review",
+        "--days",
+        "7",
+        "--json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "cards": [
+          {
+            "id": "18a1468f0c764334a78f95d704663bdd",
+            "created_at": "2026-10-26T12:31:00.617Z",
+            "updated_at": "2026-10-26T12:31:00.617Z",
+            "tags": [
+              "decisions"
+            ],
+            "content": "A useful meeting note ends with a clear decision."
+          }
+        ],
+        "count": 1,
+        "days": 7,
+        "limit": 20
+      },
+      "stderr": ""
+    },
+    {
+      "title": "06 / The note is your Markdown file",
+      "argv": [
+        "read",
+        "<temporary-library>/cards/18a1468f0c764334a78f95d704663bdd.md"
+      ],
+      "exit_code": 0,
+      "markdown": "---\nid: \"18a1468f0c764334a78f95d704663bdd\"\ncreated_at: \"2026-10-26T12:31:00.617Z\"\nupdated_at: \"2026-10-26T12:31:00.617Z\"\ntags: [\"decisions\"]\n---\nA useful meeting note ends with a clear decision.\n"
+    }
+  ]
+}

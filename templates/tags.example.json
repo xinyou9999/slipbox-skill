@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "tags": [
+    {
+      "name": "工作",
+      "aliases": ["work", "事务"],
+      "description": "需要推进或复盘的工作事项",
+      "usage_count": 0
+    },
+    {
+      "name": "灵感",
+      "aliases": ["idea"],
+      "description": "尚未形成任务的想法与观察",
+      "usage_count": 0
+    }
+  ]
+}

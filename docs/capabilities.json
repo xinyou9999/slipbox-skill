@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "name": "slipbox",
+  "version": "0.1.0",
+  "description": "Capture reusable Markdown cards, govern tags, retrieve by literal text or tag, and review recently updated cards through an AI agent.",
+  "python_requires": ">=3.10",
+  "runtime_dependencies": [],
+  "entrypoint": "scripts/slipbox.py",
+  "instructions": {"default": "SKILL.md"},
+  "default_library": "~/.slipbox",
+  "library_environment_variable": "SLIPBOX_HOME",
+  "source_of_truth": ["cards/*.md", "tags.json"],
+  "derived_index": "SQLite",
+  "maximum_tags_per_card": 3,
+  "search": "literal_substring_and_tag",
+  "semantic_judgment": "host_agent",
+  "calls_model_api": false,
+  "cross_device_sync": false,
+  "hosts": [
+    {"name": "Codex", "status": "documented_untested"},
+    {"name": "Hermes", "status": "documented_untested"},
+    {"name": "OpenClaw", "status": "documented_untested"},
+    {"name": "WorkBuddy", "status": "documented_untested"},
+    {"name": "DeepSeek harness", "status": "experimental_untested"}
+  ],
+  "commands": {
+    "init": "initialize_library",
+    "add": "capture_card",
+    "list": "list_cards",
+    "search": "literal_search",
+    "show": "read_card",
+    "edit": "revise_card",
+    "delete": "delete_card_after_confirmation",
+    "review": "recently_updated_cards",
+    "tag-add": "explicitly_create_tag",
+    "tag-list": "inspect_vocabulary",
+    "tag-merge": "merge_tags_after_confirmation",
+    "tag-stats": "tag_usage",
+    "rebuild-index": "rebuild_derived_index"
+  },
+  "documentation": ["docs/INSTALL.md", "docs/QUICKSTART.md", "docs/AI_INSTALL.md", "references/tagging-policy.md", "references/data-format.md"]
+}

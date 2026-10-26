@@ -1,0 +1,24 @@
+# slipbox
+
+> Make fleeting thoughts useful again. A local Markdown card-note Skill for AI agents, with governed tags and literal text retrieval.
+
+## Start
+- [Overview](README.md): product capabilities, limits and host evidence.
+- [Chinese overview](README.zh-CN.md): 简体中文说明。
+- [Installation](docs/INSTALL.md): documented host routes and untested/experimental status.
+- [AI installation request](docs/AI_INSTALL.md): user-directed installation and a temporary-library check.
+- [Quick start](docs/QUICKSTART.md): standalone CLI exercise.
+
+## Operate
+- [English Skill](SKILL.en.md): authoritative workflow and safety rules.
+- [Chinese Skill](SKILL.md): 卡片与标签操作规则。
+- [Capabilities](docs/capabilities.json): machine-readable command and compatibility index.
+- [Tag policy](references/tagging-policy.md): reuse, aliases and explicit changes.
+- [Storage boundaries](references/data-format.md): Markdown, index recovery, concurrency and privacy.
+
+## Contribute
+- [Contributing](CONTRIBUTING.md): host reports, changes and verification.
+- [Roadmap](ROADMAP.md): priorities and uncommitted future features.
+- [Security](SECURITY.md): private reporting guidance.
+
+This file is a documentation index. It does not guarantee crawler ingestion or AI recommendations.

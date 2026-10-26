@@ -1,0 +1,45 @@
+name: Check Skill packages
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.12']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+      - name: Build Chinese generic Skill
+        run: python scripts/package_skill.py --language zh
+      - name: Build English generic Skill
+        run: python scripts/package_skill.py --language en
+      - name: Build Chinese WorkBuddy Skill
+        run: python scripts/package_skill.py --target workbuddy --language zh
+      - name: Build English WorkBuddy Skill
+        run: python scripts/package_skill.py --target workbuddy --language en
+      - name: Verify release metadata and checksums
+        run: python scripts/verify_release.py
+      - name: Keep local build artifacts
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: slipbox-${{ matrix.os }}-python${{ matrix.python }}
+          path: |
+            dist/*.zip
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 14

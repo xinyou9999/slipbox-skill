@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "source_repo": "xinyou9999/slipbox",
+  "source_commit": "4d5155241b578369544dc639049dd59b6ab2f9a7",
+  "public_repo": "xinyou9999/slipbox-skill",
+  "files": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "sha256": "837b5e1dab673d4ac6a8fadd3626dea72b6c11f8261a56bd5e9b259e49c5ccc3"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "sha256": "70e4be901fe9df654436ae8e1aa61d559bb04e302439602510ec25fc40f789bf"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "26948f7c3507649b1dde9c0934438c2c804b824ad56f8bb30e7f789bf11a7dd7"
+    },
+    {
+      "path": ".github/workflows/check.yml",
+      "sha256": "145a3d3111ac9d0726a35e1fd7862d9f8b77f43469e21217de42a5a5f3c12b0e"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "574c9257e8f4c081c813020ff0ef30244ac0634212ad40b2aac0f9017f881955"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "f9f52e4a7513ab721ce46886d84a3af1ca9cf22f37af0865d9972dc98ded9e41"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "619ed7f5a379be024073a49e9c45b92776bca7279ae1e936d909754a85bb9c39"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "sha256": "55157fd335a155cc95947e138dbcd30979545fcbf547ea715270be34d55030d4"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "f235f6cc543936836560924f2030ea86d464b1fb84bf6ff01f257d8f360fcc01"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "35eca7485c821b842243468d24ce4543bb8e067ccc9a09a697722edf05d4e750"
+    },
+    {
+      "path": "README.md",
+      "sha256": "0c02381c2ea27d2195ee685921a64315be0e36936919b46c47ce846667a92954"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "1c3575ecac3a8f650656e9ca33711c20eec4618d23b4664eee521124268c770b"
+    },
+    {
+      "path": "ROADMAP.md",
+      "sha256": "24511f79e860eb47f7a5e858d82e980f47b3b46c23c6d4b67181ae5fd332c173"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "7db34ce45434942a7f657c7552e54bd2c7ec63c438c56a03e13bd22f31bfdc74"
+    },
+    {
+      "path": "SKILL.en.md",
+      "sha256": "ba30bce767e27ba729b2140f525dda87063f741ac00e47006c6b41748f6c4e9a"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "a6bf9bab0129fa29c9e436457531dbee216427254c144185fa6244820ddaeb21"
+    },
+    {
+      "path": "assets/cli-demo.gif",
+      "sha256": "fcd5632bb770b7be9656a939b29f42b6788ac11d478dc32236b71752d6ab7abf"
+    },
+    {
+      "path": "assets/demo-static.png",
+      "sha256": "1ce65ad4d2d0edab34a2794737bed99509adbe55d85bb19515c0fc80c13cfce9"
+    },
+    {
+      "path": "assets/demo-transcript.json",
+      "sha256": "0a7a08794d0b474251770f7a266a916af91373e3671378cfcb31fc26cb9a6067"
+    },
+    {
+      "path": "assets/social-day.png",
+      "sha256": "93ca285658385c4f2ca1d8119494cb1b7d146af58d3dd7db1c204c8b1931a03a"
+    },
+    {
+      "path": "assets/social-day.svg",
+      "sha256": "e313c516611f502b2ca2685856cf59ab8b40a2b7c45d6947d57fc3e6b480e6c0"
+    },
+    {
+      "path": "assets/social-night.png",
+      "sha256": "101b30e3c54b1144f59941fa5e12fcf356f419bd5e130345e85478830288404e"
+    },
+    {
+      "path": "assets/social-night.svg",
+      "sha256": "f76464ed73587032ef579e7f7f1667b54cdf34fb7d44ab76e964cc510f7e74a0"
+    },
+    {
+      "path": "docs/AI_INSTALL.md",
+      "sha256": "353e8d56f678b11503678622415e2729b044a3bd7c83e9190016e84b70420a8c"
+    },
+    {
+      "path": "docs/FAQ.md",
+      "sha256": "5095f0252d18e35ced84252113c061e8206465f5802a5b26572b731226a30404"
+    },
+    {
+      "path": "docs/INSTALL.md",
+      "sha256": "d52d049359610763847500be10e74e5ef4b64519902d60a990ae175553846de8"
+    },
+    {
+      "path": "docs/QUICKSTART.md",
+      "sha256": "fc8b5b211f2b4d15c6315764cbb4e5af2e681a62349bbb783099075b1cbda74b"
+    },
+    {
+      "path": "docs/asset-provenance.md",
+      "sha256": "44a4bf92007f709f21c90ca8e3d84ea96ec159e0bdfdbf8628185c4d65fbda21"
+    },
+    {
+      "path": "docs/capabilities.json",
+      "sha256": "2d83b937190936acee811553e7a41dbcfc990ecc97362566487acc4a762f1a71"
+    },
+    {
+      "path": "docs/launch-kit.md",
+      "sha256": "f04f9afc1bc020b531bc65ad10265064ca564cc86bbc092a5e1c576ba6b1d9b4"
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "2deace467344b04a546da320fb3fbb55a1a0b088a20bc7ce7649c5d535d59ba3"
+    },
+    {
+      "path": "references/data-format.md",
+      "sha256": "f25c5bac02af8792a50971fecbeb051e6d910b08ee42b8066d13af5269972609"
+    },
+    {
+      "path": "references/tagging-policy.md",
+      "sha256": "8ede9c4bfcf71c201ef1beaaa101f7f0fd7c08439a2ed5f04e0eeb5994b8fe02"
+    },
+    {
+      "path": "scripts/package_skill.py",
+      "sha256": "e0bf8c0c363f4f27224d9a004be75f985e3db7a66440b9ad06f1d93ea6b21afd"
+    },
+    {
+      "path": "scripts/record_demo.py",
+      "sha256": "b624fa475909ee389d1a7fc10d947d9ba474cd383386882e6b12a3b366bd34de"
+    },
+    {
+      "path": "scripts/slipbox.py",
+      "sha256": "9fe3fb18aad97c185e2cd4588c48d32f650ddb492256d8faff2ba254f8de0b2b"
+    },
+    {
+      "path": "scripts/verify_release.py",
+      "sha256": "d4a53030ea6b53407cd37e523ba52132dfd8471761e2cd12ab420ad58ceae793"
+    },
+    {
+      "path": "templates/tags.example.json",
+      "sha256": "1783fd7922e420d2814d5c7b407d3c6540bf4ed430d6131cc0caf60ad7f69a7f"
+    },
+    {
+      "path": "tests/test_release_metadata.py",
+      "sha256": "4242b00c2b1926bdbe90cfec8453a92aa914177c600d10045139856881b02302"
+    },
+    {
+      "path": "tests/test_skill_core.py",
+      "sha256": "aaa2e4d8e5990d1a2c1159ac71bae0903758cb4c5ee14c32e1eda61601bba123"
+    },
+    {
+      "path": "tests/test_skill_distribution.py",
+      "sha256": "49567c7b31ea6df784160570c3805036662447d3a0cf4be6dad49bb5ce1fceec"
+    }
+  ]
+}

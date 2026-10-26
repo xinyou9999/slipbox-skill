@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+dist/
+demo-output/
+.env
+.env.*
+!.env.example
+.slipbox/
+private/
+*.db
+.smoke-slipbox/
