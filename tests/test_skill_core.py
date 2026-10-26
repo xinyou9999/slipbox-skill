@@ -326,6 +326,29 @@ class SlipboxSkillCliTests(unittest.TestCase):
         lock.rmdir()
         self.assertEqual(self.run_cli("tag-add", "恢复")["name"], "恢复")
 
+    def test_lock_symlink_is_refused_when_os_has_no_nofollow_flag(self):
+        self.run_cli("init")
+        lock = self.home / ".lock"
+        lock.unlink()
+        external = Path(self.tmp.name) / "external-no-follow"
+        external.write_bytes(b"untouched")
+        try:
+            lock.symlink_to(external)
+        except OSError as error:
+            if os.name == "nt":
+                self.skipTest(f"symlink creation unavailable: {error}")
+            raise
+        module = self._load_cli_module()
+        fd = None
+        try:
+            with mock.patch.object(module.os, "O_NOFOLLOW", 0, create=True):
+                with self.assertRaisesRegex(ValueError, "symbolic link"):
+                    fd = module._open_lock_descriptor(lock)
+        finally:
+            if fd is not None:
+                os.close(fd)
+        self.assertEqual(external.read_bytes(), b"untouched")
+
     def test_separate_processes_never_overlap_in_the_critical_section(self):
         self.run_cli("init")
         state = self.home / "state.json"

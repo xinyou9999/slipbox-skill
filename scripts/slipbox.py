@@ -389,6 +389,9 @@ def _recover_merge_journals(home: Path) -> None:
 
 def _open_lock_descriptor(lock_path: Path) -> int:
     """Open the persistent lock file read/write without following a final symlink."""
+    # Windows does not expose O_NOFOLLOW. Refuse a pre-existing link before
+    # opening it, while retaining the kernel no-follow flag on POSIX.
+    _reject_symlink(lock_path, "library lock")
     flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_BINARY", 0) | getattr(os, "O_NOFOLLOW", 0)
     try:
         fd = os.open(lock_path, flags, 0o600)
