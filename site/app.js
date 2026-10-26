@@ -110,7 +110,7 @@
       $('theme').setAttribute('aria-pressed', String(theme === 'night'));
       $('theme').setAttribute('aria-label', theme === 'night' ? t('切换浅色主题', 'Switch to light theme') : t('切换深色主题', 'Switch to dark theme'));
       $('theme').querySelector('.theme-label').textContent = theme === 'night' ? t('浅色', 'Light') : t('深色', 'Dark');
-      doc.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'night' ? '#292733' : '#f8f9fc');
+      doc.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'night' ? '#131f37' : '#f8f9fc');
     }
     $('capture-form').addEventListener('submit', event => {
       event.preventDefault(); const result = book.add($('note').value);
