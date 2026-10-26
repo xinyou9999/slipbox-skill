@@ -3,7 +3,9 @@ name: slipbox
 description: 在用户要求记下想法、保存卡片笔记、找回旧笔记、回顾近期想法，或维护标签与别名时使用。用本地 Markdown 卡片完成捕捉、字面检索和回顾；需要 Python 3.10+ 与文件读写权限，语义理解由宿主 Agent 提供。
 ---
 
-# Slipbox 卡片笔记
+# slipbox｜跨智能体的 AI 卡片笔记
+
+用 AI 整理卡片笔记，持续积累，跨智能体复用。
 
 Slipbox 使用 Python 3.10+ 标准库。Markdown 卡片是事实源，SQLite 只是可删除重建的检索缓存；脚本不调用模型 API，语义标签判断由当前宿主 Agent 完成。
 

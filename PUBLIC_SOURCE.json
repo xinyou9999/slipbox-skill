@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "578d1a5d119b2553132251f5d6cc49714d9cf46a",
+  "source_commit": "0a433d365e45cff7f239f883648dae081a90ec36",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -26,7 +26,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "f9f52e4a7513ab721ce46886d84a3af1ca9cf22f37af0865d9972dc98ded9e41"
+      "sha256": "c2487dc2836f1e89b37d5cbdc1e89dd3a61b7332e58c141324509dc826f0e27e"
     },
     {
       "path": "CHANGELOG.md",
@@ -38,7 +38,7 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "f235f6cc543936836560924f2030ea86d464b1fb84bf6ff01f257d8f360fcc01"
+      "sha256": "69bc486de18da1ced75279656051f1b43bee167008d80d30ca7cc50b3f9f923d"
     },
     {
       "path": "LICENSE",
@@ -46,11 +46,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "0c02381c2ea27d2195ee685921a64315be0e36936919b46c47ce846667a92954"
+      "sha256": "92bf8fe6a8782fd838b5b4851400972d49f5a5e017923b8b7c483eabccbe198a"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "1c3575ecac3a8f650656e9ca33711c20eec4618d23b4664eee521124268c770b"
+      "sha256": "82084e9c6b5b0cd9085cbaead805f4aa86c7f65a45beae91bb558dc12bc79314"
     },
     {
       "path": "ROADMAP.md",
@@ -62,11 +62,11 @@
     },
     {
       "path": "SKILL.en.md",
-      "sha256": "ba30bce767e27ba729b2140f525dda87063f741ac00e47006c6b41748f6c4e9a"
+      "sha256": "54912f5413c603e99ddf539be5004a20ba0eee805e57146298a7bd8e3171f53f"
     },
     {
       "path": "SKILL.md",
-      "sha256": "a6bf9bab0129fa29c9e436457531dbee216427254c144185fa6244820ddaeb21"
+      "sha256": "48baf4411fb9323a5ef187e30a420657d40f54c2c7f28976e7ce0a8d61d05ec7"
     },
     {
       "path": "assets/cli-demo.gif",
@@ -82,19 +82,19 @@
     },
     {
       "path": "assets/social-day.png",
-      "sha256": "93ca285658385c4f2ca1d8119494cb1b7d146af58d3dd7db1c204c8b1931a03a"
+      "sha256": "b649b390ec2308f8b5b2505b5dec2179af6a6b4e047649c8866e84764882e003"
     },
     {
       "path": "assets/social-day.svg",
-      "sha256": "e313c516611f502b2ca2685856cf59ab8b40a2b7c45d6947d57fc3e6b480e6c0"
+      "sha256": "ccee952d1b9db64de748f23085cce84b0c3dd6695d8da6e7cfcf62929977ebcd"
     },
     {
       "path": "assets/social-night.png",
-      "sha256": "101b30e3c54b1144f59941fa5e12fcf356f419bd5e130345e85478830288404e"
+      "sha256": "0155b8e338deaed1d6a407ad8b9eaf4940c9df996f67e169d018383796641753"
     },
     {
       "path": "assets/social-night.svg",
-      "sha256": "f76464ed73587032ef579e7f7f1667b54cdf34fb7d44ab76e964cc510f7e74a0"
+      "sha256": "cb6b87918111e790c08d3fac15c774294389568f1bbb44972c6152b2837af058"
     },
     {
       "path": "docs/AI_INSTALL.md",
@@ -114,7 +114,11 @@
     },
     {
       "path": "docs/asset-provenance.md",
-      "sha256": "44a4bf92007f709f21c90ca8e3d84ea96ec159e0bdfdbf8628185c4d65fbda21"
+      "sha256": "be853f34b77d787af7e057a73ab4575ad398e020fd253ec4c089cc765fb174fe"
+    },
+    {
+      "path": "docs/brand-copy.md",
+      "sha256": "761106c0be3a415d1b0ebec49647da5f4b8697b38cd20942381a8e53f94f2bc0"
     },
     {
       "path": "docs/capabilities.json",
@@ -122,11 +126,11 @@
     },
     {
       "path": "docs/launch-kit.md",
-      "sha256": "f04f9afc1bc020b531bc65ad10265064ca564cc86bbc092a5e1c576ba6b1d9b4"
+      "sha256": "a1e7103c2f22f92e18d807fb7794ff8bde7ab62911c90b4a0ac25564a6134c48"
     },
     {
       "path": "llms.txt",
-      "sha256": "2deace467344b04a546da320fb3fbb55a1a0b088a20bc7ce7649c5d535d59ba3"
+      "sha256": "bc326e7821161efec14541bff9e7861ebe38b8821e752d8e91ce0d46eed34c26"
     },
     {
       "path": "references/data-format.md",
@@ -138,11 +142,11 @@
     },
     {
       "path": "scripts/package_skill.py",
-      "sha256": "e0bf8c0c363f4f27224d9a004be75f985e3db7a66440b9ad06f1d93ea6b21afd"
+      "sha256": "142c28d4f9704782f5ec7a0607c54fd269c6a20d57744dedfd7597470f591d01"
     },
     {
       "path": "scripts/record_demo.py",
-      "sha256": "b624fa475909ee389d1a7fc10d947d9ba474cd383386882e6b12a3b366bd34de"
+      "sha256": "c6a79f3bad55216aa4d9488ef062432eb85ed548733828132153349acf471987"
     },
     {
       "path": "scripts/slipbox.py",

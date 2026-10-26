@@ -27,8 +27,8 @@ FILES = (
     "docs/capabilities.json",
 )
 WORKBUDDY_FIELDS = {
-    "display_name": "Slipbox 卡片笔记",
-    "display_name_en": "Slipbox Card Notes",
+    "display_name": "slipbox｜跨智能体的 AI 卡片笔记",
+    "display_name_en": "slipbox | AI-powered card notes across agents",
     "description_zh": "在需要记录、查找、修改或回顾本地 Markdown 卡片笔记时使用。",
     "description_en": "Use when capturing, finding, revising, or reviewing local Markdown card notes.",
     "version": VERSION,

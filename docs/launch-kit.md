@@ -2,21 +2,31 @@
 
 ## Positioning
 
-Name: **slipbox**. Headline: **Make fleeting thoughts useful again.**
+Canonical copy: [brand-copy.md](brand-copy.md).
 
-中文主张：**把一闪而过的想法，变成下次用得上的卡片。**
+**slipbox | AI-powered card notes across agents**
 
-Supporting proof: small reusable Markdown cards; governed tags; one local library accessible to different AI agents. “Change AI without losing notes” is supporting value, not the whole pitch.
+**Organize card notes with AI. Build your collection over time. Reuse it across agents.**
 
-Repository About draft (English):
+slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.
 
-> A Markdown card-note Skill for AI agents. Capture fleeting thoughts, keep tags consistent, and find useful ideas again. Local files, no extra model API.
+**slipbox｜跨智能体的 AI 卡片笔记**
+
+**用 AI 整理卡片笔记，持续积累，跨智能体复用。**
+
+slipbox 是跨智能体的 AI 卡片笔记工具，让 AI 帮你记录、整理和调用，让同一套卡片在不同平台中持续复用。
+
+Supporting proof: Markdown note cards, host-provided AI assistance, and reuse of one collection by compatible agents with access to the same local directory.
+
+Repository About (English):
+
+> slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.
 
 Suggested topics (verify relevance at release): `agent-skills`, `ai-agents`, `zettelkasten`, `markdown`, `note-taking`, `personal-knowledge-management`, `local-first`, `python`, `openclaw`, `hermes-agent`.
 
 ## Short English post
 
-> I kept saving useful ideas and forgetting where I put them, so I built slipbox: a small Markdown card-note Skill for AI agents.
+> slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.
 >
 > Capture a thought, reuse a stable tag vocabulary, retrieve it before the next task. Your notes remain ordinary Markdown, and different agents can access the same local library.
 >
@@ -26,9 +36,9 @@ Suggested topics (verify relevance at release): `agent-skills`, `ai-agents`, `ze
 
 ## 中文首发草稿
 
-> 你有没有收藏过一个很有用的想法，却在真正需要的时候找不到？
+> 用 AI 整理卡片笔记，持续积累，跨智能体复用。
 >
-> 我做了 slipbox：一个给 AI Agent 使用的开源卡片笔记 Skill。随手记下一张卡，让 AI 先复用已有标签，需要时再搜索、回顾。笔记是自己保存的 Markdown 文件，不绑定某个模型 API。
+> slipbox 是跨智能体的 AI 卡片笔记工具，让 AI 帮你记录、整理和调用，让同一套卡片在不同平台中持续复用。
 >
 > 它的重点是一个小而可复用的过程：记下来 → 分清楚 → 找回来 → 再用上。不同 Agent 只要能访问同一本地目录，就可以接着使用这些卡片。
 >

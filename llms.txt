@@ -1,8 +1,13 @@
-# slipbox
+# slipbox | AI-powered card notes across agents
 
-> Make fleeting thoughts useful again. A local Markdown card-note Skill for AI agents, with governed tags and literal text retrieval.
+> Organize card notes with AI. Build your collection over time. Reuse it across agents.
+
+slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.
+
+A local Markdown Skill with governed tags and literal text retrieval; AI assistance comes from the host agent.
 
 ## Start
+- [Approved product copy](docs/brand-copy.md): canonical Chinese and English positioning, tagline and description.
 - [Overview](README.md): product capabilities, limits and host evidence.
 - [Chinese overview](README.zh-CN.md): 简体中文说明。
 - [Installation](docs/INSTALL.md): documented host routes and untested/experimental status.

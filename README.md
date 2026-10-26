@@ -1,10 +1,10 @@
-<p align="center"><img src="assets/social-day.png" alt="slipbox — Make fleeting thoughts useful again." width="960"></p>
+<p align="center"><img src="assets/social-day.png" alt="slipbox — Organize card notes with AI. Build your collection over time. Reuse it across agents." width="960"></p>
 
-# slipbox
+# slipbox | AI-powered card notes across agents
 
-**Make fleeting thoughts useful again.**
+**Organize card notes with AI. Build your collection over time. Reuse it across agents.**
 
-An open-source card-note Skill for your AI agents. Capture one useful thought, keep tags consistent, and ask your agent to find it when you need it. Your notes stay in Markdown files you control.
+slipbox is an AI-powered card note tool that works across agents. Use AI to capture, organize, and retrieve your notes, and keep reusing the same collection across platforms.
 
 [简体中文](README.zh-CN.md) · [Install](docs/INSTALL.md) · [Three-minute start](docs/QUICKSTART.md) · [Give this to your AI](docs/AI_INSTALL.md)
 

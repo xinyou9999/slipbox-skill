@@ -3,7 +3,9 @@ name: slipbox
 description: Capture ideas as local Markdown cards, find saved notes, review recent thoughts, and maintain canonical tags and aliases. Use when the user asks to save a thought, retrieve a note, review cards, or organize tags. Requires Python 3.10+ and file access; the host agent supplies semantic judgment.
 ---
 
-# Slipbox Notes
+# slipbox | AI-powered card notes across agents
+
+Organize card notes with AI. Build your collection over time. Reuse it across agents.
 
 Use this skill to capture, find, revise, delete, and review short Markdown notes. The Python 3.10+ standard-library CLI keeps Markdown as the source of truth and SQLite as a disposable search index. It does not call a model API; semantic tagging is the current host Agent's responsibility.
 

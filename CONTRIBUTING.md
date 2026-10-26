@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping make fleeting thoughts useful again. Start with the [README](README.md), [installation guide](docs/INSTALL.md) and [roadmap](ROADMAP.md).
+Thanks for helping people organize card notes with AI and reuse their collection across agents. Start with the [README](README.md), [installation guide](docs/INSTALL.md) and [roadmap](ROADMAP.md).
 
 ## Useful first contributions
 

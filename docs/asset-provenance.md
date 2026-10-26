@@ -15,3 +15,5 @@ python scripts/record_demo.py --output demo-output
 Maintainer-only graphics regeneration uses `--render` and an available Pillow installation. Pillow is an optional authoring dependency, not a requirement of the CLI or installed Skill. Font files are resolved from the local system and are not distributed in the repository. Rendering may differ slightly with available fonts.
 
 Original code and assets are distributed under the repository's MIT license. Any later imported work needs its own attribution and license check.
+
+The cover wording was updated on 2026-10-26 using the approved [brand copy](brand-copy.md). Only cover typography changed; the existing real CLI transcript and demo recording were preserved.

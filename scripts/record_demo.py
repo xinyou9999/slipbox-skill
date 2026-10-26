@@ -65,10 +65,11 @@ def render(transcript: list[dict], output: Path):
         image = Image.new("RGB", (1280, 640), paper)
         draw = ImageDraw.Draw(image)
         draw.text((74, 54), "slipbox", fill=ink, font=font(36))
-        draw.text((74, 163), "Make fleeting thoughts", fill=ink, font=font(52))
-        draw.text((74, 225), "useful again.", fill=ink, font=font(52))
+        draw.text((74, 163), "AI-powered card notes", fill=ink, font=font(52))
+        draw.text((74, 225), "across agents", fill=ink, font=font(52))
         draw.rounded_rectangle((75, 337, 127, 342), radius=2, fill=accent)
-        draw.text((74, 381), "Capture. Tag. Retrieve. Review.", fill=muted, font=font(25))
+        for y, line_text in zip((369, 402, 435), ("Organize card notes with AI.", "Build your collection over time.", "Reuse it across agents.")):
+            draw.text((74, y), line_text, fill=muted, font=font(25))
         draw.text((74, 551), "CARD NOTES FOR AI AGENTS  /  YOUR MARKDOWN, YOUR IDEAS", fill=muted, font=font(15))
         for i, (label, content) in enumerate((("01  CAPTURE", "A useful idea."), ("02  RETRIEVE", "Right when you need it."))):
             x, y = 830 + i * 34, 124 + i * 166
@@ -82,7 +83,7 @@ def render(transcript: list[dict], output: Path):
         # Matching editable vector; the PNG is rendered from the same design.
         cards = "".join(f'<rect x="{830+i*34}" y="{124+i*166}" width="295" height="210" rx="18" fill="{surface}" stroke="{line}"/><text x="{854+i*34}" y="{174+i*166}" fill="{accent}" font-size="15">{label}</text><text x="{854+i*34}" y="{220+i*166}" fill="{ink}" font-size="19">{content}</text>'
                         for i, (label, content) in enumerate((("01 CAPTURE", "A useful idea."), ("02 RETRIEVE", "Right when you need it."))))
-        svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640"><rect width="1280" height="640" fill="{paper}"/><g font-family="Segoe UI,DejaVu Sans,sans-serif"><text x="74" y="98" fill="{ink}" font-size="36">slipbox</text><text x="74" y="219" fill="{ink}" font-size="52">Make fleeting thoughts</text><text x="74" y="281" fill="{ink}" font-size="52">useful again.</text><rect x="75" y="337" width="52" height="5" rx="2" fill="{accent}"/><text x="74" y="415" fill="{muted}" font-size="25">Capture. Tag. Retrieve. Review.</text><text x="74" y="578" fill="{muted}" font-size="15">CARD NOTES FOR AI AGENTS / YOUR MARKDOWN, YOUR IDEAS</text>{cards}</g></svg>'
+        svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640"><rect width="1280" height="640" fill="{paper}"/><g font-family="Segoe UI,DejaVu Sans,sans-serif"><text x="74" y="98" fill="{ink}" font-size="36">slipbox</text><text x="74" y="219" fill="{ink}" font-size="52">AI-powered card notes</text><text x="74" y="281" fill="{ink}" font-size="52">across agents</text><rect x="75" y="337" width="52" height="5" rx="2" fill="{accent}"/><text x="74" y="400" fill="{muted}" font-size="25">Organize card notes with AI.</text><text x="74" y="433" fill="{muted}" font-size="25">Build your collection over time.</text><text x="74" y="466" fill="{muted}" font-size="25">Reuse it across agents.</text><text x="74" y="578" fill="{muted}" font-size="15">CARD NOTES FOR AI AGENTS / YOUR MARKDOWN, YOUR IDEAS</text>{cards}</g></svg>'
         (output / f"social-{theme}.svg").write_text(svg, encoding="utf-8")
 
     frames = []
