@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "555e79c0e6d0e76f906d47ec9ce52d3f890a8688",
+  "source_commit": "d636c22020ae1a0dabd5f33b6f711a504e5cd47c",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -170,7 +170,7 @@
     },
     {
       "path": "site/index.html",
-      "sha256": "3ae10620ba04a7acb589591b19a221825dc71bda93c160f1d5f92b610d7b87ae"
+      "sha256": "2992953121ba8be6438916acda49d4189da7871215b7b1d996058efcce26cdee"
     },
     {
       "path": "site/style.css",
@@ -186,7 +186,7 @@
     },
     {
       "path": "tests/test_site.js",
-      "sha256": "c8ad961b5e41153e437e5e9d9cb1f6f43bb4e71d3e755e57b7e57490b1168f2b"
+      "sha256": "8a4021ab43d8774635039aa5b2dcbd5f3b53656f6bdea442b3411234df688668"
     },
     {
       "path": "tests/test_skill_core.py",

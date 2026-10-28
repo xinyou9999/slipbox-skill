@@ -58,6 +58,20 @@ test('rendering uses text nodes, static page has accessible forms and exact asse
   }
 });
 
+test('website analytics uses the issued public beacon with bilingual disclosure', () => {
+  const html = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
+  const beacons = html.match(/<script\b[^>]*\bdata-cf-beacon=[^>]*><\/script>/g) || [];
+  assert.equal(beacons.length, 1);
+  assert.match(beacons[0], /type="module"/);
+  assert.match(beacons[0], /src="https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js"/);
+  const config = JSON.parse(beacons[0].match(/data-cf-beacon='([^']+)'/)[1]);
+  assert.deepEqual(config, { token: '6eddef5400a04c038810266cf2352184' });
+  assert.ok(html.indexOf(beacons[0]) < html.indexOf('</body>'));
+  assert.match(html, /data-zh="本站使用 Cloudflare Web Analytics/);
+  assert.match(html, /data-en="This site uses Cloudflare Web Analytics/);
+  assert.equal((html.match(/<script\b[^>]*src="https?:/g) || []).length, 1);
+});
+
 // Small DOM contract harness: exercises mounted handlers without installing a DOM library.
 // This is behavior evidence, not browser layout or visual verification.
 function domHarness() {
