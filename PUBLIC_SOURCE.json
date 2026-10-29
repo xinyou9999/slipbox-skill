@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "d636c22020ae1a0dabd5f33b6f711a504e5cd47c",
+  "source_commit": "03a17959b229584735082020ed5c5e244377ff6e",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": ".github/workflows/check.yml",
-      "sha256": "145a3d3111ac9d0726a35e1fd7862d9f8b77f43469e21217de42a5a5f3c12b0e"
+      "sha256": "cc1f4db0bdea97a7248e3bea55bdff333ee4f2235643ea17d6abbeaba8704e1e"
     },
     {
       "path": ".github/workflows/pages.yml",
@@ -50,11 +50,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "a28ac6bedc1752465f21cefd792c1dc16cc6aba79b6090540542bb4163388546"
+      "sha256": "18bdf7f5a09bf07ca8dc0f496364246e4e6753b8845ffb363db8da40ccefae2d"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "7257542ad832aca9c29ae818d3b7653448bfc72b9454a45614d6cd9bf0388fa9"
+      "sha256": "762ce873b428a2c19b95140563098d2690a0f455f97237ee5a9274c199f264be"
     },
     {
       "path": "ROADMAP.md",
@@ -109,6 +109,14 @@
       "sha256": "5095f0252d18e35ced84252113c061e8206465f5802a5b26572b731226a30404"
     },
     {
+      "path": "docs/HARNESS_PLUGIN.md",
+      "sha256": "5f18366da135029c4bc961d4ebd0ae4b14f522ab238c367ce5f8e281c2fbe95d"
+    },
+    {
+      "path": "docs/HERMES_INSTALL_REQUEST.md",
+      "sha256": "8e7e5230edf71b48a83eb8d1366a606d8f3b902e0709f2a08819011493499780"
+    },
+    {
       "path": "docs/INSTALL.md",
       "sha256": "d52d049359610763847500be10e74e5ef4b64519902d60a990ae175553846de8"
     },
@@ -134,7 +142,43 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "0758f7c3afa397ded5a6c0359ba4d3a17d4158ba8847a7c1ab259e35414baf2f"
+      "sha256": "845391109f13e47e611eba04048aabde97b9dd3b0149f54392f52b31ad0460ae"
+    },
+    {
+      "path": "plugins/dsh-slipbox/README.md",
+      "sha256": "014f82a2ff096f451f69cfeffcf72823f6888f0340f794086cd25fb3227f40cf"
+    },
+    {
+      "path": "plugins/dsh-slipbox/bridge.mjs",
+      "sha256": "df6c1963a18425e39901fc98d435a72b1d09d64fb790286f6f64ef9b2ed626c1"
+    },
+    {
+      "path": "plugins/dsh-slipbox/client.js",
+      "sha256": "ec41a5e79f88ac6412b4f35bb3ad7698bbef24d26cfd588ecb86c62aed038b1e"
+    },
+    {
+      "path": "plugins/dsh-slipbox/cordis.patch.yml",
+      "sha256": "8c170c63d96ddaa1aaf52441d94132701c922761178c75a92131d65ae42a2ba6"
+    },
+    {
+      "path": "plugins/dsh-slipbox/icon.svg",
+      "sha256": "6ad8062098f1e2ba0524d9252152374d5181896e8cb7155eb073439c9d3aaea2"
+    },
+    {
+      "path": "plugins/dsh-slipbox/index.mjs",
+      "sha256": "b9470459ed32de7da6eeabc698e8fdb747db1b11765314698630b749cd95362d"
+    },
+    {
+      "path": "plugins/dsh-slipbox/locale/en.json",
+      "sha256": "4dde8d3de8041ef7cac7886a427b2ae39e6e34e90d1a9ae1c27daa25c548e0ee"
+    },
+    {
+      "path": "plugins/dsh-slipbox/locale/zh.json",
+      "sha256": "a00a1ead995a08434c4b1c46edbfbc48ba504349034a5c2b0dadede5b7179b71"
+    },
+    {
+      "path": "plugins/dsh-slipbox/package.json",
+      "sha256": "ada1e91490aa7dc27e2fc10461cf825af75e6afbe4b9fcdd14a97c0e7ecfe087"
     },
     {
       "path": "references/data-format.md",
@@ -143,6 +187,10 @@
     {
       "path": "references/tagging-policy.md",
       "sha256": "8ede9c4bfcf71c201ef1beaaa101f7f0fd7c08439a2ed5f04e0eeb5994b8fe02"
+    },
+    {
+      "path": "scripts/package_harness_plugin.mjs",
+      "sha256": "82767ec9a562807d9cd9ab7e981c613ec3b375eaa905dae06acb9c0f58a59394"
     },
     {
       "path": "scripts/package_skill.py",
@@ -179,6 +227,10 @@
     {
       "path": "templates/tags.example.json",
       "sha256": "1783fd7922e420d2814d5c7b407d3c6540bf4ed430d6131cc0caf60ad7f69a7f"
+    },
+    {
+      "path": "tests/test_harness_plugin.mjs",
+      "sha256": "4f589d148e3591af03f93346540cf9d58836e3da615f706c35d3c6aaf76c2f0e"
     },
     {
       "path": "tests/test_release_metadata.py",

@@ -51,13 +51,15 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 
 ## Host status
 
+**DeepSeek Harness native plugin is now available:** [installation and market guide](docs/HARNESS_PLUGIN.md) · [download prebuilt0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). It adds a real card-note page and uses the host default model. **Hermes:** [copy this installation request to your running agent](docs/HERMES_INSTALL_REQUEST.md).
+
 | Host | Path provided | Evidence |
 |---|---|---|
 | Codex | User/project Skill directory | Documented; host untested |
 | Hermes | Active profile Skill directory | Documented; host untested |
 | OpenClaw | Shared/workspace Skill directory | Documented; host untested |
 | WorkBuddy | Upload the WorkBuddy ZIP | Documented; host untested |
-| DeepSeek harness | Configured filesystem Skill root | Experimental; host untested |
+| DeepSeek Harness | Native bundle0.1.1; portable Skill also available | Windows0.2.1-rc.3 native page and default-model flow tested locally; other versions/OS untested |
 
 Package execution checks do not certify host integrations. Help turn a documented path into a tested one: [report your host/version and walkthrough](CONTRIBUTING.md).
 
@@ -65,7 +67,7 @@ Package execution checks do not certify host integrations. Help turn a documente
 
 Capture, list, search, show, edit, delete and review Markdown cards; inspect/add/merge tags; rebuild the search index. Semantic reasoning belongs to the host agent. The CLI currently uses literal substring search, not embedding or semantic search.
 
-Cards and `tags.json` are authoritative. SQLite is a disposable index. Local writes are serialized, but stale edits still need care: re-read before editing and keep one writer per card. No built-in cross-device sync, multi-user permissions, attachments or graphical note editor.
+Cards and `tags.json` are authoritative. SQLite is a disposable index. Local writes are serialized, but stale edits still need care: re-read before editing and keep one writer per card. The native DSH plugin provides a graphical editor; the portable Skill uses the host agent. No built-in cross-device sync, multi-user permissions or attachments.
 
 ## Build and check
 

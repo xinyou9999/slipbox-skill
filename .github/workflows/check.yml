@@ -9,6 +9,28 @@ permissions:
   contents: read
 
 jobs:
+  harness-plugin:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test native plugin bridge
+        run: node --test tests/test_harness_plugin.mjs
+      - name: Check native client and host syntax
+        run: |
+          node --check plugins/dsh-slipbox/client.js
+          node --check plugins/dsh-slipbox/index.mjs
+      - name: Build prebuilt native plugin without install scripts
+        run: node scripts/package_harness_plugin.mjs
   check:
     strategy:
       fail-fast: false

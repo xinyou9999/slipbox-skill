@@ -14,6 +14,8 @@ A local Markdown Skill with governed tags and literal text retrieval; AI assista
 - [Installation](docs/INSTALL.md): documented host routes and untested/experimental status.
 - [AI installation request](docs/AI_INSTALL.md): user-directed installation and a temporary-library check.
 - [Quick start](docs/QUICKSTART.md): standalone CLI exercise.
+- [DeepSeek Harness native plugin](docs/HARNESS_PLUGIN.md): prebuilt0.1.1 download, real card page and default-model flow; Windows0.2.1-rc.3 locally tested, market listing remains separate.
+- [Hermes installation request](docs/HERMES_INSTALL_REQUEST.md): copyable profile-aware install/check instructions for portable Skill v0.1.0; host invocation still needs validation.
 
 ## Operate
 - [English Skill](SKILL.en.md): authoritative workflow and safety rules.
