@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Test native plugin bridge
-        run: node --test tests/test_harness_plugin.mjs
+        run: node --test tests/test_harness_plugin.mjs tests/test_harness_market.mjs
       - name: Check native client and host syntax
         run: |
           node --check plugins/dsh-slipbox/client.js

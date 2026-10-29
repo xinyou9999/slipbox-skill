@@ -1,6 +1,6 @@
 {
   "name": "dsh-slipbox",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "slipbox · 跨智能体的 AI 卡片笔记。记录、整理和检索本地 Markdown 卡片。",
   "type": "module",
   "main": "index.mjs",
@@ -8,6 +8,7 @@
   "files": ["index.mjs", "bridge.mjs", "client.js", "locale", "icon.svg", "cordis.patch.yml", "skill", "README.md"],
   "engines": { "node": ">=22", "dsh": ">=0.2.1-rc.3 <0.3.0" },
   "peerDependencies": { "@deepseek-ai/dsh-tools": "*", "@deepseek-ai/schemastery": "*" },
+  "peerDependenciesMeta": { "@deepseek-ai/dsh-tools": { "optional": true }, "@deepseek-ai/schemastery": { "optional": true } },
   "dsh": {
     "bundle": { "patch": "./cordis.patch.yml" },
     "client": { "platform": "web", "inject": ["@deepseek-ai/dsh-client-ui-layout", "@deepseek-ai/dsh-client-ui-sidebar", "@deepseek-ai/dsh-client-ui-workspace", "@deepseek-ai/dsh-api-session-controller"] }
@@ -15,7 +16,7 @@
   "icon": "icon.svg",
   "author": "slipbox contributors",
   "homepage": "https://github.com/xinyou9999/slipbox-skill/blob/main/docs/HARNESS_PLUGIN.md",
-  "repository": { "type": "git", "url": "git+https://github.com/xinyou9999/slipbox-skill.git", "directory": "plugins/dsh-slipbox" },
+  "repository": { "type": "git", "url": "git+https://github.com/xinyou9999/slipbox-skill.git", "directory": "packages/dsh-slipbox" },
   "keywords": ["dsh", "deepseek-harness", "slipbox", "card-notes", "agent-skill", "markdown"],
   "license": "MIT"
 }

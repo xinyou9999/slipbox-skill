@@ -27,7 +27,7 @@ export function apply(ctx, config = {}) {
         const body = await request.text();
         if (body.length > 512000) throw new Error('Request too large');
         const input = JSON.parse(body);
-        const result = input.action === 'status' ? { library: settings().home, version: '0.1.0' } : await run(input);
+        const result = input.action === 'status' ? { library: settings().home, version: '0.1.2' } : await run(input);
         return Response.json({ ok: true, value: result });
       } catch (error) { return Response.json({ ok: false, error: error.message }, { status: 400 }); }
     },
