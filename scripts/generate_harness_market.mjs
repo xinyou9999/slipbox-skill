@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 export function createMarketIndex({commit,publishTimestamp,packageJson:pkg}) {
   if(typeof commit!=='string'|| !/^[a-f0-9]{40}$/.test(commit)) throw new Error('Expected full lowercase Git commit SHA');
   if(!Number.isSafeInteger(publishTimestamp)||publishTimestamp<=0) throw new Error('Expected positive integer publish timestamp');
-  if(pkg?.name!=='dsh-slipbox'|| !/^\d+\.\d+\.\d+$/.test(pkg.version)|| !pkg.dsh?.bundle?.patch || !pkg.engines?.dsh) throw new Error('Invalid native package metadata');
+  if(pkg?.name!=='dsh-slipbox'|| typeof pkg.version!=='string'|| !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(pkg.version)|| typeof pkg.dsh?.bundle?.patch!=='string'|| !pkg.dsh.bundle.patch || typeof pkg.engines?.dsh!=='string'|| !pkg.engines.dsh.trim()) throw new Error('Invalid native package metadata');
   if(Object.keys(pkg.scripts||{}).length) throw new Error('Market package must not require lifecycle scripts');
   return {
     format:1,

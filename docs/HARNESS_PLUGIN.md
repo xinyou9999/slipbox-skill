@@ -4,7 +4,22 @@
 
 The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and an AI action that starts a conversation with your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
 
-## Install the prebuilt plugin
+## Install from the DSH market (0.1.2)
+
+Add this index URL to your actual DSH profile:
+
+```text
+https://xinyou9999.github.io/slipbox-skill/dsh/index.json
+```
+
+1. Open **插件**, open the menu beside **实验性插件**, and enable **自定义插件市场**.
+2. Open **发现 → 添加索引源**, paste the URL above and save. Keep your existing sources.
+3. Search **slipbox** or **卡片笔记**, open the result and choose **安装** (or **更新** when0.1.1 is already installed).
+4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `a4a5cd05a53cc859e9ec5008bf93890957969839`, directory `packages/dsh-slipbox`, version0.1.2. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
+
+This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
+
+## Alternative: prebuilt plugin (0.1.1)
 
 1. Download `dsh-slipbox-0.1.1.tgz` and `SHA256SUMS` from the [DSH plugin release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). This is separate from portable Skill v0.1.0.
 2. Verify the downloaded archive's SHA-256 against the checksum file (`Get-FileHash` on PowerShell or `sha256sum` on Linux). The archive includes executable plugin code: inspect its source before installing.
@@ -30,20 +45,15 @@ node --test tests/test_harness_plugin.mjs
 node scripts/package_harness_plugin.mjs
 ```
 
-The command prints the archive path under ignored `.local-release/`. It copies a fixed set of plugin and core/Skill files, then runs `npm pack --ignore-scripts`; it does not publish to npm or install dependencies. The unbundled `plugins/dsh-slipbox` source directory is not a standalone Git-installable package: the packager supplies its `skill/` subtree. Use the prebuilt archive for installation.
+The command prints the current source version's archive path under ignored `.local-release/`. It copies a fixed set of plugin and core/Skill files, then runs `npm pack --ignore-scripts`; it does not publish to npm or install dependencies. `plugins/dsh-slipbox` contains development source; the public `packages/dsh-slipbox` directory is the self-contained Git distribution with its own `skill/` subtree. Market installation uses the latter at the fixed commit above.
 
 ## DSH market discovery
 
 According to the [official market documentation](https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market), DSH currently ships **no built-in index source**. Its experimental custom market reads JSON indexes selected by each profile. Publishing this GitHub repository or a Release does not make the plugin searchable on every DSH installation.
 
-To distribute through the market:
+slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.2 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
 
-1. Provide an installable **npm package** containing the prebuilt files, or a **self-contained Git package** pinned to a full commit SHA. This repository's current source subdirectory is not the latter; the release `.tgz` is the ready-to-install artifact.
-2. Publish a UTF-8 JSON index (`format: 1`) over HTTPS, returning 2xx without redirects. Include `dsh-slipbox`, bilingual title/description, icon, author, exact version, Unix publication timestamp, matching `engines.dsh` and an actual npm or Git source. The documented index schema does not accept a tarball source type; do not put a Release URL into a fabricated source type.
-3. Users open **插件 → 实验性插件 → 自定义插件市场**, enable it, then open **发现 → 添加索引源** and paste the index URL. They can then search **slipbox** and confirm installation.
-4. For wider discovery, ask maintainers of an existing trusted community index to include the package. Their review/acceptance is independent; there is no documented universal approval step that makes all DSH users see it automatically.
-
-No npm publication, market index or third-party listing has been made by this GitHub release. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish) for the supported packaging paths.
+For wider discovery, maintainers of an existing community index may include this package at their discretion. There is no automatic universal listing. No npm publication or third-party listing has been made. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish).
 
 ## 中文安装与市场说明
 
@@ -51,7 +61,7 @@ No npm publication, market index or third-party listing has been made by this Gi
 
 从上方插件发布页下载 `.tgz` 与校验和，核对后执行安装命令，再完全退出并重新打开应用。Windows 桌面版使用 `desktop` profile；其他环境要选择自己实际运行的 profile。可先保存一张“安装验证”卡片，再搜索读回。
 
-**GitHub 公开不等于插件市场自动上架。** DSH 当前通过用户自行添加的市场索引发现插件。下一步可发布预构建 npm 包，再把其版本和元数据加入 HTTPS 市场索引；其他电脑添加该索引后才能搜索安装。更广泛传播需要已有社区索引收录。这一版先提供可直接下载的安装包，尚未发布市场索引。
+**现在可以添加上方索引，搜索 slipbox 后安装0.1.2。** 插件和索引都托管在 GitHub，不需要 npm 账号。每台电脑在实际使用的 profile 添加一次索引；有旧版时选择更新。更广泛传播仍需要用户添加此源或已有社区索引收录，不代表所有 DSH 默认都能搜到。
 
 Hermes 使用通用 Skill，而不是这个 DSH `.tgz`。把[安装请求](HERMES_INSTALL_REQUEST.md)整段发给实际运行的 Hermes，安装后用 `/slipbox` 记卡片、检索和回顾。
 

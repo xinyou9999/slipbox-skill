@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "e9168a74b0765f6e655748c308c235ca53caa1cc",
+  "source_commit": "42cfb92b2e4fa27a8a8757f7fc7e988d39b54960",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -50,11 +50,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "18bdf7f5a09bf07ca8dc0f496364246e4e6753b8845ffb363db8da40ccefae2d"
+      "sha256": "46b918a96e014a3995ee62143f4b150136c7094fdbe8639c8872da91589cf1b8"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "762ce873b428a2c19b95140563098d2690a0f455f97237ee5a9274c199f264be"
+      "sha256": "3c53a7f54880bda69b416636e5617b3208ea5e0e7adaf09f168b8d86ebea09dc"
     },
     {
       "path": "ROADMAP.md",
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "5f18366da135029c4bc961d4ebd0ae4b14f522ab238c367ce5f8e281c2fbe95d"
+      "sha256": "71f98774429f0297790c14cf968c654d9087ca4cf9f234832927f932cd4f2615"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
@@ -142,11 +142,11 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "845391109f13e47e611eba04048aabde97b9dd3b0149f54392f52b31ad0460ae"
+      "sha256": "3d33b366a6343a9c89a3bfbc0e8d152b4add7611377f463ac1e55ce2ca3770f9"
     },
     {
       "path": "packages/dsh-slipbox/README.md",
-      "sha256": "014f82a2ff096f451f69cfeffcf72823f6888f0340f794086cd25fb3227f40cf"
+      "sha256": "a830152d8abe1788dd778dcabc2cdb016382b150bc472e41b6c6ab3e7491dd04"
     },
     {
       "path": "packages/dsh-slipbox/bridge.mjs",
@@ -222,7 +222,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/README.md",
-      "sha256": "014f82a2ff096f451f69cfeffcf72823f6888f0340f794086cd25fb3227f40cf"
+      "sha256": "a830152d8abe1788dd778dcabc2cdb016382b150bc472e41b6c6ab3e7491dd04"
     },
     {
       "path": "plugins/dsh-slipbox/bridge.mjs",
@@ -266,7 +266,7 @@
     },
     {
       "path": "scripts/generate_harness_market.mjs",
-      "sha256": "5e036201653801773f17b1c0d22debcaa2420d66ecd0ac1089e59b4a86ff71e2"
+      "sha256": "004d4d7aa8cbeab9d46aaa411bfea0bdc7df907eceb71b77229d70cb75d2d5ad"
     },
     {
       "path": "scripts/package_harness_plugin.mjs",
@@ -293,6 +293,14 @@
       "sha256": "8d9252f0fe1f60667570ff5ed9acd99f3398a964a77e0b9b0f40849fdaf153f0"
     },
     {
+      "path": "site/dsh/icon.svg",
+      "sha256": "6ad8062098f1e2ba0524d9252152374d5181896e8cb7155eb073439c9d3aaea2"
+    },
+    {
+      "path": "site/dsh/index.json",
+      "sha256": "86b93823370249fe8106956ff15e16654753472f08f1dd98ee55f139821b82e7"
+    },
+    {
       "path": "site/favicon.svg",
       "sha256": "3e5edccc61c2f3338cadede65f8078d86d5c57bdcc185f9aff4a480f373ee3e3"
     },
@@ -310,7 +318,7 @@
     },
     {
       "path": "tests/test_harness_market.mjs",
-      "sha256": "e63a8b46d1ddb0cc7b979dc9dcc2e220c25b9ee08be08d7dde680eb94adb2832"
+      "sha256": "35b6166102881e9a047c4da8ed80ef650b955bdada489a7a1e74a61320e93d14"
     },
     {
       "path": "tests/test_harness_plugin.mjs",

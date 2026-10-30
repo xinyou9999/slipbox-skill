@@ -51,7 +51,7 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 
 ## Host status
 
-**DeepSeek Harness native plugin is now available:** [installation and market guide](docs/HARNESS_PLUGIN.md) · [download prebuilt0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). It adds a real card-note page and uses the host default model. **Hermes:** [copy this installation request to your running agent](docs/HERMES_INSTALL_REQUEST.md).
+**DeepSeek Harness:** add our [market index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), search **slipbox** and install0.1.2 directly from a pinned GitHub package. [Step-by-step guide](docs/HARNESS_PLUGIN.md) · [older prebuilt0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). It adds a real card-note page and uses the host default model. **Hermes:** [copy this installation request to your running agent](docs/HERMES_INSTALL_REQUEST.md).
 
 | Host | Path provided | Evidence |
 |---|---|---|
@@ -59,7 +59,7 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 | Hermes | Active profile Skill directory | Documented; host untested |
 | OpenClaw | Shared/workspace Skill directory | Documented; host untested |
 | WorkBuddy | Upload the WorkBuddy ZIP | Documented; host untested |
-| DeepSeek Harness | Native bundle0.1.1; portable Skill also available | Windows0.2.1-rc.3 native page and default-model flow tested locally; other versions/OS untested |
+| DeepSeek Harness | Native Git market0.1.2; portable Skill also available | Windows0.2.1-rc.3 native page/default-model flow in0.1.1 and isolated Git installation in0.1.2 tested locally; other versions/OS untested |
 
 Package execution checks do not certify host integrations. Help turn a documented path into a tested one: [report your host/version and walkthrough](CONTRIBUTING.md).
 

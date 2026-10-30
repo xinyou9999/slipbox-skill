@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "title": {
+    "en": "slipbox plugins",
+    "zh": "slipbox 插件市场"
+  },
+  "description": {
+    "en": "AI-powered card notes across agents. Install directly from a pinned GitHub commit.",
+    "zh": "用 AI 整理卡片笔记，持续积累，跨智能体复用。从固定 GitHub 提交安装。"
+  },
+  "plugins": [
+    {
+      "name": "dsh-slipbox",
+      "title": {
+        "en": "slipbox | AI-powered card notes across agents",
+        "zh": "slipbox｜跨智能体的 AI 卡片笔记"
+      },
+      "description": {
+        "en": "A permanent card-note page, local Markdown storage, tags, search and AI assistance from your Harness default model.",
+        "zh": "常驻卡片笔记页面，本地 Markdown 存储、标签整理、搜索与宿主默认模型 AI 助力。"
+      },
+      "icon": "icon.svg",
+      "author": "slipbox contributors",
+      "homepage": "https://github.com/xinyou9999/slipbox-skill/blob/main/docs/HARNESS_PLUGIN.md",
+      "repository": {
+        "url": "https://github.com/xinyou9999/slipbox-skill",
+        "directory": "packages/dsh-slipbox"
+      },
+      "versions": [
+        {
+          "version": "0.1.2",
+          "publishTimestamp": 1793318263,
+          "engines": {
+            "dsh": ">=0.2.1-rc.3 <0.3.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/xinyou9999/slipbox-skill",
+            "commit": "a4a5cd05a53cc859e9ec5008bf93890957969839",
+            "path": "packages/dsh-slipbox"
+          }
+        }
+      ]
+    }
+  ]
+}
