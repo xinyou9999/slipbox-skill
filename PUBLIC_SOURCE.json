@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "b21586986ddfa5c2d2fd70322153133ff476e869",
+  "source_commit": "bccef155b84e8482106e04eb28a89c1b4d0a14d0",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -50,11 +50,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "46b918a96e014a3995ee62143f4b150136c7094fdbe8639c8872da91589cf1b8"
+      "sha256": "53fe06d1686c26505cb92c2a49db9c451065aeaf368dabe0200f28e58631ed9a"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "3c53a7f54880bda69b416636e5617b3208ea5e0e7adaf09f168b8d86ebea09dc"
+      "sha256": "85612a1641c3c98253abec36b4850d6c2599bdb8a244f19d2574e2a197949685"
     },
     {
       "path": "ROADMAP.md",
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "71f98774429f0297790c14cf968c654d9087ca4cf9f234832927f932cd4f2615"
+      "sha256": "9e71ef43b789db5ead0db2608a8fd076f61584d9c73e1fd791bf9628442a1fc1"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
@@ -142,11 +142,11 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "3d33b366a6343a9c89a3bfbc0e8d152b4add7611377f463ac1e55ce2ca3770f9"
+      "sha256": "3d85df5a0451f0ef5256fbc9218e162012c658400644c72e8afd76f8fea18980"
     },
     {
       "path": "packages/dsh-slipbox/README.md",
-      "sha256": "a830152d8abe1788dd778dcabc2cdb016382b150bc472e41b6c6ab3e7491dd04"
+      "sha256": "03c9f06ac41ebe476007d5bc58ae75de4ccbb52cebebc2a4f459b26dab5a02b4"
     },
     {
       "path": "packages/dsh-slipbox/bridge.mjs",
@@ -222,7 +222,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/README.md",
-      "sha256": "a830152d8abe1788dd778dcabc2cdb016382b150bc472e41b6c6ab3e7491dd04"
+      "sha256": "03c9f06ac41ebe476007d5bc58ae75de4ccbb52cebebc2a4f459b26dab5a02b4"
     },
     {
       "path": "plugins/dsh-slipbox/bridge.mjs",
@@ -298,7 +298,7 @@
     },
     {
       "path": "site/dsh/index.json",
-      "sha256": "86b93823370249fe8106956ff15e16654753472f08f1dd98ee55f139821b82e7"
+      "sha256": "0478628447bf0e4e990802e0ac9005ee15d887817dcb711491aa26d0ab8097f9"
     },
     {
       "path": "site/favicon.svg",

@@ -2,7 +2,9 @@
 
 Native bundle with an installed plugin item, permanent **卡片笔记** navigation, real Markdown card UI and the host's default-model AI conversation. The Python standard-library core is shared with the portable Skill; no separate model credential is required.
 
-For version0.1.2, add `https://xinyou9999.github.io/slipbox-skill/dsh/index.json` in DSH's experimental custom market, search **slipbox** and confirm installation. It installs a self-contained GitHub package pinned to a fixed commit; no npm account or installation build permission is needed. See the [step-by-step guide](../../docs/HARNESS_PLUGIN.md).
+For version0.1.3, add `https://xinyou9999.github.io/slipbox-skill/dsh/index.json` in DSH's experimental custom market, search **slipbox** and confirm installation. It installs a self-contained GitHub package pinned to a fixed commit; no npm account or installation build permission is needed. See the [step-by-step guide](../../docs/HARNESS_PLUGIN.md).
+
+The homepage displays selected tags only. Search to add a tag on demand (up to8 matches); the separate **标签列表** page provides search,48-item pagination and explicit creation. Drafts survive view switches. Native light/dark UI was verified with371 tags, with500-tag interaction regressions.
 
 Download the prebuilt archive from the [DSH plugin release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). Build from the public repository root with `node scripts/package_harness_plugin.mjs`. Install the resulting local `.tgz` with `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts`. Select the profile you actually run, then fully quit and reopen Harness. See [installation and market discovery](../../docs/HARNESS_PLUGIN.md). GitHub publication does not register the plugin in a marketplace.
 
