@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "c999ba3d69feee47b63055f3e8c643f62a4cae35",
+  "source_commit": "4224daaeb99c46ae402f378540c2a7ace141e64d",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "82881316f3dfbae672204d2c8b6496ba4ec7502784a6d5d793c5a06d0c1301c3"
+      "sha256": "a25052096c30e2ddc2055d7d3ad36df6127f8c2cbdec47088dc87d3a452a1cb8"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
@@ -178,7 +178,7 @@
     },
     {
       "path": "packages/dsh-slipbox/package.json",
-      "sha256": "d9d184c5ad9911a2d8a7431fa393e1c8928c8ee92c7da1cef6f85ce2eb876895"
+      "sha256": "0af0e801777d99c070dc024f2f34c381334e5d10633af1f30846ee5b006a3130"
     },
     {
       "path": "packages/dsh-slipbox/skill/LICENSE",
@@ -254,7 +254,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/package.json",
-      "sha256": "d9d184c5ad9911a2d8a7431fa393e1c8928c8ee92c7da1cef6f85ce2eb876895"
+      "sha256": "0af0e801777d99c070dc024f2f34c381334e5d10633af1f30846ee5b006a3130"
     },
     {
       "path": "references/data-format.md",

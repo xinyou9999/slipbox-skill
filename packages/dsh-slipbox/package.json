@@ -17,6 +17,6 @@
   "author": "slipbox contributors",
   "homepage": "https://github.com/xinyou9999/slipbox-skill/blob/main/docs/HARNESS_PLUGIN.md",
   "repository": { "type": "git", "url": "git+https://github.com/xinyou9999/slipbox-skill.git", "directory": "packages/dsh-slipbox" },
-  "keywords": ["dsh", "deepseek-harness", "slipbox", "card-notes", "agent-skill", "markdown"],
+  "keywords": ["dsh-plugin", "dsh", "deepseek-harness", "slipbox", "card-notes", "ai-notes", "zettelkasten", "agent-skill", "markdown", "卡片笔记"],
   "license": "MIT"
 }

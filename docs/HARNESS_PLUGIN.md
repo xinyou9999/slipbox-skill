@@ -25,6 +25,21 @@ https://xinyou9999.github.io/slipbox-skill/dsh/index.json
 
 This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
 
+## Install from npm or a mainland China mirror (0.1.5)
+
+The complete native plugin is now published as [`dsh-slipbox@0.1.5`](https://www.npmjs.com/package/dsh-slipbox), with a verified [npmmirror copy](https://npmmirror.com/package/dsh-slipbox). The npm and mirror archives have identical SHA-256 and SHA-512 integrity values. Installing does not require an npm publishing account or two-factor authentication.
+
+If you use the community [`@easytz/dsh-market`](https://github.com/EasyTZ/dsh-market) plugin, enable its **国内镜像** switch, search **dsh-slipbox**, and install version **0.1.5**. This market searches npm packages using `dsh-plugin` metadata; it is separate from DSH's built-in custom-index interface. No application to a universal official catalog has been made.
+
+For CLI installation on Windows desktop, use your existing Harness CLI:
+
+```powershell
+$env:npm_config_registry = 'https://registry.npmmirror.com'
+dsh plugin --profile desktop add dsh-slipbox@0.1.5 --ignore-scripts
+```
+
+The registry variable applies to the current shell and its child processes. Use your actual profile on other platforms. Version0.1.5 was installed in an isolated Windows Harness0.2.1-rc.3 profile from this registry; all19 installed package files matched the published archive. Keep Python3.10+ available. Follow the host's restart notice after installation and open **卡片笔记** in the sidebar. The Git index above remains available as an alternative.
+
 ## Alternative: prebuilt plugin (0.1.1)
 
 1. Download `dsh-slipbox-0.1.1.tgz` and `SHA256SUMS` from the [DSH plugin release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). This is separate from portable Skill v0.1.0.
@@ -59,7 +74,7 @@ According to the [official market documentation](https://deepseek-harness.github
 
 slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.5 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
 
-For wider discovery, maintainers of an existing community index may include this package at their discretion. There is no automatic universal listing. No npm publication or third-party listing has been made. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish).
+For wider discovery, maintainers of an existing community index may include this package at their discretion. There is no automatic universal listing. npm and npmmirror distribution are available; no third-party curated-index submission has been made. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish).
 
 ## 中文安装与市场说明
 
@@ -67,7 +82,9 @@ For wider discovery, maintainers of an existing community index may include this
 
 从上方插件发布页下载 `.tgz` 与校验和，核对后执行安装命令，再完全退出并重新打开应用。Windows 桌面版使用 `desktop` profile；其他环境要选择自己实际运行的 profile。可先保存一张“安装验证”卡片，再搜索读回。
 
-**现在可以添加上方索引，搜索 slipbox 后安装0.1.4。** 中文版显示“卡片笔记”和“我的笔记”，默认中文；右上角可切换 English 并记住选择。首页不再铺开全部标签；进入“标签列表”后搜索、分页查看或新建，编辑卡片时按需搜索添加，最多三个。插件和索引都托管在 GitHub，不需要 npm 账号。每台电脑在实际使用的 profile 添加一次索引；有旧版时选择更新。更广泛传播仍需要用户添加此源或已有社区索引收录，不代表所有 DSH 默认都能搜到。
+**当前版本0.1.5已发布到npm，并已同步国内npmmirror镜像。** 如果使用社区 `@easytz/dsh-market`，打开“国内镜像”后搜索 **dsh-slipbox** 安装；普通用户不用注册npm，也不用配置发布者的两步验证。DSH自带的“发现”界面则仍需添加上方GitHub索引；两种市场入口不同，不能保证所有DSH默认都能搜到。
+
+中文版显示“卡片笔记”和“我的笔记”，默认中文；右上角可切换English并记住选择。笔记在左，导航在右；窄屏导航在上方。首页不再铺开全部标签；进入“标签列表”后搜索、分页查看或新建，编辑卡片时按需搜索添加，最多三个。已有用户可在对应来源选择更新。
 
 Hermes 使用通用 Skill，而不是这个 DSH `.tgz`。把[安装请求](HERMES_INSTALL_REQUEST.md)整段发给实际运行的 Hermes，安装后用 `/slipbox` 记卡片、检索和回顾。
 
