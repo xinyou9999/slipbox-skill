@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "4224daaeb99c46ae402f378540c2a7ace141e64d",
+  "source_commit": "661e35d82061cf3a9c6e508e18f959eff8683b00",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "a25052096c30e2ddc2055d7d3ad36df6127f8c2cbdec47088dc87d3a452a1cb8"
+      "sha256": "62c306a091e9ab63f6274eb7f12cfd685a358b2a1252a9fedc6d995f454890d8"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",

@@ -31,6 +31,8 @@ The complete native plugin is now published as [`dsh-slipbox@0.1.5`](https://www
 
 If you use the community [`@easytz/dsh-market`](https://github.com/EasyTZ/dsh-market) plugin, enable its **国内镜像** switch, search **dsh-slipbox**, and install version **0.1.5**. This market searches npm packages using `dsh-plugin` metadata; it is separate from DSH's built-in custom-index interface. No application to a universal official catalog has been made.
 
+Search verification on2026-11-04: the mirror returns the exact package name, but the combined query `keywords:dsh-plugin dsh-slipbox` has not returned the package yet. Community-market discovery is therefore not fully verified; use the CLI command below or the Git index above if the result is absent. Registry indexing and query handling may differ.
+
 For CLI installation on Windows desktop, use your existing Harness CLI:
 
 ```powershell
@@ -83,6 +85,8 @@ For wider discovery, maintainers of an existing community index may include this
 从上方插件发布页下载 `.tgz` 与校验和，核对后执行安装命令，再完全退出并重新打开应用。Windows 桌面版使用 `desktop` profile；其他环境要选择自己实际运行的 profile。可先保存一张“安装验证”卡片，再搜索读回。
 
 **当前版本0.1.5已发布到npm，并已同步国内npmmirror镜像。** 如果使用社区 `@easytz/dsh-market`，打开“国内镜像”后搜索 **dsh-slipbox** 安装；普通用户不用注册npm，也不用配置发布者的两步验证。DSH自带的“发现”界面则仍需添加上方GitHub索引；两种市场入口不同，不能保证所有DSH默认都能搜到。
+
+2026-11-04实测：镜像直接搜索包名已有结果，但社区市场常用的“插件关键词＋包名”组合查询暂未返回此包。因此市场内搜索尚未完整验证；搜不到时使用上面的CLI命令或现有GitHub索引安装。
 
 中文版显示“卡片笔记”和“我的笔记”，默认中文；右上角可切换English并记住选择。笔记在左，导航在右；窄屏导航在上方。首页不再铺开全部标签；进入“标签列表”后搜索、分页查看或新建，编辑卡片时按需搜索添加，最多三个。已有用户可在对应来源选择更新。
 
