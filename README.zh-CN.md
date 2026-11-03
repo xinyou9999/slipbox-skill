@@ -51,7 +51,7 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 ## 宿主状态
 
-**DeepSeek Harness：**添加我们的[市场索引](https://xinyou9999.github.io/slipbox-skill/dsh/index.json)，搜索 **slipbox** 后即可从固定 GitHub 提交安装0.1.3。[完整步骤](docs/HARNESS_PLUGIN.md) · [旧版预构建0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1)。首页专注卡片，完整标签在独立列表中查找与整理。**Hermes：**把[安装请求](docs/HERMES_INSTALL_REQUEST.md)整段发给实际运行的智能体即可。
+**DeepSeek Harness：**添加我们的[市场索引](https://xinyou9999.github.io/slipbox-skill/dsh/index.json)，搜索 **slipbox** 后即可从固定 GitHub 提交安装0.1.4。[完整步骤](docs/HARNESS_PLUGIN.md) · [旧版预构建0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1)。默认中文“卡片笔记”“我的笔记”，提供中英文切换；完整标签在独立列表中查找与整理。**Hermes：**把[安装请求](docs/HERMES_INSTALL_REQUEST.md)整段发给实际运行的智能体即可。
 
 | 宿主 | 安装入口 | 当前证据 |
 |---|---|---|
@@ -59,7 +59,7 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 | Hermes | 当前 profile 的 Skill 目录 | 文档核查；未实机验证 |
 | OpenClaw | 共享/工作区 Skill 目录 | 文档核查；未实机验证 |
 | WorkBuddy | 上传专用 ZIP | 文档核查；未实机验证 |
-| DeepSeek Harness | Git 市场插件0.1.3；另有通用 Skill | Windows 原生0.1.3大量标签界面已验证；默认模型与Git安装历史证据见安装文档；其他系统未实机验证 |
+| DeepSeek Harness | Git 市场插件0.1.4；另有通用 Skill | Windows 原生大量标签界面和0.1.4中英文命名已验证；默认模型与Git安装历史证据见安装文档；其他系统未实机验证 |
 
 本地包检查不等于平台兼容认证。欢迎提供宿主、版本和实际安装报告，帮助改进这些路径。
 

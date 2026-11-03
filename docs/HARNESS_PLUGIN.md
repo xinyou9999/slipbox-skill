@@ -4,9 +4,11 @@
 
 The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and an AI action that starts a conversation with your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
 
+Version0.1.4 defaults to Chinese: page title **卡片笔记**, navigation **我的笔记**. Use **English** in the header for the English view (**slipbox · Card Notes**, **My Notes**); use **简体中文** to return. The preference is remembered. Switching preserves drafts, selected tags, filters and themes, and never translates or rewrites your actual notes or tag names. The package identifier remains `dsh-slipbox`.
+
 Version0.1.3 keeps the homepage card-first: it shows selected tags only, with an on-demand tag search capped at8 results. Open **标签列表** to search all tags, page through48 at a time or explicitly create a tag. Switching views preserves the current draft. This UI was checked in the native Windows app with371 tags;500-tag interaction regressions also cover the selection limit and avoiding accidental draft submission on Enter.
 
-## Install from the DSH market (0.1.3)
+## Install from the DSH market (0.1.4)
 
 Add this index URL to your actual DSH profile:
 
@@ -17,7 +19,7 @@ https://xinyou9999.github.io/slipbox-skill/dsh/index.json
 1. Open **插件**, open the menu beside **实验性插件**, and enable **自定义插件市场**.
 2. Open **发现 → 添加索引源**, paste the URL above and save. Keep your existing sources.
 3. Search **slipbox** or **卡片笔记**, open the result and choose **安装** (or **更新** when0.1.1 is already installed).
-4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `0d8c41c17323a6446d8f1c7d66380dd0a5c3e886`, directory `packages/dsh-slipbox`, version0.1.3. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
+4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `6ca3daac6b5f75ef6b15332d7bd62058b58cad7d`, directory `packages/dsh-slipbox`, version0.1.4. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
 
 This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
 
@@ -53,7 +55,7 @@ The command prints the current source version's archive path under ignored `.loc
 
 According to the [official market documentation](https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market), DSH currently ships **no built-in index source**. Its experimental custom market reads JSON indexes selected by each profile. Publishing this GitHub repository or a Release does not make the plugin searchable on every DSH installation.
 
-slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.3 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
+slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.4 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
 
 For wider discovery, maintainers of an existing community index may include this package at their discretion. There is no automatic universal listing. No npm publication or third-party listing has been made. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish).
 
@@ -63,7 +65,7 @@ For wider discovery, maintainers of an existing community index may include this
 
 从上方插件发布页下载 `.tgz` 与校验和，核对后执行安装命令，再完全退出并重新打开应用。Windows 桌面版使用 `desktop` profile；其他环境要选择自己实际运行的 profile。可先保存一张“安装验证”卡片，再搜索读回。
 
-**现在可以添加上方索引，搜索 slipbox 后安装0.1.3。** 首页不再铺开全部标签；进入“标签列表”后搜索、分页查看或新建，编辑卡片时按需搜索添加，最多三个。插件和索引都托管在 GitHub，不需要 npm 账号。每台电脑在实际使用的 profile 添加一次索引；有旧版时选择更新。更广泛传播仍需要用户添加此源或已有社区索引收录，不代表所有 DSH 默认都能搜到。
+**现在可以添加上方索引，搜索 slipbox 后安装0.1.4。** 中文版显示“卡片笔记”和“我的笔记”，默认中文；右上角可切换 English 并记住选择。首页不再铺开全部标签；进入“标签列表”后搜索、分页查看或新建，编辑卡片时按需搜索添加，最多三个。插件和索引都托管在 GitHub，不需要 npm 账号。每台电脑在实际使用的 profile 添加一次索引；有旧版时选择更新。更广泛传播仍需要用户添加此源或已有社区索引收录，不代表所有 DSH 默认都能搜到。
 
 Hermes 使用通用 Skill，而不是这个 DSH `.tgz`。把[安装请求](HERMES_INSTALL_REQUEST.md)整段发给实际运行的 Hermes，安装后用 `/slipbox` 记卡片、检索和回顾。
 
