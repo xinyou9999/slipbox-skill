@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "0c699831f6161e0748cae5732a3a21c607e381f3",
+  "source_commit": "6c2bf45adc117dc8adb4e2939a8c477e3bf7ee7e",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -154,7 +154,7 @@
     },
     {
       "path": "packages/dsh-slipbox/client.js",
-      "sha256": "230a7720faae5c8046372f3dd34fbf98d04c6020f17c02e104daa48d7944e36f"
+      "sha256": "1e44b54380562b60f7bb8267575da6f171fdf667476f28fe5ba1ceee714069cc"
     },
     {
       "path": "packages/dsh-slipbox/cordis.patch.yml",
@@ -166,7 +166,7 @@
     },
     {
       "path": "packages/dsh-slipbox/index.mjs",
-      "sha256": "5cf5c3f560db864f0f7d2975ae8777c4b3945c1a05a91269314ede9e85dc38a7"
+      "sha256": "71527506a6adc987c1e8b12ef87e630086fc96e1cfb25096e8dda667416eff68"
     },
     {
       "path": "packages/dsh-slipbox/locale/en.json",
@@ -178,7 +178,7 @@
     },
     {
       "path": "packages/dsh-slipbox/package.json",
-      "sha256": "78a68f82e62d66cc07bb9c63737e34bb003f4ffde8b21c9f2079e835b9da7407"
+      "sha256": "d9d184c5ad9911a2d8a7431fa393e1c8928c8ee92c7da1cef6f85ce2eb876895"
     },
     {
       "path": "packages/dsh-slipbox/skill/LICENSE",
@@ -230,7 +230,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/client.js",
-      "sha256": "230a7720faae5c8046372f3dd34fbf98d04c6020f17c02e104daa48d7944e36f"
+      "sha256": "1e44b54380562b60f7bb8267575da6f171fdf667476f28fe5ba1ceee714069cc"
     },
     {
       "path": "plugins/dsh-slipbox/cordis.patch.yml",
@@ -242,7 +242,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/index.mjs",
-      "sha256": "5cf5c3f560db864f0f7d2975ae8777c4b3945c1a05a91269314ede9e85dc38a7"
+      "sha256": "71527506a6adc987c1e8b12ef87e630086fc96e1cfb25096e8dda667416eff68"
     },
     {
       "path": "plugins/dsh-slipbox/locale/en.json",
@@ -254,7 +254,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/package.json",
-      "sha256": "78a68f82e62d66cc07bb9c63737e34bb003f4ffde8b21c9f2079e835b9da7407"
+      "sha256": "d9d184c5ad9911a2d8a7431fa393e1c8928c8ee92c7da1cef6f85ce2eb876895"
     },
     {
       "path": "references/data-format.md",
