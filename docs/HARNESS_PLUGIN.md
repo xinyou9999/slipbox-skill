@@ -4,11 +4,13 @@
 
 The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and an AI action that starts a conversation with your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
 
+Version0.1.5 places the note editor and collection on the left, with compact navigation on the right. Narrow screens retain navigation above the notes. Both themes and languages share this layout.
+
 Version0.1.4 defaults to Chinese: page title **卡片笔记**, navigation **我的笔记**. Use **English** in the header for the English view (**slipbox · Card Notes**, **My Notes**); use **简体中文** to return. The preference is remembered. Switching preserves drafts, selected tags, filters and themes, and never translates or rewrites your actual notes or tag names. The package identifier remains `dsh-slipbox`.
 
 Version0.1.3 keeps the homepage card-first: it shows selected tags only, with an on-demand tag search capped at8 results. Open **标签列表** to search all tags, page through48 at a time or explicitly create a tag. Switching views preserves the current draft. This UI was checked in the native Windows app with371 tags;500-tag interaction regressions also cover the selection limit and avoiding accidental draft submission on Enter.
 
-## Install from the DSH market (0.1.4)
+## Install from the DSH market (0.1.5)
 
 Add this index URL to your actual DSH profile:
 
@@ -19,7 +21,7 @@ https://xinyou9999.github.io/slipbox-skill/dsh/index.json
 1. Open **插件**, open the menu beside **实验性插件**, and enable **自定义插件市场**.
 2. Open **发现 → 添加索引源**, paste the URL above and save. Keep your existing sources.
 3. Search **slipbox** or **卡片笔记**, open the result and choose **安装** (or **更新** when0.1.1 is already installed).
-4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `6ca3daac6b5f75ef6b15332d7bd62058b58cad7d`, directory `packages/dsh-slipbox`, version0.1.4. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
+4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `a6da475d72feb6e0688e7c379c11f1458e598789`, directory `packages/dsh-slipbox`, version0.1.5. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
 
 This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
 
@@ -55,7 +57,7 @@ The command prints the current source version's archive path under ignored `.loc
 
 According to the [official market documentation](https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market), DSH currently ships **no built-in index source**. Its experimental custom market reads JSON indexes selected by each profile. Publishing this GitHub repository or a Release does not make the plugin searchable on every DSH installation.
 
-slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.4 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
+slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.5 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
 
 For wider discovery, maintainers of an existing community index may include this package at their discretion. There is no automatic universal listing. No npm publication or third-party listing has been made. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish).
 

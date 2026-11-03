@@ -2,9 +2,11 @@
 
 Native bundle with an installed plugin item, permanent **卡片笔记** navigation, real Markdown card UI and the host's default-model AI conversation. The Python standard-library core is shared with the portable Skill; no separate model credential is required.
 
+Desktop layout: notes on the left, navigation on the right. On narrow screens navigation sits above the notes.
+
 The page defaults to Chinese **卡片笔记** / **我的笔记**. Switch to **English** for **slipbox · Card Notes** / **My Notes**, or **简体中文** to return. Language preference persists while original notes, tags, draft, filters and theme remain intact. Package name remains `dsh-slipbox`.
 
-For version0.1.4, add `https://xinyou9999.github.io/slipbox-skill/dsh/index.json` in DSH's experimental custom market, search **slipbox** and confirm installation. It installs a self-contained GitHub package pinned to a fixed commit; no npm account or installation build permission is needed. See the [step-by-step guide](../../docs/HARNESS_PLUGIN.md).
+For version0.1.5, add `https://xinyou9999.github.io/slipbox-skill/dsh/index.json` in DSH's experimental custom market, search **slipbox** and confirm installation. It installs a self-contained GitHub package pinned to a fixed commit; no npm account or installation build permission is needed. See the [step-by-step guide](../../docs/HARNESS_PLUGIN.md).
 
 The homepage displays selected tags only. Search to add a tag on demand (up to8 matches); the separate **标签列表** page provides search,48-item pagination and explicit creation. Drafts survive view switches. Native light/dark UI was verified with371 tags, with500-tag interaction regressions.
 
