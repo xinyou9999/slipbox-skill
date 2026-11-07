@@ -29,7 +29,7 @@ https://xinyou9999.github.io/slipbox-skill/dsh/index.json
 1. Open **插件**, open the menu beside **实验性插件**, and enable **自定义插件市场**.
 2. Open **发现 → 添加索引源**, paste the URL above and save. Keep your existing sources.
 3. Search **slipbox** or **卡片笔记**, open the result and choose **安装** (or **更新** when0.1.1 is already installed).
-4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `b36c4d4d97595560e27632613f4e69870b81b272`, directory `packages/dsh-slipbox`, version0.1.8. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
+4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `e9764480d0f43feae49b1bd9d0536d1fff3807ea`, directory `packages/dsh-slipbox`, version0.1.8. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
 
 This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
 
