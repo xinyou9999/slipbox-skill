@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "41eee7e4781afc28df8706f9c0610c55caa59685",
+  "source_commit": "e6e41a19ebbd1ce2aaf978f5969ee9133eeb4be3",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -110,11 +110,11 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "223e0177b6a109b5b0bcb3508f5f99a8b51ff276cc0791fa9ee2f9a5ae0a1175"
+      "sha256": "4a4383bceb5e17630665575444cfbee4d788e64923cd47c82f9e654eb5dd0483"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
-      "sha256": "cd3f9292b9b35e31c45666ede5a3b7af99378c342e0b3f51fe3ab80c274ddefd"
+      "sha256": "000e2c46cf85465e54addc268c2ed04edbe2e042087c076b091229c0ce8dcb0e"
     },
     {
       "path": "docs/INSTALL.md",
@@ -306,7 +306,7 @@
     },
     {
       "path": "site/dsh/index.json",
-      "sha256": "a965ef5fdc4bd5210091ea11dfdd452c78e293a05f6813ef2f302abd37bda7dd"
+      "sha256": "49b6e49c25035471305959aefa295a8b18630cbed8ff62edd628f96561bff171"
     },
     {
       "path": "site/favicon.svg",

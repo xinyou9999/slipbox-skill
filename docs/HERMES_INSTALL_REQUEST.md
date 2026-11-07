@@ -9,7 +9,7 @@
 版本：v0.1.1
 中文通用包：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-zh.zip
 校验清单：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/SHA256SUMS
-此中文包预期SHA256：469cc2b30ca0dd915a07013875d235d2f0e0c29fe6a0d2d557af3b5796b7152d
+此中文包预期SHA256：c8d8b9610d870db376a3d1b278396230a19bdfc1d2287fed6034966aa71d1ef1
 
 请直接执行安装：
 1. 确认当前系统、执行环境、Hermes版本、当前profile实际HERMES_HOME，以及Python3.10+可执行路径；不要将Windows电脑路径套用到NAS或容器。
