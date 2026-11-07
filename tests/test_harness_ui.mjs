@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 
 function mounted(preferences=new Map(), options={}) {
-  const states=[],refs=[],deps=[];let cursor=0,refCursor=0,effectCursor=0,component,tree;const pending=[];
+  const states=[],refs=[],deps=[],themeListeners=[];let cursor=0,refCursor=0,effectCursor=0,component,tree,pageProps={};const pending=[];
   const tags=Array.from({length:500},(_,i)=>({name:'标签'+String(i+1).padStart(4,'0')}));
   const writes=[];
   const cards=[];
@@ -15,9 +15,9 @@ function mounted(preferences=new Map(), options={}) {
     useEffect(fn,values){const i=effectCursor++;if(!deps[i]||values.some((v,n)=>v!==deps[i][n])){deps[i]=values;pending.push(fn);}},
   };
   const local=preferences;
-  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox')component=view;}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,
+  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);let value={};
-      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.7'};
+      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.8'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
       else {writes.push(input);
@@ -29,7 +29,7 @@ function mounted(preferences=new Map(), options={}) {
       }
       return {ok:true,json:async()=>({ok:true,value})};}};
   vm.runInNewContext(readFileSync(new URL('../plugins/dsh-slipbox/client.js',import.meta.url),'utf8'),context);
-  function render(){cursor=refCursor=effectCursor=0;tree=component({organize:async()=>{}});for(const fn of pending.splice(0))fn();return tree;}
+  function render(){cursor=refCursor=effectCursor=0;tree=component(pageProps);for(const fn of pending.splice(0))fn();return tree;}
   function nodes(node=tree){if(!node||typeof node!=='object')return [];return [node,...node.children.flatMap(x=>nodes(x))];}
   function text(node){return typeof node==='object'?node.children.map(text).join(''):String(node??'');}
   function one(predicate){const matches=nodes().filter(predicate);assert.equal(matches.length,1,'Expected one matching element, found '+matches.length);return matches[0];}
@@ -37,8 +37,24 @@ function mounted(preferences=new Map(), options={}) {
   function input(label){return one(n=>n.props['aria-label']===label||n.props.id===label);}
   async function settle(){for(let i=0;i<4;i++){for(let j=0;j<8;j++)await Promise.resolve();render();}}
   render();
-  return {render,settle,nodes,text,button,input,writes,local};
+  return {render,settle,nodes,text,button,input,writes,local,themeListeners};
 }
+
+test('native appearance follows the host and switches through its theme service without losing the draft',async()=>{
+  let scheme='dark';const calls=[];
+  const hostTheme={getTheme:()=>({active:{colorScheme:scheme}}),setTheme:value=>{calls.push(value);scheme=value;}};
+  const prefs=new Map([['slipbox.plugin.theme','light']]);
+  const ui=mounted(prefs,{hostTheme});await ui.settle();
+  assert.equal(ui.nodes().find(n=>n.props.className==='sbx').props['data-theme'],'night');
+  ui.input('sbx-note').props.onChange({target:{value:'Preserve this draft'}});ui.render();
+  ui.button('浅色模式').props.onClick();ui.render();
+  assert.deepEqual(calls,['light']);
+  assert.equal(ui.nodes().find(n=>n.props.className==='sbx').props['data-theme'],'light');
+  scheme='dark';ui.themeListeners.forEach(fn=>fn({active:{colorScheme:scheme}}));ui.render();
+  assert.equal(ui.nodes().find(n=>n.props.className==='sbx').props['data-theme'],'night');
+  assert.equal(ui.input('sbx-note').props.value,'Preserve this draft');
+  assert.equal(ui.writes.length,0);
+});
 
 test('500 tags do not flood the homepage; full list is searchable and paginated',async()=>{
   const ui=mounted();await ui.settle();
@@ -215,8 +231,16 @@ test('card action icons expose names and deletion requires confirmation or can b
   ui.input('sbx-note').props.onChange({target:{value:'Synthetic card to delete'}});ui.render();
   await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await ui.settle();
   for(const label of ['编辑','删除笔记']){const action=ui.button(label);assert.equal(action.props.title,label);assert.ok(action.children.some(n=>n.type==='svg'));}
-  ui.button('删除笔记').props.onClick();ui.render();
+  let restoredFocus=false;
+  ui.button('删除笔记').props.onClick({currentTarget:{focus(){restoredFocus=true;}}});ui.render();
   assert.equal(ui.writes.filter(x=>x.action==='delete').length,0);
+  assert.ok(ui.text(ui.render()).includes('删除后无法恢复'));
+  const confirm=ui.nodes().find(n=>n.props.className==='sbx-delete-confirm');
+  let escaped=false;confirm.props.onKeyDown({key:'Escape',preventDefault(){escaped=true;}});ui.render();
+  assert.equal(escaped,true);
+  assert.equal(restoredFocus,true);
+  assert.ok(!ui.nodes().some(n=>n.props.className==='sbx-delete-confirm'));
+  ui.button('删除笔记').props.onClick();ui.render();
   ui.button('取消').props.onClick();ui.render();
   assert.equal(ui.nodes().filter(n=>n.props.className==='sbx-card').length,1);
   ui.button('删除笔记').props.onClick();ui.render();

@@ -1,5 +1,12 @@
 # Changelog
 
+## DSH plugin 0.1.8 — 2026-11-07
+
+- Replace the nested deletion box with a compact, quiet confirmation strip: concise heading, muted hint, aligned Cancel/Delete actions and responsive wrapping.
+- Keep both themes and languages consistent; focus Cancel on opening and support Escape to cancel. Explicit confirmation and revision-checked deletion remain intact.
+- Match DSH's native dark theme using its appearance service and color tokens; theme changes stay synchronized with the host. The approved light palette remains.
+- GitHub and the custom Git index distribute this version. The community listing still uses npm0.1.5 until its source is updated; a GitHub release alone does not update that listing.
+
 ## DSH plugin 0.1.7 — 2026-11-07
 
 - Save notes locally first, then fill tag slots with the configured DSH default model; per-library opt-out and failure retry.

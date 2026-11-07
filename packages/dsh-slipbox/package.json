@@ -1,6 +1,6 @@
 {
   "name": "dsh-slipbox",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "slipbox · 跨智能体的 AI 卡片笔记。记录、整理和检索本地 Markdown 卡片。",
   "type": "module",
   "main": "index.mjs",
@@ -11,7 +11,7 @@
   "peerDependenciesMeta": { "@deepseek-ai/dsh-tools": { "optional": true }, "@deepseek-ai/schemastery": { "optional": true }, "@deepseek-ai/dsh-llm": { "optional": true } },
   "dsh": {
     "bundle": { "patch": "./cordis.patch.yml" },
-    "client": { "platform": "web", "inject": ["@deepseek-ai/dsh-client-ui-layout", "@deepseek-ai/dsh-client-ui-sidebar"] }
+    "client": { "platform": "web", "inject": ["@deepseek-ai/dsh-client-ui-layout", "@deepseek-ai/dsh-client-ui-sidebar", "@deepseek-ai/dsh-client-ui-theme"] }
   },
   "icon": "icon.svg",
   "author": "slipbox contributors",
