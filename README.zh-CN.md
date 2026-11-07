@@ -36,7 +36,7 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 ## 开始使用
 
-1. 从 [v0.1.1 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.1)获取 ZIP，或从源码构建。
+1. 从 [v0.1.2 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.2)获取 ZIP，或从源码构建。
 2. 按[安装文档](docs/INSTALL.md)选择宿主。
 3. 先做[隔离的三分钟体验](docs/QUICKSTART.md)，再请 Agent 真正记一张卡并找回来。
 
@@ -44,14 +44,14 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 | 安装包 | 简体中文 | English |
 |---|---|---|
-| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-en.zip) |
-| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-en.zip) |
+| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-generic-en.zip) |
+| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-workbuddy-en.zip) |
 
-[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
+[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
 
 ## 宿主状态
 
-**DeepSeek Harness：**添加我们的[市场索引](https://xinyou9999.github.io/slipbox-skill/dsh/index.json)，搜索 **slipbox** 后即可从固定 GitHub 提交安装0.1.5。[完整步骤](docs/HARNESS_PLUGIN.md) · [旧版预构建0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1)。默认中文“卡片笔记”“我的笔记”，提供中英文切换；完整标签在独立列表中查找与整理。**Hermes：**把[安装请求](docs/HERMES_INSTALL_REQUEST.md)整段发给实际运行的智能体即可。
+**DeepSeek Harness：**添加我们的[市场索引](https://xinyou9999.github.io/slipbox-skill/dsh/index.json)，搜索 **slipbox** 后即可从固定 GitHub 提交安装0.1.5。[完整步骤](docs/HARNESS_PLUGIN.md) · [旧版预构建0.1.2](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.2)。默认中文“卡片笔记”“我的笔记”，提供中英文切换；完整标签在独立列表中查找与整理。**Hermes：**把[安装请求](docs/HERMES_INSTALL_REQUEST.md)整段发给实际运行的智能体即可。
 
 | 宿主 | 安装入口 | 当前证据 |
 |---|---|---|
@@ -65,7 +65,7 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 ## 当前能力与边界
 
-支持记录、列表、搜索、读取、编辑、删除、回顾，以及标签查看/新建/合并和索引重建。当前为字面子串搜索，不是向量或语义搜索；卡片与 `tags.json` 是事实源，SQLite 可重建。
+支持记录、列表、搜索、读取、编辑、删除、回顾，以及标签查看/新建/合并和索引重建。新增本地记录足迹与按创建日期筛选：看哪天记了多少条，点击日期回看笔记。当前为字面子串搜索，不是向量或语义搜索；卡片与 `tags.json` 是事实源，SQLite 可重建。
 
 本地写入有互斥保护，但不检测基于旧内容的覆盖编辑，修改前需重读，同一卡片保持一个修改者。DSH 原生插件提供图形卡片编辑页面；通用 Skill 通过宿主智能体操作。暂不包含附件、多用户权限或自动跨设备同步。
 

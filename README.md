@@ -36,7 +36,7 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 
 ## Start here
 
-1. Download a ZIP from [v0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.1), or [build one from source](#build-and-check).
+1. Download a ZIP from [v0.1.2](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.2), or [build one from source](#build-and-check).
 2. Follow the [installation guide](docs/INSTALL.md) for your host.
 3. Try the [isolated quick start](docs/QUICKSTART.md), then ask your agent to save and retrieve one card.
 
@@ -44,14 +44,14 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 
 | Bundle | English | 简体中文 |
 |---|---|---|
-| Codex / Hermes / OpenClaw (generic) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-zh.zip) |
-| WorkBuddy | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-zh.zip) |
+| Codex / Hermes / OpenClaw (generic) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-generic-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-generic-zh.zip) |
+| WorkBuddy | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-workbuddy-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/slipbox-0.1.2-workbuddy-zh.zip) |
 
-[SHA-256 checksums](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/SHA256SUMS). Install through your host; this is a Skill, not a hosted note editor. Host evidence is listed below.
+[SHA-256 checksums](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.2/SHA256SUMS). Install through your host; this is a Skill, not a hosted note editor. Host evidence is listed below.
 
 ## Host status
 
-**DeepSeek Harness:** add our [market index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), search **slipbox** and install0.1.5 directly from a pinned GitHub package. [Step-by-step guide](docs/HARNESS_PLUGIN.md) · [older prebuilt0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.1). It adds a real card-note page and uses the host default model. **Hermes:** [copy this installation request to your running agent](docs/HERMES_INSTALL_REQUEST.md).
+**DeepSeek Harness:** add our [market index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), search **slipbox** and install0.1.5 directly from a pinned GitHub package. [Step-by-step guide](docs/HARNESS_PLUGIN.md) · [older prebuilt0.1.2](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.2). It adds a real card-note page and uses the host default model. **Hermes:** [copy this installation request to your running agent](docs/HERMES_INSTALL_REQUEST.md).
 
 | Host | Path provided | Evidence |
 |---|---|---|
@@ -59,13 +59,13 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 | Hermes | Active profile Skill directory | Documented; host untested |
 | OpenClaw | Shared/workspace Skill directory | Documented; host untested |
 | WorkBuddy | Upload the WorkBuddy ZIP | Documented; host untested |
-| DeepSeek Harness | Native Git market0.1.5; portable Skill also available | Windows0.2.1-rc.3 native page/default-model flow in0.1.1 and isolated Git installation in0.1.2 tested locally; other versions/OS untested |
+| DeepSeek Harness | Native Git market0.1.5; portable Skill also available | Windows0.2.1-rc.3 native page/default-model flow in0.1.2 and isolated Git installation in0.1.2 tested locally; other versions/OS untested |
 
 Package execution checks do not certify host integrations. Help turn a documented path into a tested one: [report your host/version and walkthrough](CONTRIBUTING.md).
 
 ## What it does today
 
-Capture, list, search, show, edit, delete and review Markdown cards; inspect/add/merge tags; rebuild the search index. Semantic reasoning belongs to the host agent. The CLI currently uses literal substring search, not embedding or semantic search.
+Capture, list, search, show, edit, delete and review Markdown cards; query writing activity and filter by creation date; inspect/add/merge tags; rebuild the search index. Semantic reasoning belongs to the host agent. The CLI currently uses literal substring search, not embedding or semantic search.
 
 Cards and `tags.json` are authoritative. SQLite is a disposable index. Local writes are serialized, but stale edits still need care: re-read before editing and keep one writer per card. The native DSH plugin provides a graphical editor; the portable Skill uses the host agent. No built-in cross-device sync, multi-user permissions or attachments.
 
