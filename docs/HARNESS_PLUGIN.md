@@ -18,7 +18,7 @@ Version0.1.4 defaults to Chinese: page title **卡片笔记**, navigation **我�
 
 Version0.1.3 keeps the homepage card-first: it shows selected tags only, with an on-demand tag search capped at8 results. Open **标签列表** to search all tags, page through48 at a time or explicitly create a tag. Switching views preserves the current draft. This UI was checked in the native Windows app with371 tags;500-tag interaction regressions also cover the selection limit and avoiding accidental draft submission on Enter.
 
-## Install from the DSH market (0.1.5)
+## Install from the custom Git market (0.1.7)
 
 Add this index URL to your actual DSH profile:
 
@@ -29,7 +29,7 @@ https://xinyou9999.github.io/slipbox-skill/dsh/index.json
 1. Open **插件**, open the menu beside **实验性插件**, and enable **自定义插件市场**.
 2. Open **发现 → 添加索引源**, paste the URL above and save. Keep your existing sources.
 3. Search **slipbox** or **卡片笔记**, open the result and choose **安装** (or **更新** when0.1.1 is already installed).
-4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `a6da475d72feb6e0688e7c379c11f1458e598789`, directory `packages/dsh-slipbox`, version0.1.5. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
+4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `b36c4d4d97595560e27632613f4e69870b81b272`, directory `packages/dsh-slipbox`, version0.1.7. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
 
 This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
 

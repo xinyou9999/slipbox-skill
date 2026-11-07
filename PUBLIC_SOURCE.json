@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "8f1417450080d7286de56a03ae2ac4c5939f9614",
+  "source_commit": "010f5ace207510ae642db36615a8b70831063865",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "a967ca461fbd432e623a35d5b431bd9615503b7b7da278a0f34f90728eba4009"
+      "sha256": "8421cbe56c5082bb48db1ad571466174ad59731a1a7399953e3b572b8c33d8c8"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
@@ -306,7 +306,7 @@
     },
     {
       "path": "site/dsh/index.json",
-      "sha256": "5a870efb101fbdb5832dfa45abbc017583c24b7deb7ad784958ec2801b0ff66a"
+      "sha256": "b1baf7b5e0b55624b0f776d9e56c980e8e49b7c3b7fb0f8705a94412bf0bdb8f"
     },
     {
       "path": "site/favicon.svg",
