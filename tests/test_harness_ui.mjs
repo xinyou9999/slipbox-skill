@@ -17,7 +17,7 @@ function mounted(preferences=new Map(), options={}) {
   const local=preferences;
   const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);let value={};
-      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.8'};
+      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.9'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
       else {writes.push(input);
@@ -56,6 +56,17 @@ test('native appearance follows the host and switches through its theme service 
   assert.equal(ui.writes.length,0);
 });
 
+test('many inline/manual tags can be saved and AI still runs; card ids stay out of visible copy',async()=>{
+  const ui=mounted();await ui.settle();
+  ui.input('sbx-note').props.onChange({target:{value:'记下思考 '+Array.from({length:12},(_,i)=>'#标签'+String(i+1).padStart(4,'0')).join(' ')}});ui.render();
+  assert.equal(ui.button('添加标签').props.disabled,false);
+  await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await ui.settle();
+  assert.equal(ui.writes.find(x=>x.action==='add').tags.length,12);
+  assert.equal(ui.writes.filter(x=>x.action==='ai-tag').length,1);
+  const card=ui.nodes().find(n=>n.type==='article');
+  assert.ok(!ui.text(card).includes('aaaaaaaa'));
+});
+
 test('500 tags do not flood the homepage; full list is searchable and paginated',async()=>{
   const ui=mounted();await ui.settle();
   assert.ok(ui.nodes().filter(n=>n.type==='button').length<30,'Homepage must not render every tag');
@@ -71,7 +82,7 @@ test('500 tags do not flood the homepage; full list is searchable and paginated'
   assert.ok(ui.text(ui.render()).includes('# 标签0500'));
 });
 
-test('composer tags are searched on demand, bounded, removable and capped at three',async()=>{
+test('composer tags are searched on demand, bounded in search results and removable without a note tag cap',async()=>{
   const ui=mounted();await ui.settle();
   ui.button('添加标签').props.onClick();ui.render();
   ui.input('搜索要添加的标签').props.onChange({target:{value:'标签'}});ui.render();
@@ -81,7 +92,7 @@ test('composer tags are searched on demand, bounded, removable and capped at thr
     ui.button('选择标签 '+name).props.onClick();ui.render();
     if(name!=='标签0500'){ui.button('添加标签').props.onClick();ui.render();}
   }
-  assert.equal(ui.button('添加标签').props.disabled,true);
+  assert.equal(ui.button('添加标签').props.disabled,false);
   ui.button('移除标签 标签0002').props.onClick();ui.render();
   assert.equal(ui.button('添加标签').props.disabled,false);
   ui.input('sbx-note').props.onChange({target:{value:'卡片正文'}});ui.render();

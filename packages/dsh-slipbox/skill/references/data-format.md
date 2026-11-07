@@ -30,7 +30,7 @@ tags: ["工作", "灵感"]
 原文正文，按纯文本保存。
 ```
 
-The filename must equal `<id>.md`. IDs are 32 lowercase hexadecimal characters and never change. Timestamps must parse as UTC ISO 8601 and end in `Z`; `updated_at` cannot precede `created_at`. Tags must be strings, unique, known canonical names, and no more than three. Content is nonblank and at most 100,000 characters. Malformed metadata produces a structured JSON CLI error.
+The filename must equal `<id>.md`. IDs are 32 lowercase hexadecimal characters and never change. Timestamps must parse as UTC ISO 8601 and end in `Z`; `updated_at` cannot precede `created_at`. Tags must be strings, unique, and known canonical names. There is no per-card count limit. Content is nonblank and at most 100,000 characters. Malformed metadata produces a structured JSON CLI error.
 
 ## Tag library
 

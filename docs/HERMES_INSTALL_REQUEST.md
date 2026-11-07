@@ -6,10 +6,10 @@
 请在你自己实际运行的环境里安装并验证 slipbox：跨智能体的 AI 卡片笔记。
 
 可信项目：https://github.com/xinyou9999/slipbox-skill
-版本：v0.1.0
-中文通用包：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-zh.zip
-校验清单：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/SHA256SUMS
-此中文包预期SHA256：3ac05650161d7b2721a722debe8722fcdd0a139111070c197f5fbd66d3c2dab5
+版本：v0.1.1
+中文通用包：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-zh.zip
+校验清单：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/SHA256SUMS
+此中文包预期SHA256：469cc2b30ca0dd915a07013875d235d2f0e0c29fe6a0d2d557af3b5796b7152d
 
 请直接执行安装：
 1. 确认当前系统、执行环境、Hermes版本、当前profile实际HERMES_HOME，以及Python3.10+可执行路径；不要将Windows电脑路径套用到NAS或容器。

@@ -100,10 +100,20 @@ class SlipboxSkillCliTests(unittest.TestCase):
         self.assertIn("unknown tag", error["error"])
         card = self.run_cli("add", "别名应规范化", "--tag", "IDEA", "--tag", "work")
         self.assertEqual(card["tags"], ["灵感", "工作"])
-        error = self.run_cli(
-            "add", "标签太多", "--tag", "工作", "--tag", "灵感", "--tag", "第三", "--tag", "第四", ok=False
-        )
-        self.assertIn("at most 3", error["error"])
+
+    def test_many_tags_survive_add_edit_read_and_rebuild(self):
+        self.init_with_tags()
+        names = [f"主题{i}" for i in range(20)]
+        for name in names:
+            self.run_cli("tag-add", name)
+        args = [part for name in names for part in ("--tag", name)]
+        card = self.run_cli("add", "多标签笔记", *args)
+        self.assertEqual(card["tags"], names)
+        edited = self.run_cli("edit", card["id"], "更新正文", *args, "--tag", names[0])
+        self.assertEqual(edited["tags"], names)
+        self.run_cli("rebuild-index")
+        self.assertEqual(self.run_cli("show", card["id"])["tags"], names)
+        self.assertEqual(self.run_cli("search", "更新正文", "--tag", names[-1])["count"], 1)
 
     def test_list_search_edit_delete_review_and_rebuild(self):
         self.init_with_tags()
@@ -918,7 +928,7 @@ class SlipboxSkillCliTests(unittest.TestCase):
         self.assertTrue(skill.startswith("---\nname: slipbox\ndescription:"))
         frontmatter = skill.split("---", 2)[1]
         self.assertNotIn("platforms:", frontmatter)
-        self.assertIn("最多 3 个", skill)
+        self.assertIn("不限制标签数量", skill)
         self.assertIn("先读标签库", skill)
         self.assertIn("{baseDir}", skill)
         readme = (ROOT / "README.md").read_text(encoding="utf-8")

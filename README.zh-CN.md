@@ -29,14 +29,14 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 ## 三个值得安装的理由
 
 - **小卡片，随时拿来用。** 保留原话，通过文字或标签找到具体想法。
-- **标签越用越清楚。** 规范名、别名、每卡最多三个标签；新标签明确创建，避免无意中越贴越乱。
+- **标签越用越清楚。** 规范名、别名，标签数量按需添加；新标签明确创建，避免无意中越贴越乱。
 - **换个智能体，继续使用同一套卡片。** 多个宿主可访问同一本地库；Python 3.10+、核心无第三方依赖，无内置模型 API 或账号。
 
 在各宿主实际执行环境设置相同的绝对 `SLIPBOX_HOME`；共用资料库要求访问同一个实际本地目录，不包含自动云同步。宿主可能将卡片发送给配置的模型服务，使用前检查其隐私设置。
 
 ## 开始使用
 
-1. 从 [v0.1.0 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0)获取 ZIP，或从源码构建。
+1. 从 [v0.1.1 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.1)获取 ZIP，或从源码构建。
 2. 按[安装文档](docs/INSTALL.md)选择宿主。
 3. 先做[隔离的三分钟体验](docs/QUICKSTART.md)，再请 Agent 真正记一张卡并找回来。
 
@@ -44,10 +44,10 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 | 安装包 | 简体中文 | English |
 |---|---|---|
-| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-en.zip) |
-| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-en.zip) |
+| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-en.zip) |
+| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-en.zip) |
 
-[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
+[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
 
 ## 宿主状态
 

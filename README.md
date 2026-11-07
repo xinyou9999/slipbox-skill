@@ -29,14 +29,14 @@ The agent chooses semantic tags from the existing vocabulary. The CLI validates 
 ## Why slipbox?
 
 - **Small cards, ready to reuse.** Keep the user's wording and retrieve a specific thought by text or tag.
-- **Tags that stay useful.** Canonical names, aliases and at most three tags per card. Unknown tags are explicit choices, not silently growing clutter.
+- **Tags that stay useful.** Canonical names and aliases, with no per-card tag count limit. Unknown tags are explicit choices, not silently growing clutter.
 - **Your files, your agents.** One local library can be used by different hosts. Python 3.10+, no third-party runtime dependencies, no built-in model API or account.
 
 Switch agents without starting your notebook over. Set the same absolute `SLIPBOX_HOME` in each host's execution environment: sharing means the **same accessible local directory**, not automatic cloud sync. The host may send notes to its configured model; inspect its privacy settings.
 
 ## Start here
 
-1. Download a ZIP from [v0.1.0](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.0), or [build one from source](#build-and-check).
+1. Download a ZIP from [v0.1.1](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.1), or [build one from source](#build-and-check).
 2. Follow the [installation guide](docs/INSTALL.md) for your host.
 3. Try the [isolated quick start](docs/QUICKSTART.md), then ask your agent to save and retrieve one card.
 
@@ -44,10 +44,10 @@ Switch agents without starting your notebook over. Set the same absolute `SLIPBO
 
 | Bundle | English | 简体中文 |
 |---|---|---|
-| Codex / Hermes / OpenClaw (generic) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-generic-zh.zip) |
-| WorkBuddy | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/slipbox-0.1.0-workbuddy-zh.zip) |
+| Codex / Hermes / OpenClaw (generic) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-generic-zh.zip) |
+| WorkBuddy | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-en.zip) | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/slipbox-0.1.1-workbuddy-zh.zip) |
 
-[SHA-256 checksums](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.0/SHA256SUMS). Install through your host; this is a Skill, not a hosted note editor. Host evidence is listed below.
+[SHA-256 checksums](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.1/SHA256SUMS). Install through your host; this is a Skill, not a hosted note editor. Host evidence is listed below.
 
 ## Host status
 

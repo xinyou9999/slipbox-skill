@@ -7,12 +7,18 @@ import { createBridge, makeArgs, renderToolResult } from '../plugins/dsh-slipbox
 
 test('bridge rejects unsupported actions and treats user content as a literal argument', () => {
   assert.throws(() => makeArgs({ action: 'exec', command: 'whoami' }), /action/);
-  assert.throws(() => makeArgs({ action: 'add', content: 'x', tags: ['a','b','c','d'] }), /tags/);
+  assert.throws(() => makeArgs({ action: 'add', content: 'x', tags: ['a',7] }), /tag/);
   assert.throws(() => makeArgs({ action: 'show', id: '../../file' }), /id/);
   assert.throws(() => makeArgs({ action: 'delete', id:'a'.repeat(32),expected:'revision' }), /Confirm/);
   assert.throws(() => makeArgs({ action: 'add', content: ' ' }), /content/);
   const value = '$(whoami) & echo sensitive; <script>literal</script>';
   assert.deepEqual(makeArgs({ action: 'add', content: value, tags: ['test'] }), ['add', '--tag=test', '--json', '--', value]);
+});
+
+test('bridge accepts many manual tags without a per-note count ceiling',()=>{
+  const tags=Array.from({length:40},(_,i)=>'topic'+i);
+  const args=makeArgs({action:'add',content:'many useful concepts',tags});
+  assert.equal(args.filter(x=>x.startsWith('--tag=')).length,40);
 });
 
 test('host output render returns the canonical result rather than the tool arguments', () => {

@@ -28,7 +28,6 @@ except ImportError:  # pragma: no cover - Windows
     fcntl = None
 
 MAX_CONTENT_CHARS = 100_000
-MAX_TAGS_PER_CARD = 3
 MAX_TAG_CHARS = 64
 LOCK_WAIT_SECONDS = 10.0
 LOCK_STALE_SECONDS = 120.0
@@ -621,8 +620,6 @@ def normalize_tags(values: list[str] | None, data: dict[str, Any]) -> list[str]:
     values = values or []
     if not isinstance(values, list) or any(not isinstance(value, str) for value in values):
         raise ValueError("tags must be a list of strings")
-    if len(values) > MAX_TAGS_PER_CARD:
-        raise ValueError(f"a card may have at most {MAX_TAGS_PER_CARD} tags")
     lookup = tag_lookup(data)
     result: list[str] = []
     for value in values:
@@ -631,8 +628,6 @@ def normalize_tags(values: list[str] | None, data: dict[str, Any]) -> list[str]:
             raise ValueError(f"unknown tag: {value}; use tag-add explicitly")
         if canonical not in result:
             result.append(canonical)
-    if len(result) > MAX_TAGS_PER_CARD:
-        raise ValueError(f"a card may have at most {MAX_TAGS_PER_CARD} unique tags")
     return result
 
 
@@ -692,8 +687,8 @@ def parse_card(path: Path, tag_data: dict[str, Any] | None = None) -> dict[str, 
         raise ValueError("updated_at must not precede created_at")
     if not isinstance(metadata["tags"], list) or any(not isinstance(tag, str) for tag in metadata["tags"]):
         raise ValueError(f"invalid card tags: {path.name}")
-    if len(metadata["tags"]) > MAX_TAGS_PER_CARD or len(set(metadata["tags"])) != len(metadata["tags"]):
-        raise ValueError(f"card tags must contain at most {MAX_TAGS_PER_CARD} unique values")
+    if len(set(metadata["tags"])) != len(metadata["tags"]):
+        raise ValueError("card tags must contain unique values")
     tag_data = load_tags() if tag_data is None else tag_data
     canonical = normalize_tags(metadata["tags"], tag_data)
     if canonical != metadata["tags"]:
@@ -997,7 +992,7 @@ def apply_card_tags(card_id: str, expected_updated_at: str, tags: list[str], def
             raise ValueError("expected updated_at is required")
         if card["updated_at"] != expected_updated_at:
             return {"applied": False, "reason": "changed", "card": card}
-        if not isinstance(definitions, list) or len(definitions) > 3 or not isinstance(tags, list):
+        if not isinstance(definitions, list) or not isinstance(tags, list):
             raise ValueError("invalid tag definitions")
         data = load_tags()
         old_data = json.dumps(data, ensure_ascii=False)

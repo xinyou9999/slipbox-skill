@@ -7,7 +7,7 @@ function text(value, name, max, empty = false) {
   return value;
 }
 function tags(values) {
-  if (!Array.isArray(values) || values.length > 3) throw new Error('Invalid tags: at most 3');
+  if (!Array.isArray(values)) throw new Error('Invalid tags: expected an array');
   return values.map(v => '--tag=' + text(v, 'tag', 64));
 }
 function id(value) {
@@ -40,7 +40,7 @@ export function makeArgs(input) {
     }
     case 'tag-add': args = ['tag-add', '--description=' + text(input.description ?? '', 'description', 1000, true)]; positional=[text(input.name, 'tag name', 64)]; break;
     case 'apply-card-tags': {
-      if (!Array.isArray(input.definitions) || input.definitions.length > 3) throw new Error('Invalid definitions');
+      if (!Array.isArray(input.definitions)) throw new Error('Invalid definitions');
       args = ['apply-card-tags', '--expected=' + text(input.expected, 'expected', 100), ...tags(input.tags), '--definitions-json=' + JSON.stringify(input.definitions)];
       positional = [id(input.id)]; break;
     }

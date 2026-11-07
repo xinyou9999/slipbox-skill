@@ -1,5 +1,12 @@
 # Changelog
 
+## Portable Skill 0.1.1 / DSH plugin 0.1.9 — 2026-11-07
+
+- Remove the per-note three-tag restriction across the shared Markdown core, generic/WorkBuddy Skills and DSH. Canonical validation, deduplication and revision checks remain.
+- Group tag selection, automatic AI tagging and save controls in one compact toolbar. AI privacy details remain accessible and expanded until acknowledged.
+- Hide internal card IDs, align quiet edit/delete icons, retain native DSH dark appearance and lavender light mode.
+- AI adds a bounded batch of relevant suggestions without capping or discarding existing manual tags. Portable Skills use their host agent for semantic tagging; DSH provides its native interface.
+
 ## DSH plugin 0.1.8 — 2026-11-07
 
 - Replace the nested deletion box with a compact, quiet confirmation strip: concise heading, muted hint, aligned Cancel/Delete actions and responsive wrapping.

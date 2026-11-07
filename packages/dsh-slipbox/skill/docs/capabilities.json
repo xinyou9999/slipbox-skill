@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "slipbox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Capture reusable Markdown cards, govern tags, retrieve by literal text or tag, and review recently updated cards through an AI agent.",
   "python_requires": ">=3.10",
   "runtime_dependencies": [],
@@ -11,7 +11,7 @@
   "library_environment_variable": "SLIPBOX_HOME",
   "source_of_truth": ["cards/*.md", "tags.json"],
   "derived_index": "SQLite",
-  "maximum_tags_per_card": 3,
+  "maximum_tags_per_card": null,
   "search": "literal_substring_and_tag",
   "semantic_judgment": "host_agent",
   "calls_model_api": false,

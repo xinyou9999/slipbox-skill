@@ -35,7 +35,7 @@ Before every `add` or tag-changing `edit`:
 
 1. **Read the tag library first:** run `<script> tag-list --json`; optionally pass `--match "NOTE TEXT"` to find lexical candidates.
 2. Decide semantic relevance yourself. The script only performs candidate matching, alias normalization, validation, and statistics.
-3. Prefer existing canonical tags or aliases. Choose **no more than three** tags per note.
+3. Prefer existing canonical tags or aliases. There is no per-note tag count limit. Choose relevant tags based on the content and the user’s needs.
 4. Create a tag only when no existing concept fits: run `tag-add NAME --alias ALIAS --description TEXT` first. Do not create near-duplicates or a new tag for every note.
 5. Pass selected tags with repeated `--tag` arguments. Unknown tags are rejected rather than silently created.
 

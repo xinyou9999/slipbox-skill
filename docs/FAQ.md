@@ -14,7 +14,7 @@
 
 **Does it install on all advertised hosts?** We provide routes based on official docs. They are marked untested until reproducible host-level evidence exists; DeepSeek harness is experimental.
 
-**Why only three tags?** To encourage stable reusable concepts instead of a separate tag for every card. Tags have canonical names and aliases; new tags are created explicitly.
+**Is there a tag count limit?** No. Add as many relevant tags as you need. Canonical names and aliases help keep concepts reusable; new tags are created explicitly.
 
 **Can two agents edit together?** Commands serialize writes locally, but stale edits can overwrite newer content. Re-read before an edit and keep one writer per card.
 
