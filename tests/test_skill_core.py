@@ -189,18 +189,25 @@ class SlipboxSkillCliTests(unittest.TestCase):
         card_path = self.home / "cards" / f"{card_id}.md"
         valid = {"id": card_id, "created_at": "2026-01-01T00:00:00.000Z",
                  "updated_at": "2026-01-01T00:00:00.000Z", "tags": ["one"]}
+        def write_metadata(metadata, content):
+            # Canonical LF bytes exercise metadata validation on Windows too;
+            # write_text's CRLF conversion used to mask all these cases there.
+            card_path.write_bytes(("---\n" + "\n".join(
+                f"{key}: {json.dumps(value, ensure_ascii=False)}" for key, value in metadata.items()
+            ) + "\n---\n" + content + "\n").encode("utf-8"))
+        write_metadata({**valid, "tags": ["one", "two", "three", "four"]}, "body")
+        self.assertEqual(self.run_cli("rebuild-index")["indexed"], 1)
+        self.assertEqual(self.run_cli("show", card_id)["tags"], ["one", "two", "three", "four"])
         cases = [
             ({**valid, "id": "b" * 32}, "body"),
             ({**valid, "updated_at": "not-a-time"}, "body"),
             ({**valid, "tags": [1]}, "body"),
-            ({**valid, "tags": ["one", "two", "three", "four"]}, "body"),
+            ({**valid, "tags": ["one", "two", "one", "four"]}, "body"),
             ({**valid, "tags": ["unknown"]}, "body"),
             (valid, "x" * 100001),
         ]
         for metadata, content in cases:
-            card_path.write_text("---\n" + "\n".join(
-                f"{key}: {json.dumps(value, ensure_ascii=False)}" for key, value in metadata.items()
-            ) + "\n---\n" + content + "\n", encoding="utf-8")
+            write_metadata(metadata, content)
             failure = subprocess.run([sys.executable, str(CLI), "rebuild-index", "--json"], env=self.env,
                                      text=True, encoding="utf-8", capture_output=True)
             self.assertEqual(failure.returncode, 2, failure.stdout + failure.stderr)
