@@ -5,6 +5,8 @@ import { existsSync } from 'node:fs';
 import z from '@deepseek-ai/schemastery';
 import { defineTool } from '@deepseek-ai/dsh-tools';
 import { createBridge, renderToolResult } from './bridge.mjs';
+import { BlockAssembler, createUserMessage } from '@deepseek-ai/dsh-llm';
+import { createTaggingService, createHostCompletion } from './ai.mjs';
 
 export const name = 'slipbox';
 export const inject = ['connection', 'tools'];
@@ -19,6 +21,18 @@ export function apply(ctx, config = {}) {
   const script = existsSync(join(base, 'skill/scripts/slipbox.py')) ? join(base, 'skill/scripts/slipbox.py') : join(base, '../../scripts/slipbox.py');
   const settings = () => ({ python: value(config.pythonPath, 'python'), script, home: value(config.libraryPath, defaultHome) });
   const run = input => createBridge(settings())(input);
+  const taggers = new Map();
+  const complete = createHostCompletion(ctx, { BlockAssembler, createUserMessage });
+  const tagger = () => {
+    const snapshot = settings(), key = JSON.stringify(snapshot);
+    if (!taggers.has(key)) {
+      // Capture the library for the whole request, even if host settings change.
+      if (taggers.size >= 8) throw new Error('Too many library changes; reload the plugin');
+      taggers.set(key, createTaggingService({ run: createBridge(snapshot), complete }));
+    }
+    return taggers.get(key);
+  };
+  ctx.effect(() => () => { for (const service of taggers.values()) service.close(); });
   ctx.connection.fetch.register({
     path: '/api/slipbox/cards', methods: ['POST'], requestBody: 'buffered',
     fetch: async request => {
@@ -27,7 +41,10 @@ export function apply(ctx, config = {}) {
         const body = await request.text();
         if (body.length > 512000) throw new Error('Request too large');
         const input = JSON.parse(body);
-        const result = input.action === 'status' ? { library: settings().home, version: '0.1.5' } : await run(input);
+        const result = input.action === 'status' ? { library: settings().home, version: '0.1.7' }
+          : input.action === 'ai-tag' ? await tagger().tag(input)
+          : input.action === 'ai-maintain' ? await tagger().maintain()
+          : await run(input);
         return Response.json({ ok: true, value: result });
       } catch (error) { return Response.json({ ok: false, error: error.message }, { status: 400 }); }
     },
@@ -43,6 +60,10 @@ export function apply(ctx, config = {}) {
       limit: { type: 'number' }, offset: { type: 'number' },
     },
     output: { schema: { type: 'string' }, render: renderToolResult },
-    execute: async (args, exec) => { exec.signal.throwIfAborted(); return JSON.stringify(await run(args)); },
+    execute: async (args, exec) => {
+      exec.signal.throwIfAborted();
+      if (!['list','search','show','add','edit','tag-list','tag-add','tag-stats'].includes(args.action)) throw new Error('Unsupported tool action');
+      return JSON.stringify(await run(args));
+    },
   })));
 }

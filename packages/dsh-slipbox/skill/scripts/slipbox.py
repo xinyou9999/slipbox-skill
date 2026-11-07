@@ -51,6 +51,14 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
 
+def next_updated_at(previous: str) -> str:
+    """Keep the revision strictly increasing even within one clock tick."""
+    candidate = now()
+    if _parse_utc(candidate, "updated_at") <= _parse_utc(previous, "updated_at"):
+        return (_parse_utc(previous, "updated_at") + timedelta(milliseconds=1)).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    return candidate
+
+
 def home_path() -> Path:
     raw = os.environ.get("SLIPBOX_HOME")
     return Path(raw).expanduser() if raw else Path.home() / ".slipbox"
@@ -854,7 +862,7 @@ def edit_card(card_id: str, content: str | None, tags: list[str] | None, clear_t
             card["tags"] = normalize_tags(tags, load_tags())
         if content is None and tags is None and not clear_tags:
             raise ValueError("edit requires content, --tag, or --clear-tags")
-        card["updated_at"] = now()
+        card["updated_at"] = next_updated_at(card["updated_at"])
         commit_warning = None
         try:
             atomic_write(card_path(card_id), render_card(card))
@@ -869,12 +877,14 @@ def edit_card(card_id: str, content: str | None, tags: list[str] | None, clear_t
         return card
 
 
-def delete_card(card_id: str) -> dict[str, Any]:
+def delete_card(card_id: str, expected_updated_at: str | None = None) -> dict[str, Any]:
     with library_lock():
         path = card_path(card_id)
         if not path.exists():
             return {"id": card_id, "deleted": False}
         _reject_symlink(path, f"card {path.name}")
+        if expected_updated_at is not None and show_card(card_id)["updated_at"] != expected_updated_at:
+            raise ValueError("Note changed since confirmation; refresh and confirm again")
         path.unlink()
         result: dict[str, Any] = {"id": card_id, "deleted": True}
         commit_warning = None
@@ -961,6 +971,79 @@ def tag_list(match: str = "") -> dict[str, Any]:
     return {"tags": tags, "count": len(tags)}
 
 
+def tag_update(name: str, aliases: list[str], description: str, expected: dict[str, Any]) -> dict[str, Any]:
+    """Apply a user-confirmed vocabulary suggestion without dropping aliases."""
+    with library_lock():
+        data = load_tags()
+        canonical = tag_lookup(data).get(key(validate_tag_name(name)))
+        item = next((t for t in data["tags"] if t["name"] == canonical), None)
+        if item is None:
+            raise ValueError("tag not found")
+        if {k: item[k] for k in ("name", "aliases", "description")} != expected:
+            raise ValueError("tag changed; review the suggestion again")
+        if not isinstance(aliases, list) or len(aliases) > 12 or not isinstance(description, str) or len(description) > 1000:
+            raise ValueError("invalid tag metadata")
+        item["aliases"] = list(dict.fromkeys([*item["aliases"], *(validate_tag_name(a) for a in aliases)]))
+        item["description"] = description.strip()
+        save_tags(data)  # validates collisions across every canonical name and alias
+        return item
+
+
+def apply_card_tags(card_id: str, expected_updated_at: str, tags: list[str], definitions: list[dict[str, Any]]) -> dict[str, Any]:
+    """CAS, validate, then transactionally commit vocabulary and tag-only edits."""
+    with library_lock():
+        card = show_card(card_id)
+        if not isinstance(expected_updated_at, str) or not expected_updated_at:
+            raise ValueError("expected updated_at is required")
+        if card["updated_at"] != expected_updated_at:
+            return {"applied": False, "reason": "changed", "card": card}
+        if not isinstance(definitions, list) or len(definitions) > 3 or not isinstance(tags, list):
+            raise ValueError("invalid tag definitions")
+        data = load_tags()
+        old_data = json.dumps(data, ensure_ascii=False)
+        new_concepts = 0
+        for definition in definitions:
+            if not isinstance(definition, dict) or set(definition) != {"name", "description"}:
+                raise ValueError("invalid tag definition")
+            name = validate_tag_name(definition["name"])
+            description = definition["description"]
+            if not isinstance(description, str) or not description.strip() or len(description) > 1000:
+                raise ValueError("invalid tag description")
+            lookup = tag_lookup(data)
+            existing = lookup.get(key(name))
+            if existing is None:
+                new_concepts += 1
+                if new_concepts > 1:
+                    raise ValueError("automatic tagging may add at most one new concept")
+                data["tags"].append({"name": name, "aliases": [], "description": description.strip(), "usage_count": 0})
+            else:
+                item = next(t for t in data["tags"] if t["name"] == existing)
+                if not item["description"]:
+                    item["description"] = description.strip()
+        desired = normalize_tags(tags, data)
+        if not set(card["tags"]).issubset(desired):
+            raise ValueError("automatic tags must preserve existing manual tags")
+        if any(tag_lookup(data)[key(validate_tag_name(d["name"]))] not in desired for d in definitions):
+            raise ValueError("tag definitions must belong to this card")
+        if desired == card["tags"] and json.dumps(data, ensure_ascii=False) == old_data:
+            return {"applied": True, "card": card}
+        _, _, tags_path, _ = paths()
+        originals = {"tags.json": secure_read_text(tags_path, "tags.json"),
+                     f"cards/{card_id}.md": secure_read_text(card_path(card_id), "card")}
+        journal = _write_merge_journal(originals)
+        card["tags"] = desired
+        card["updated_at"] = next_updated_at(card["updated_at"])
+        try:
+            save_tags(data)
+            atomic_write(card_path(card_id), render_card(card))
+            _rebuild_index_unlocked()
+        except (OSError, ValueError, sqlite3.Error, TypeError) as error:
+            _recover_merge_journals(home_path())
+            raise ValueError(f"tag update failed; recovery attempted: {error}") from error
+        _discard_journal_directory(_retire_merge_journal(journal))
+        return {"applied": True, "card": card}
+
+
 def _write_merge_journal(originals: dict[str, str]) -> Path:
     home = home_path()
     journal = home / f"{MERGE_JOURNAL_PREFIX}{uuid.uuid4().hex}"
@@ -1003,7 +1086,7 @@ def tag_merge(source: str, target: str) -> dict[str, Any]:
         for card in cards:
             if source_name in card["tags"]:
                 card["tags"] = list(dict.fromkeys(target_name if value == source_name else value for value in card["tags"]))
-                card["updated_at"] = now()
+                card["updated_at"] = next_updated_at(card["updated_at"])
                 changed_cards.append(card)
         _, _, tags_path, _ = paths()
         originals = {"tags.json": secure_read_text(tags_path, "tags.json")}
@@ -1093,6 +1176,7 @@ def parser() -> argparse.ArgumentParser:
     edit.add_argument("--clear-tags", action="store_true")
     delete = command("delete")
     delete.add_argument("id")
+    delete.add_argument("--expected")
     command("rebuild-index")
     tags = command("tag-list")
     tags.add_argument("--match", default="")
@@ -1100,6 +1184,16 @@ def parser() -> argparse.ArgumentParser:
     create_tag.add_argument("name")
     create_tag.add_argument("--alias", action="append", default=[])
     create_tag.add_argument("--description", default="")
+    update_tag = command("tag-update")
+    update_tag.add_argument("name")
+    update_tag.add_argument("--alias", action="append", default=[])
+    update_tag.add_argument("--description", required=True)
+    update_tag.add_argument("--expected-json", required=True)
+    apply_tags = command("apply-card-tags")
+    apply_tags.add_argument("id")
+    apply_tags.add_argument("--expected", required=True)
+    apply_tags.add_argument("--tag", action="append", dest="tags", default=[])
+    apply_tags.add_argument("--definitions-json", default="[]")
     merge = command("tag-merge")
     merge.add_argument("source")
     merge.add_argument("target")
@@ -1117,10 +1211,12 @@ def dispatch(args: argparse.Namespace) -> Any:
     if args.command == "search": return query_cards(search=args.query, tag=args.tag, limit=args.limit, offset=args.offset)
     if args.command == "show": return show_card(args.id)
     if args.command == "edit": return edit_card(args.id, args.content, args.tags, args.clear_tags)
-    if args.command == "delete": return delete_card(args.id)
+    if args.command == "delete": return delete_card(args.id, args.expected)
     if args.command == "rebuild-index": return rebuild_index()
     if args.command == "tag-list": return tag_list(args.match)
     if args.command == "tag-add": return tag_add(args.name, args.alias, args.description)
+    if args.command == "tag-update": return tag_update(args.name, args.alias, args.description, json.loads(args.expected_json))
+    if args.command == "apply-card-tags": return apply_card_tags(args.id, args.expected, args.tags, json.loads(args.definitions_json))
     if args.command == "tag-merge": return tag_merge(args.source, args.target)
     if args.command == "tag-stats": return tag_stats()
     if args.command == "review": return review(args.days, args.limit)

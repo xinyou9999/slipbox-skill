@@ -7,7 +7,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 await mkdir(join(root,'.local-release'),{recursive:true});
 const stage = process.argv[2] ? resolve(process.argv[2]) : await mkdtemp(join(root,'.local-release/harness-plugin-'));
 if(process.argv[2]) await mkdir(stage, { recursive: false });
-const files = ['package.json', 'index.mjs', 'bridge.mjs', 'client.js', 'icon.svg', 'cordis.patch.yml', 'README.md', 'locale/zh.json', 'locale/en.json'];
+const files = ['package.json', 'index.mjs', 'bridge.mjs', 'ai.mjs', 'client.js', 'icon.svg', 'cordis.patch.yml', 'README.md', 'locale/zh.json', 'locale/en.json'];
 for (const file of files) {
   await mkdir(dirname(join(stage,file)),{recursive:true});
   await copyFile(join(root,'plugins/dsh-slipbox',file),join(stage,file));

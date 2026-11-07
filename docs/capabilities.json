@@ -36,6 +36,8 @@
     "tag-list": "inspect_vocabulary",
     "tag-merge": "merge_tags_after_confirmation",
     "tag-stats": "tag_usage",
+    "tag-update": "update_tag_metadata_if_snapshot_matches",
+    "apply-card-tags": "atomically_apply_tag_only_ai_result_if_revision_matches",
     "rebuild-index": "rebuild_derived_index"
   },
   "documentation": ["docs/INSTALL.md", "docs/QUICKSTART.md", "docs/AI_INSTALL.md", "references/tagging-policy.md", "references/data-format.md"]

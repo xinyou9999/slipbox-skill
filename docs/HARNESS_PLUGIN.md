@@ -2,7 +2,15 @@
 
 [简体中文](#中文安装与市场说明) · [Hermes installation request](HERMES_INSTALL_REQUEST.md)
 
-The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and an AI action that starts a conversation with your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
+The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and background tagging through your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
+
+## New in0.1.7: automatic and manual tags
+
+Save locally first, then let the DSH default model fill tag slots in the background. Manual `#标签` entry and search/create buttons share canonical tags and aliases, with at most3 tags per note. Turn **自动 AI 标签** off per library, or use **保存并用 AI 打标签** explicitly. When enabled, the saved note and vocabulary are sent to your configured provider; typing alone sends nothing. Failures preserve the note and offer retry, and stale responses cannot overwrite later edits.
+
+Open **标签列表 → AI 整理标签库** for metadata-only descriptions, aliases and duplicate proposals. Changes require explicit application, with a second confirmation for merges. No automatic merging/deletion, body rewrite, model tools, new conversation or separate key. Calls are limited to800 vocabulary entries,96,000 input characters, two concurrent requests per library and60 seconds.
+
+Download `dsh-slipbox-0.1.7.tgz` and `SHA256SUMS` from the [0.1.7 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.7), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
 
 Version0.1.5 places the note editor and collection on the left, with compact navigation on the right. Narrow screens retain navigation above the notes. Both themes and languages share this layout.
 

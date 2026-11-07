@@ -9,6 +9,7 @@ test('bridge rejects unsupported actions and treats user content as a literal ar
   assert.throws(() => makeArgs({ action: 'exec', command: 'whoami' }), /action/);
   assert.throws(() => makeArgs({ action: 'add', content: 'x', tags: ['a','b','c','d'] }), /tags/);
   assert.throws(() => makeArgs({ action: 'show', id: '../../file' }), /id/);
+  assert.throws(() => makeArgs({ action: 'delete', id:'a'.repeat(32),expected:'revision' }), /Confirm/);
   assert.throws(() => makeArgs({ action: 'add', content: ' ' }), /content/);
   const value = '$(whoami) & echo sensitive; <script>literal</script>';
   assert.deepEqual(makeArgs({ action: 'add', content: value, tags: ['test'] }), ['add', '--tag=test', '--json', '--', value]);

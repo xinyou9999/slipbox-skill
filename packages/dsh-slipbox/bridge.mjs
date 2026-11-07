@@ -28,6 +28,10 @@ export function makeArgs(input) {
       args.push('--limit', String(limit), '--offset', String(offset)); break;
     }
     case 'show': args = ['show']; positional=[id(input.id)]; break;
+    case 'delete': {
+      if(input.confirmed!==true)throw new Error('Confirm deletion first');
+      args=['delete','--expected='+text(input.expected,'expected',100)];positional=[id(input.id)];break;
+    }
     case 'add': args = ['add', ...tags(input.tags ?? [])]; positional=[text(input.content, 'content', 20000)]; break;
     case 'edit': {
       const options = input.tags === undefined ? [] : tags(input.tags);
@@ -35,6 +39,17 @@ export function makeArgs(input) {
       positional=[id(input.id),text(input.content, 'content', 20000)]; break;
     }
     case 'tag-add': args = ['tag-add', '--description=' + text(input.description ?? '', 'description', 1000, true)]; positional=[text(input.name, 'tag name', 64)]; break;
+    case 'apply-card-tags': {
+      if (!Array.isArray(input.definitions) || input.definitions.length > 3) throw new Error('Invalid definitions');
+      args = ['apply-card-tags', '--expected=' + text(input.expected, 'expected', 100), ...tags(input.tags), '--definitions-json=' + JSON.stringify(input.definitions)];
+      positional = [id(input.id)]; break;
+    }
+    case 'tag-update': {
+      if (!Array.isArray(input.aliases) || input.aliases.length > 12 || !input.expected || typeof input.expected !== 'object') throw new Error('Invalid metadata');
+      args = ['tag-update', '--description=' + text(input.description, 'description', 1000, true), '--expected-json=' + JSON.stringify(input.expected), ...input.aliases.map(a=>'--alias='+text(a,'alias',64))];
+      positional = [text(input.name,'tag name',64)]; break;
+    }
+    case 'tag-merge': args=['tag-merge']; positional=[text(input.source,'source tag',64),text(input.target,'target tag',64)]; break;
     default: throw new Error('Unsupported action');
   }
   return [...args, '--json', ...(positional.length ? ['--', ...positional] : [])];
