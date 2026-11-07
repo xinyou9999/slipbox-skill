@@ -18,7 +18,7 @@ import tempfile
 import time
 import unicodedata
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -904,12 +904,25 @@ def _index_connection() -> sqlite3.Connection:
     return db
 
 
-def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 0) -> dict[str, Any]:
+def calendar_date(value: str) -> date:
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        raise ValueError("date must be YYYY-MM-DD")
+    try:
+        return date.fromisoformat(value)
+    except ValueError as error:
+        raise ValueError("invalid calendar date") from error
+
+
+def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 0, created_on: str = "") -> dict[str, Any]:
     if limit < 1 or limit > 1000 or offset < 0:
         raise ValueError("limit must be 1-1000 and offset must be non-negative")
     ensure_index()
     clauses: list[str] = []
     params: list[Any] = []
+    if created_on:
+        calendar_date(created_on)
+        clauses.append("date(cards.created_at, 'localtime') = ?")
+        params.append(created_on)
     if search:
         escaped = search.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
         clauses.append("cards.content LIKE ? ESCAPE '\\'")
@@ -931,7 +944,7 @@ def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 
                     tags_by_id[tag_row["card_id"]].append(tag_row["tag"])
     except sqlite3.Error:
         rebuild_index()
-        return query_cards(search, tag, limit, offset)
+        return query_cards(search, tag, limit, offset, created_on)
     cards = [{"id": row["id"], "content": row["content"], "created_at": row["created_at"], "updated_at": row["updated_at"], "tags": tags_by_id[row["id"]]} for row in rows]
     return {"cards": cards, "count": total, "limit": limit, "offset": offset, "has_more": offset + len(cards) < total}
 
@@ -1132,6 +1145,30 @@ def tag_stats() -> dict[str, Any]:
         return {"tags": tags, "count": len(tags)}
 
 
+def activity(days: int = 84, end: str = "") -> dict[str, Any]:
+    """Count existing cards by host-local creation date; no event tracking."""
+    if not isinstance(days, int) or isinstance(days, bool) or not 1 <= days <= 366:
+        raise ValueError("days must be 1-366")
+    last = calendar_date(end) if end else datetime.now().astimezone().date()
+    try:
+        first = last - timedelta(days=days - 1)
+    except OverflowError as error:
+        raise ValueError("activity window exceeds calendar range") from error
+    ensure_index()
+    with contextlib.closing(_index_connection()) as db:
+        counts = dict(db.execute(
+            "SELECT date(created_at, 'localtime') AS day, COUNT(*) FROM cards "
+            "WHERE date(created_at, 'localtime') BETWEEN ? AND ? GROUP BY day",
+            [first.isoformat(), last.isoformat()],
+        ).fetchall())
+    daily = [{"date": (first + timedelta(days=i)).isoformat(),
+              "count": counts.get((first + timedelta(days=i)).isoformat(), 0)} for i in range(days)]
+    return {"days": daily, "start": first.isoformat(), "end": last.isoformat(),
+            "total": sum(item["count"] for item in daily),
+            "active_days": sum(item["count"] > 0 for item in daily),
+            "timezone": "host_local", "metric": "existing_cards_created"}
+
+
 def review(days: int, limit: int) -> dict[str, Any]:
     if days < 1 or limit < 1 or limit > 1000:
         raise ValueError("days must be positive and limit must be 1-1000")
@@ -1155,11 +1192,13 @@ def parser() -> argparse.ArgumentParser:
     add.add_argument("--tag", action="append", dest="tags")
     listing = command("list")
     listing.add_argument("--tag", default="")
+    listing.add_argument("--created-on", default="")
     listing.add_argument("--limit", type=int, default=50)
     listing.add_argument("--offset", type=int, default=0)
     search = command("search")
     search.add_argument("query")
     search.add_argument("--tag", default="")
+    search.add_argument("--created-on", default="")
     search.add_argument("--limit", type=int, default=50)
     search.add_argument("--offset", type=int, default=0)
     show = command("show")
@@ -1196,14 +1235,17 @@ def parser() -> argparse.ArgumentParser:
     review_parser = command("review")
     review_parser.add_argument("--days", type=int, default=7)
     review_parser.add_argument("--limit", type=int, default=20)
+    activity_parser = command("activity")
+    activity_parser.add_argument("--days", type=int, default=84)
+    activity_parser.add_argument("--end", default="")
     return root
 
 
 def dispatch(args: argparse.Namespace) -> Any:
     if args.command == "init": return initialize()
     if args.command == "add": return add_card(args.content, args.tags)
-    if args.command == "list": return query_cards(tag=args.tag, limit=args.limit, offset=args.offset)
-    if args.command == "search": return query_cards(search=args.query, tag=args.tag, limit=args.limit, offset=args.offset)
+    if args.command == "list": return query_cards(tag=args.tag, limit=args.limit, offset=args.offset, created_on=args.created_on)
+    if args.command == "search": return query_cards(search=args.query, tag=args.tag, limit=args.limit, offset=args.offset, created_on=args.created_on)
     if args.command == "show": return show_card(args.id)
     if args.command == "edit": return edit_card(args.id, args.content, args.tags, args.clear_tags)
     if args.command == "delete": return delete_card(args.id, args.expected)
@@ -1215,6 +1257,7 @@ def dispatch(args: argparse.Namespace) -> Any:
     if args.command == "tag-merge": return tag_merge(args.source, args.target)
     if args.command == "tag-stats": return tag_stats()
     if args.command == "review": return review(args.days, args.limit)
+    if args.command == "activity": return activity(args.days, args.end)
     raise ValueError(f"unknown command: {args.command}")
 
 

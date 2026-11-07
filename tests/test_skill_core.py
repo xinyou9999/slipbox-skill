@@ -13,6 +13,7 @@ import tempfile
 import threading
 import time
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
 
@@ -27,6 +28,53 @@ CLI = ROOT / "scripts" / "slipbox.py"
 
 
 class SlipboxSkillCliTests(unittest.TestCase):
+    def test_activity_counts_creation_dates_and_filters_without_changing_notes(self):
+        self.run_cli("init")
+        cards = [self.run_cli("add", "calendar note " + str(i)) for i in range(3)]
+        for card, local_time in zip(cards, [datetime(2026, 11, 7, 23, 59), datetime(2026, 11, 8, 0, 1), datetime(2026, 11, 7, 12)]):
+            created = local_time.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+            path = self.home / "cards" / (card["id"] + ".md")
+            path.write_bytes(path.read_bytes().replace(card["created_at"].encode(), created.encode()))
+        self.run_cli("rebuild-index")
+        before = {p.name: p.read_bytes() for p in (self.home / "cards").glob("*.md")}
+        stats = self.run_cli("activity", "--days", "7", "--end", "2026-11-08")
+        self.assertEqual(len(stats["days"]), 7)
+        self.assertEqual(stats["total"], 3)
+        self.assertEqual(stats["active_days"], 2)
+        self.assertEqual(stats["days"][-2:], [{"date": "2026-11-07", "count": 2}, {"date": "2026-11-08", "count": 1}])
+        self.assertEqual(before, {p.name: p.read_bytes() for p in (self.home / "cards").glob("*.md")})
+        day = self.run_cli("list", "--created-on", "2026-11-07", "--limit", "1")
+        self.assertEqual(day["count"], 2)
+        self.assertTrue(day["has_more"])
+        self.assertEqual(self.run_cli("search", "calendar", "--created-on", "2026-11-08")["count"], 1)
+        self.run_cli("edit", cards[0]["id"], "edited later")
+        self.assertEqual(self.run_cli("activity", "--days", "7", "--end", "2026-11-08")["total"], 3)
+        self.run_cli("delete", cards[0]["id"])
+        self.assertEqual(self.run_cli("activity", "--days", "7", "--end", "2026-11-08")["total"], 2)
+
+    def test_activity_window_and_date_filters_validate_input(self):
+        self.run_cli("init")
+        for args in [("activity", "--days", "0"), ("activity", "--days", "367"), ("activity", "--end", "2026-02-30"), ("activity", "--end", "0001-01-01"), ("list", "--created-on", "2026-02-30")]:
+            self.assertIn("error", self.run_cli(*args, ok=False))
+        stats = self.run_cli("activity", "--days", "1")
+        self.assertEqual(stats["total"], 0)
+        self.assertEqual(len(stats["days"]), 1)
+        self.assertEqual(stats["days"][0]["date"], datetime.now().astimezone().date().isoformat())
+
+    @unittest.skipIf(os.name == "nt", "TZ override uses POSIX timezone rules")
+    def test_activity_and_date_filter_agree_across_daylight_saving_boundary(self):
+        self.env["TZ"] = "America/New_York"
+        self.run_cli("init")
+        stamps = ["2026-03-08T04:59:59Z", "2026-03-08T05:00:00Z", "2026-03-09T03:59:59Z", "2026-03-09T04:00:00Z"]
+        for stamp in stamps:
+            card = self.run_cli("add", "DST boundary")
+            path = self.home / "cards" / (card["id"] + ".md")
+            path.write_bytes(path.read_bytes().replace(card["created_at"].encode(), stamp.encode()))
+        self.run_cli("rebuild-index")
+        stats = self.run_cli("activity", "--days", "1", "--end", "2026-03-08")
+        self.assertEqual(stats["total"], 2)
+        self.assertEqual(self.run_cli("list", "--created-on", "2026-03-08")["count"], 2)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.home = Path(self.tmp.name) / "library"

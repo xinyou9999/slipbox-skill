@@ -1,5 +1,12 @@
 # Changelog
 
+## Portable Skill0.1.2 / DSH plugin0.1.10 — 2026-11-08
+
+- Add a local writing calendar with dated GitHub-style squares, zero-filled days, four intensity levels and keyboard navigation.
+- Count existing cards by creation date in the library host timezone; editing and AI tagging do not inflate counts, deletion reduces them. No event tracking or schema migration.
+- Select a date to filter notes without losing the draft; combine date, text, tag and pagination filters.
+- Shared portable CLI exposes `activity --days 84` (1–366) and `list/search --created-on YYYY-MM-DD` for every compatible agent.
+
 ## Portable Skill 0.1.1 / DSH plugin 0.1.9 — 2026-11-07
 
 - Remove the per-note three-tag restriction across the shared Markdown core, generic/WorkBuddy Skills and DSH. Canonical validation, deduplication and revision checks remain.

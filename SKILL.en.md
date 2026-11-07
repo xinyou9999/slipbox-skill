@@ -67,6 +67,12 @@ A successful Markdown mutation may return `repair_required: true` with a warning
 
 A merge journals authoritative files, rewrites affected notes, and removes its source only if the whole operation and index rebuild succeed. An interrupted journal is rolled back on the next locked operation. The journal's commit marker prevents a completed merge from being rolled back if later cleanup fails. If snapshot validation fails, the journal is moved to `.merge-quarantine/` and a warning is written to stderr; the command remains usable and the library is left unchanged.
 
+## Writing activity and calendar dates
+
+For note-taking frequency or a dated activity calendar, run `<script> activity --days 84 --json` (1–366 days; optional `--end YYYY-MM-DD` for a historical window). Counts use the library host's local timezone and creation dates of existing cards, with zero-filled days. Editing or AI tagging does not add activity; deleting a card reduces its original day's count. This is not app-visit telemetry or an immutable event log.
+
+Use `<script> list --created-on YYYY-MM-DD --json`, or `<script> search 'keyword' --created-on YYYY-MM-DD --json`, to retrieve notes created that day. Tag and pagination options still apply. Do not substitute the last-modified timestamp for creation date.
+
 ## Recovery and data safety
 
 Run `<script> rebuild-index --json` after restoring or copying note files, or after a `repair_required` warning. It builds a fresh database and atomically replaces a missing, incompatible, or corrupt index. A successful result reports the exact number of indexed notes.

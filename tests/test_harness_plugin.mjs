@@ -21,6 +21,13 @@ test('bridge accepts many manual tags without a per-note count ceiling',()=>{
   assert.equal(args.filter(x=>x.startsWith('--tag=')).length,40);
 });
 
+test('activity and date filters are validated literal CLI options',()=>{
+  assert.deepEqual(makeArgs({action:'activity',days:84}),['activity','--days','84','--json']);
+  assert.ok(makeArgs({action:'list',createdOn:'2026-11-08'}).includes('--created-on=2026-11-08'));
+  assert.throws(()=>makeArgs({action:'activity',days:999}),/days/i);
+  assert.throws(()=>makeArgs({action:'list',createdOn:'--delete'}),/date/i);
+});
+
 test('host output render returns the canonical result rather than the tool arguments', () => {
   const output='{"cards":[{"content":"read result"}]}';
   assert.deepEqual(renderToolResult({action:'list'},output),[{type:'text',text:output}]);

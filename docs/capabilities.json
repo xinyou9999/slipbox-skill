@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "slipbox",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Capture reusable Markdown cards, govern tags, retrieve by literal text or tag, and review recently updated cards through an AI agent.",
   "python_requires": ">=3.10",
   "runtime_dependencies": [],
@@ -32,6 +32,7 @@
     "edit": "revise_card",
     "delete": "delete_card_after_confirmation",
     "review": "recently_updated_cards",
+    "activity": "existing_note_creation_counts_by_host_local_date",
     "tag-add": "explicitly_create_tag",
     "tag-list": "inspect_vocabulary",
     "tag-merge": "merge_tags_after_confirmation",

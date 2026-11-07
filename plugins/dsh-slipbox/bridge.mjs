@@ -19,12 +19,18 @@ export function makeArgs(input) {
   let args, positional = [];
   switch (input.action) {
     case 'init': case 'tag-list': case 'tag-stats': args = [input.action]; break;
+    case 'activity': {
+      const days=input.days??84;
+      if(!Number.isInteger(days)||days<1||days>366)throw new Error('Invalid activity days');
+      args=['activity','--days',String(days)];break;
+    }
     case 'list': case 'search': {
       const limit = input.limit ?? 50, offset = input.offset ?? 0;
       if (!Number.isInteger(limit) || limit < 1 || limit > 100 || !Number.isInteger(offset) || offset < 0) throw new Error('Invalid pagination');
       args = [input.action];
       if (input.action === 'search') positional.push(text(input.query, 'query', 1000));
       if (input.tag) args.push('--tag=' + text(input.tag, 'tag', 64));
+      if(input.createdOn){if(typeof input.createdOn!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(input.createdOn))throw new Error('Invalid date');args.push('--created-on='+input.createdOn);}
       args.push('--limit', String(limit), '--offset', String(offset)); break;
     }
     case 'show': args = ['show']; positional=[id(input.id)]; break;

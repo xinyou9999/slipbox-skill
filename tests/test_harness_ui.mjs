@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 function mounted(preferences=new Map(), options={}) {
   const states=[],refs=[],deps=[],themeListeners=[];let cursor=0,refCursor=0,effectCursor=0,component,tree,pageProps={};const pending=[];
   const tags=Array.from({length:500},(_,i)=>({name:'标签'+String(i+1).padStart(4,'0')}));
-  const writes=[];
+  const writes=[],requests=[];
   const cards=[];
   const React={
     createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity).filter(x=>x!==false&&x!==null&&x!==undefined)}),
@@ -16,9 +16,10 @@ function mounted(preferences=new Map(), options={}) {
   };
   const local=preferences;
   const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,
-    fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);let value={};
-      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.9'};
+    fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
+      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.10'};
       else if(input.action==='tag-list')value={tags};
+      else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
       else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
       else {writes.push(input);
         if(input.action==='tag-add'){tags.push({name:input.name});value={name:input.name};}
@@ -37,8 +38,35 @@ function mounted(preferences=new Map(), options={}) {
   function input(label){return one(n=>n.props['aria-label']===label||n.props.id===label);}
   async function settle(){for(let i=0;i<4;i++){for(let j=0;j<8;j++)await Promise.resolve();render();}}
   render();
-  return {render,settle,nodes,text,button,input,writes,local,themeListeners};
+  return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners};
 }
+
+test('calendar days filter notes without losing a draft and support keyboard navigation',async()=>{
+  const ui=mounted();await ui.settle();
+  assert.ok(ui.text(ui.render()).includes('记录足迹'));
+  ui.input('sbx-note').props.onChange({target:{value:'保留未保存的草稿'}});ui.render();
+  ui.button('2026-11-08，新增 2 条笔记').props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.input('sbx-note').props.value,'保留未保存的草稿');
+  assert.equal(ui.requests.filter(r=>r.action==='list').at(-1).createdOn,'2026-11-08');
+  const day=ui.button('2026-11-07，新增 0 条笔记');let focused=false;
+  ui.button('2026-11-08，新增 2 条笔记').props.ref({focus(){focused=true;}});
+  day.props.onKeyDown({key:'ArrowDown',preventDefault(){}});ui.render();
+  assert.equal(focused,true);
+  const picker=ui.input('按日期查看笔记');
+  assert.equal(picker.props.type,'date');
+  picker.props.onChange({target:{value:'2025-01-01'}});ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='list').at(-1).createdOn,'2025-01-01');
+  assert.equal(ui.nodes().filter(n=>n.props.className==='sbx-day'&&n.props.tabIndex===0).length,1);
+  assert.equal(ui.input('sbx-note').props.value,'保留未保存的草稿');
+  ui.button('清除日期筛选').props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='list').at(-1).createdOn,'');
+});
+
+test('activity failures leave the note workflow usable',async()=>{
+  const ui=mounted(new Map(),{activityFails:true});await ui.settle();
+  assert.ok(ui.button('记录笔记'));
+  assert.ok(ui.text(ui.render()).includes('暂时无法读取记录足迹'));
+});
 
 test('native appearance follows the host and switches through its theme service without losing the draft',async()=>{
   let scheme='dark';const calls=[];

@@ -67,6 +67,12 @@ Markdown 变更成功后，若派生索引/计数刷新失败，可能返回稳�
 
 合并先记录事实源恢复日志，再改写卡片；只有全部操作和索引重建成功才删除源标签。中断日志会在下次加锁操作时回滚；关闭日志是提交标记，之后的清理失败不会回滚已提交合并。快照校验失败时日志移入 `.merge-quarantine/` 并在 stderr 输出 `warning: merge journal ... quarantined at ...; manual inspection recommended`；资料保持原样，其他命令仍可使用。
 
+## 记录足迹与日期筛选
+
+用户询问记录频次、某天写了多少条或记录日历时，运行 `<script> activity --days 84 --json`（1–366天，可用 `--end YYYY-MM-DD` 查看历史区间）。它按资料库运行设备的本地日期统计现存卡片的创建时间，包含零记录日期；编辑、AI补标签不重复计数，删除后数量随之更新。这不是应用访问次数或云端行为跟踪。
+
+查看某天新增的笔记，用 `<script> list --created-on YYYY-MM-DD --json`，或 `<script> search '关键词' --created-on YYYY-MM-DD --json`；可继续组合标签、分页条件。不要用最近更新时间代替创建日期，也不要把没有记录的日期理解为数据丢失。
+
 ## 恢复与数据安全
 
 复制/恢复卡片或遇到 `repair_required` 后，运行 `<script> rebuild-index --json`。它新建数据库并原子替换缺失、不兼容或损坏的缓存；成功返回准确索引数量。
