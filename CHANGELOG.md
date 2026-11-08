@@ -1,5 +1,11 @@
 # Changelog
 
+## DSH plugin0.1.11 — 2026-11-09
+
+- Expand the native workspace with measured responsive gutters, removing the fixed centered width limit.
+- Move Writing activity to a full-width panel below the header; default to365days, with a12week switch and month/weekday guides.
+- Enlarge date cells, retain keyboard/date-picker access and keep narrow-screen scrolling inside the calendar. Counting/privacy and portable Skill0.1.2 remain unchanged.
+
 ## Portable Skill0.1.2 / DSH plugin0.1.10 — 2026-11-08
 
 - Add a local writing calendar with dated GitHub-style squares, zero-filled days, four intensity levels and keyboard navigation.

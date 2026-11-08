@@ -22,4 +22,4 @@
 
 **中文用户怎么开始？** 先读 [中文首页](../README.zh-CN.md)，再做 [快速体验](QUICKSTART.md)。可以用中文提 issue 或反馈安装情况。
 
-**What does the writing calendar count?** Existing notes grouped by creation date in the library host’s local timezone. Edits and AI tagging do not add counts; deleting a note reduces its original day. DSH shows recent12weeks and a date picker; portable agents query the same `activity` command. No visit tracking or automatic cloud synchronization.
+**What does the writing calendar count?** Existing notes grouped by creation date in the library host’s local timezone. Edits and AI tagging do not add counts; deleting a note reduces its original day. DSH shows a prominent year calendar, a recent12weeks switch and a date picker; portable agents query the same `activity` command. No visit tracking or automatic cloud synchronization.

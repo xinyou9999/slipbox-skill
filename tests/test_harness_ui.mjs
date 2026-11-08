@@ -17,7 +17,7 @@ function mounted(preferences=new Map(), options={}) {
   const local=preferences;
   const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
-      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.10'};
+      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.11'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
       else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
@@ -40,6 +40,21 @@ function mounted(preferences=new Map(), options={}) {
   render();
   return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners};
 }
+
+test('prominent calendar precedes content and range switching preserves a draft',async()=>{
+  const ui=mounted();await ui.settle();
+  const inner=ui.nodes().find(n=>n.props.className==='sbx-inner');
+  const activity=inner.children.findIndex(n=>n.props?.className==='sbx-activity');
+  const grid=inner.children.findIndex(n=>n.props?.className==='sbx-grid');
+  assert.ok(activity>=0&&activity<grid,'Calendar must be a full-width section above notes, outside sidebar');
+  assert.equal(ui.requests.filter(r=>r.action==='activity').at(-1).days,365);
+  ui.input('sbx-note').props.onChange({target:{value:'不要丢掉这个草稿'}});ui.render();
+  ui.button('近 12 周').props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='activity').at(-1).days,84);
+  assert.equal(ui.input('sbx-note').props.value,'不要丢掉这个草稿');
+  ui.button('近一年').props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='activity').at(-1).days,365);
+});
 
 test('calendar days filter notes without losing a draft and support keyboard navigation',async()=>{
   const ui=mounted();await ui.settle();
