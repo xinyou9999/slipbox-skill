@@ -94,7 +94,7 @@
       if (focusTarget) focusTarget.focus({ preventScroll: true });
     }
     function installText() {
-      return t('请按照 https://github.com/xinyou9999/slipbox-skill/blob/main/docs/INSTALL.md 为当前宿主安装 slipbox。先确认宿主类型、安装位置和本地资料库目录，再选择匹配的 v0.1.2 中文包；不要覆盖已有卡片。', 'Please install slipbox for this host using https://github.com/xinyou9999/slipbox-skill/blob/main/docs/INSTALL.md. First confirm the host, installation location, and local library directory, then choose the matching v0.1.2 English bundle. Preserve existing cards.');
+      return t('请按照 https://github.com/xinyou9999/slipbox-skill/blob/main/docs/INSTALL.md 为当前宿主安装 slipbox。先确认宿主类型、安装位置和本地资料库目录，再选择匹配的 v0.1.3 中文包；不要覆盖已有卡片。', 'Please install slipbox for this host using https://github.com/xinyou9999/slipbox-skill/blob/main/docs/INSTALL.md. First confirm the host, installation location, and local library directory, then choose the matching v0.1.3 English bundle. Preserve existing cards.');
     }
     function renderLanguage() {
       doc.documentElement.lang = book.lang === 'zh' ? 'zh-CN' : 'en';

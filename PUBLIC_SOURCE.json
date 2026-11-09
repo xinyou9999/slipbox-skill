@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "a2f7f0cd38fad7179a1dbf29dfe4f87d18616cb8",
+  "source_commit": "b826ab3bf776f4cf084bcfb2466a590dc68ab950",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -50,11 +50,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "9da15ce8ff8677a1c9b23a826c4377784cb9f3e48b7ae8ec72258c5df6cb220b"
+      "sha256": "05d40ecef273e264d442b7957b0e5ace6735c3b19d7375a9a0e6a0486d5ef202"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "80e4583c2eb481e6e930e273d162405e0430f558976580ef836ed78b50c82d86"
+      "sha256": "3accc10d7216f926977b5e2c539da42a2c39b9fc5e6879969f79ba7a467a1570"
     },
     {
       "path": "ROADMAP.md",
@@ -106,15 +106,15 @@
     },
     {
       "path": "docs/FAQ.md",
-      "sha256": "d4499fbf8f045aa572d67f6c2714ea861c1649c8a5caffe1f65509e10dc6f3cf"
+      "sha256": "f2f17100b35d39ace279c3fb40150eee5925605a5075fed4d51db1a85622f956"
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "c3ab8490b71733af3b646cc7465d151fb5459fbb219c008aeaa785900ff4517d"
+      "sha256": "78ae02be4e1a5b3df380691aa88cccff665c4703adba520fe850e2c804837b7d"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
-      "sha256": "c8c65e4c380f1fd326518b3d2b6d1a4ea59efbbf01861f05f519a1f30b4b157a"
+      "sha256": "ab64a69646efa1f0fb7204ba1baa8ed5cb7b8170963d0749ad3e5a247e4bd806"
     },
     {
       "path": "docs/INSTALL.md",
@@ -306,7 +306,7 @@
     },
     {
       "path": "site/app.js",
-      "sha256": "b93a95b58b5f82577ddfd0ace0c4ba56acec2e0cf23a91f0135b0a15d919a400"
+      "sha256": "341278932aa3716db290d9ed1b1b2e790e4a74c29d18f4125f50348ce297b30d"
     },
     {
       "path": "site/dsh/icon.svg",
@@ -314,7 +314,7 @@
     },
     {
       "path": "site/dsh/index.json",
-      "sha256": "b6c16bf34fc7cede10a0b7055f3301797c6589b9a180e41f504b1e0c1eb3a43b"
+      "sha256": "ae706c6c44e27db4662f406022adb08a986f54ea5b9b3028334295dd6adca491"
     },
     {
       "path": "site/favicon.svg",
@@ -322,7 +322,7 @@
     },
     {
       "path": "site/index.html",
-      "sha256": "40a4e6ace8ffda94bda50df9fb3bb1df4a490694ca07cb0c2e58b9e11384b615"
+      "sha256": "2d77e44fb6e00c5b9905f8ca1481a136ac44bd49cbccc1b9938cf4a37b22640f"
     },
     {
       "path": "site/style.css",
@@ -358,7 +358,7 @@
     },
     {
       "path": "tests/test_site.js",
-      "sha256": "fb42c22570718a71c1586972d5f699567c30c4673af31ffb8ca05a0b1428ebaf"
+      "sha256": "c30c384a7d278a57716b2ee156baeb63976f3b52bed7efda44ee278a2ea95594"
     },
     {
       "path": "tests/test_skill_ai_tags.py",
