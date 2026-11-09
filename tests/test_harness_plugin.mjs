@@ -1,4 +1,11 @@
 import test from 'node:test';
+test('retrieval validates candidate terms and preserves literal date bounds',()=>{
+  const args=makeArgs({action:'search-candidates',terms:['呼吸','$(literal)'],createdFrom:'2026-01-01',createdTo:'2026-11-09',limit:30});
+  assert.ok(args.includes('--term=$(literal)'));assert.ok(args.includes('--created-from=2026-01-01'));
+  assert.throws(()=>makeArgs({action:'search-candidates',terms:[],limit:30}));
+  assert.throws(()=>makeArgs({action:'search-candidates',terms:['x'],limit:41}));
+  assert.throws(()=>makeArgs({action:'search',query:'x',createdTo:'yesterday'}));
+});
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';

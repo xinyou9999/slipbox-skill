@@ -24,14 +24,16 @@ export function makeArgs(input) {
       if(!Number.isInteger(days)||days<1||days>366)throw new Error('Invalid activity days');
       args=['activity','--days',String(days)];break;
     }
-    case 'list': case 'search': {
-      const limit = input.limit ?? 50, offset = input.offset ?? 0;
+    case 'list': case 'search': case 'search-candidates': {
+      const limit = input.limit ?? (input.action==='search-candidates'?30:50), offset = input.offset ?? 0;
       if (!Number.isInteger(limit) || limit < 1 || limit > 100 || !Number.isInteger(offset) || offset < 0) throw new Error('Invalid pagination');
       args = [input.action];
+      if(input.action==='search-candidates'){if(!Array.isArray(input.terms)||input.terms.length<1||input.terms.length>6||limit>40)throw new Error('Invalid retrieval terms');args.push(...input.terms.map(term=>'--term='+text(term,'term',80)));}
+      for(const [field,option] of [['createdFrom','created-from'],['createdTo','created-to']])if(input[field]){if(typeof input[field]!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(input[field]))throw new Error('Invalid date');args.push('--'+option+'='+input[field]);}
       if (input.action === 'search') positional.push(text(input.query, 'query', 1000));
       if (input.tag) args.push('--tag=' + text(input.tag, 'tag', 64));
       if(input.createdOn){if(typeof input.createdOn!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(input.createdOn))throw new Error('Invalid date');args.push('--created-on='+input.createdOn);}
-      args.push('--limit', String(limit), '--offset', String(offset)); break;
+      args.push('--limit',String(limit));if(input.action!=='search-candidates')args.push('--offset',String(offset));break;
     }
     case 'show': args = ['show']; positional=[id(input.id)]; break;
     case 'delete': {

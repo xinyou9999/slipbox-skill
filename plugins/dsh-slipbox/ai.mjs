@@ -34,7 +34,7 @@ function lookup(tags) {
 }
 
 export function createHostCompletion(ctx, { BlockAssembler, createUserMessage }, selection) {
-  const complete = async ({ system, input, signal }) => {
+  const complete = async ({ system, input, signal, purpose = 'slipbox-tags' }) => {
     const defaults = ctx.get('agentDefaultModel');
     const llm = ctx.get('llm');
     if (!defaults?.currentSelection || !llm?.prepareCall) throw new Error('DSH default model is unavailable; the local note is saved');
@@ -46,9 +46,9 @@ export function createHostCompletion(ctx, { BlockAssembler, createUserMessage },
       const effort = model.reasoning?.efforts?.[0]?.id;
       return { ...controls, ...(effort === undefined ? {} : { reasoningEffort: effort }) };
     });
-    const messages = [createUserMessage({ content: [{ type: 'text', text: input }], source: { kind: 'slipbox-tags' } })];
+    const messages = [createUserMessage({ content: [{ type: 'text', text: input }], source: { kind: purpose } })];
     const assembler = new BlockAssembler();
-    for await (const chunk of call.stream({ ...call.config, messages, system, purpose: 'slipbox-tags', signal })) {
+    for await (const chunk of call.stream({ ...call.config, messages, system, purpose, signal })) {
       signal.throwIfAborted();
       assembler.push(chunk);
     }

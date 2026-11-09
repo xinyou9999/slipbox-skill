@@ -28,6 +28,27 @@ CLI = ROOT / "scripts" / "slipbox.py"
 
 
 class SlipboxSkillCliTests(unittest.TestCase):
+    def test_search_matches_multiple_body_tag_alias_terms_and_date_ranges(self):
+        self.run_cli('init')
+        self.run_cli('tag-add', '阅读', '--alias=读书')
+        first = self.run_cli('add', '晚上练习呼吸放松', '--tag=阅读')
+        self.run_cli('add', '白天散步')
+        self.assertEqual(self.run_cli('search', '呼吸 阅读')['count'], 1)
+        self.assertEqual(self.run_cli('search', '呼吸 读书')['cards'][0]['id'], first['id'])
+        self.assertEqual(self.run_cli('search', '#阅读')['count'], 1)
+        self.assertEqual(self.run_cli('search', '呼吸 散步')['count'], 0)
+        today = datetime.now().astimezone().date().isoformat()
+        self.assertEqual(self.run_cli('search', '呼吸', '--created-from', today, '--created-to', today)['count'], 1)
+        self.run_cli('search', '呼吸', '--created-from', '2026-02-30', ok=False)
+        self.run_cli('search', '呼吸', '--created-from', '2026-11-09', '--created-to', '2026-01-01', ok=False)
+        literal = self.run_cli('add', '100%_literal')
+        self.assertEqual(self.run_cli('search', '%_')['cards'][0]['id'], literal['id'])
+        result = self.run_cli('search-candidates', '--term=呼吸', '--term=散步', '--limit=1')
+        self.assertEqual(len(result['cards']), 1)
+        self.assertEqual(result['count'], 2)
+        self.run_cli('search-candidates', '--term=x', '--limit=41', ok=False)
+        self.run_cli('search-candidates', *['--term=x']*7, ok=False)
+
     def test_activity_counts_creation_dates_and_filters_without_changing_notes(self):
         self.run_cli("init")
         cards = [self.run_cli("add", "calendar note " + str(i)) for i in range(3)]

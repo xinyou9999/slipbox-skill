@@ -1,33 +1,53 @@
 {
   "schema_version": 1,
   "name": "slipbox",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Capture reusable Markdown cards, govern tags, retrieve by literal text or tag, and review recently updated cards through an AI agent.",
   "python_requires": ">=3.10",
   "runtime_dependencies": [],
   "entrypoint": "scripts/slipbox.py",
-  "instructions": {"default": "SKILL.md"},
+  "instructions": {
+    "default": "SKILL.md"
+  },
   "default_library": "~/.slipbox",
   "library_environment_variable": "SLIPBOX_HOME",
-  "source_of_truth": ["cards/*.md", "tags.json"],
+  "source_of_truth": [
+    "cards/*.md",
+    "tags.json"
+  ],
   "derived_index": "SQLite",
   "maximum_tags_per_card": null,
-  "search": "literal_substring_and_tag",
+  "search": "multi_term_body_tag_alias_and_date",
   "semantic_judgment": "host_agent",
   "calls_model_api": false,
   "cross_device_sync": false,
   "hosts": [
-    {"name": "Codex", "status": "documented_untested"},
-    {"name": "Hermes", "status": "documented_untested"},
-    {"name": "OpenClaw", "status": "documented_untested"},
-    {"name": "WorkBuddy", "status": "documented_untested"},
-    {"name": "DeepSeek harness", "status": "experimental_untested"}
+    {
+      "name": "Codex",
+      "status": "documented_untested"
+    },
+    {
+      "name": "Hermes",
+      "status": "documented_untested"
+    },
+    {
+      "name": "OpenClaw",
+      "status": "documented_untested"
+    },
+    {
+      "name": "WorkBuddy",
+      "status": "documented_untested"
+    },
+    {
+      "name": "DeepSeek harness",
+      "status": "experimental_untested"
+    }
   ],
   "commands": {
     "init": "initialize_library",
     "add": "capture_card",
     "list": "list_cards",
-    "search": "literal_search",
+    "search": "local_multi_term_search",
     "show": "read_card",
     "edit": "revise_card",
     "delete": "delete_card_after_confirmation",
@@ -39,7 +59,27 @@
     "tag-stats": "tag_usage",
     "tag-update": "update_tag_metadata_if_snapshot_matches",
     "apply-card-tags": "atomically_apply_tag_only_ai_result_if_revision_matches",
-    "rebuild-index": "rebuild_derived_index"
+    "rebuild-index": "rebuild_derived_index",
+    "search-candidates": "bounded_local_or_retrieval"
   },
-  "documentation": ["docs/INSTALL.md", "docs/QUICKSTART.md", "docs/AI_INSTALL.md", "references/tagging-policy.md", "references/data-format.md"]
+  "documentation": [
+    "docs/INSTALL.md",
+    "docs/QUICKSTART.md",
+    "docs/AI_INSTALL.md",
+    "references/tagging-policy.md",
+    "references/data-format.md"
+  ],
+  "retrieval": {
+    "keyword": "AND across body/canonical tag/exact alias",
+    "candidate_command": "search-candidates",
+    "candidate_limit": 40,
+    "ai": "host model query expansion and bounded candidate reranking",
+    "vector_index": false,
+    "privacy": "local ordinary retrieval; explicit authorization before sending candidate excerpts to host model",
+    "date_bounds": [
+      "created-on",
+      "created-from",
+      "created-to"
+    ]
+  }
 }

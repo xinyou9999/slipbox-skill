@@ -35,7 +35,7 @@ def validate_metadata(root: Path) -> list[str]:
         errors.append("runtime requirements differ from supported product")
     if data.get("calls_model_api") is not False or data.get("cross_device_sync") is not False:
         errors.append("capabilities overstate networking or synchronization")
-    if (data.get("search") != "literal_substring_and_tag"
+    if (data.get("search") != "multi_term_body_tag_alias_and_date"
             or "maximum_tags_per_card" not in data or data["maximum_tags_per_card"] is not None):
         errors.append("capabilities differ from search/tag contract")
     expected_hosts = {"Codex", "Hermes", "OpenClaw", "WorkBuddy", "DeepSeek harness"}

@@ -15,11 +15,12 @@ function mounted(preferences=new Map(), options={}) {
     useEffect(fn,values){const i=effectCursor++;if(!deps[i]||values.some((v,n)=>v!==deps[i][n])){deps[i]=values;pending.push(fn);}},
   };
   const local=preferences;
-  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,
+  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,AbortController,
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
-      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.12'};
+      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.13'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
+      else if(input.action==='ai-search'){if(options.aiSearch)value=await options.aiSearch(input);else value={cards:[],reasons:{},count:0,candidate_count:0,matched_total:0,terms:['sleep']};}
       else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
       else {writes.push(input);
         if(input.action==='tag-add'){tags.push({name:input.name});value={name:input.name};}
@@ -40,6 +41,26 @@ function mounted(preferences=new Map(), options={}) {
   render();
   return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners};
 }
+
+test('AI search is explicit, discloses excerpts, preserves draft and invalidates late results',async()=>{
+  let resolve;const ui=mounted(new Map(),{aiSearch:()=>new Promise(r=>{resolve=r;})});await ui.settle();
+  ui.input('sbx-note').props.onChange({target:{value:'草稿仍然在'}});ui.render();
+  ui.button('AI 智能搜索').props.onClick();ui.render();await ui.settle();
+  assert.ok(ui.text(ui.render()).includes('候选笔记片段'));
+  ui.input('搜索卡片').props.onChange({target:{value:'晚上怎么放松'}});ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='ai-search').length,0);
+  ui.nodes().find(n=>n.type==='form'&&n.props.className==='sbx-search-form').props.onSubmit({preventDefault(){}});ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='ai-search').length,1);
+  ui.button('普通搜索').props.onClick();ui.render();await ui.settle();
+  resolve({cards:[{id:'a'.repeat(32),content:'late AI result',tags:[],updated_at:'2026-11-09T00:00:00Z'}],count:1,reasons:{}});await ui.settle();
+  assert.ok(!ui.text(ui.render()).includes('late AI result'));
+  assert.equal(ui.input('sbx-note').props.value,'草稿仍然在');
+  ui.input('开始日期').props.onChange({target:{value:'2026-01-01'}});ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='list').at(-1).createdFrom,'2026-01-01');
+});
+
+test('AI search errors keep ordinary search usable',async()=>{const ui=mounted(new Map(),{aiSearch:()=>{throw new Error('AI_TIMEOUT');}});await ui.settle();ui.button('AI 智能搜索').props.onClick();ui.render();ui.input('搜索卡片').props.onChange({target:{value:'test'}});ui.render();ui.nodes().find(n=>n.type==='form'&&n.props.className==='sbx-search-form').props.onSubmit({preventDefault(){}});await ui.settle();assert.ok(ui.text(ui.render()).includes('智能搜索暂未完成'));ui.button('普通搜索').props.onClick();ui.render();ui.input('搜索卡片').props.onChange({target:{value:'literal'}});ui.render();await ui.settle();assert.equal(ui.requests.filter(r=>r.action==='search').at(-1).query,'literal');});
+test('refresh clears prior AI cards without reuploading and submit names expected library',async()=>{const ui=mounted(new Map(),{aiSearch:async()=>({cards:[{id:'a'.repeat(32),content:'old AI card',tags:[],updated_at:'2026-11-09T00:00:00Z'}],reasons:{},count:1})});await ui.settle();ui.button('AI 智能搜索').props.onClick();ui.render();ui.input('搜索卡片').props.onChange({target:{value:'test'}});ui.render();ui.nodes().find(n=>n.type==='form'&&n.props.className==='sbx-search-form').props.onSubmit({preventDefault(){}});await ui.settle();assert.ok(ui.text(ui.render()).includes('old AI card'));assert.equal(ui.requests.filter(r=>r.action==='ai-search').at(-1).library,'synthetic-library');ui.button('刷新').props.onClick();await ui.settle();assert.ok(!ui.text(ui.render()).includes('old AI card'));assert.equal(ui.requests.filter(r=>r.action==='ai-search').length,1);});
 
 test('prominent calendar precedes content and range switching preserves a draft',async()=>{
   const ui=mounted();await ui.settle();

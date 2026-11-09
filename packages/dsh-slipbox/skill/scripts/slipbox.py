@@ -913,7 +913,7 @@ def calendar_date(value: str) -> date:
         raise ValueError("invalid calendar date") from error
 
 
-def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 0, created_on: str = "") -> dict[str, Any]:
+def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 0, created_on: str = "", created_from: str = "", created_to: str = "", terms: list[str] | None = None, match_any: bool = False) -> dict[str, Any]:
     if limit < 1 or limit > 1000 or offset < 0:
         raise ValueError("limit must be 1-1000 and offset must be non-negative")
     ensure_index()
@@ -923,19 +923,45 @@ def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 
         calendar_date(created_on)
         clauses.append("date(cards.created_at, 'localtime') = ?")
         params.append(created_on)
-    if search:
-        escaped = search.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-        clauses.append("cards.content LIKE ? ESCAPE '\\'")
-        params.append(f"%{escaped}%")
+    if created_from:
+        calendar_date(created_from)
+        clauses.append("date(cards.created_at, 'localtime') >= ?")
+        params.append(created_from)
+    if created_to:
+        calendar_date(created_to)
+        clauses.append("date(cards.created_at, 'localtime') <= ?")
+        params.append(created_to)
+    if created_from and created_to and created_from > created_to:
+        raise ValueError("invalid date range")
+    words = terms if terms is not None else search.split()
+    if len(words) > 12:
+        raise ValueError("search supports at most 12 terms")
+    matches, match_params = [], []
+    aliases = tag_lookup(load_tags()) if words else {}
+    for word in words:
+        if not isinstance(word, str) or not word.strip() or len(word) > 1000:
+            raise ValueError("invalid search term")
+        escaped = word.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        tag_word = word.lstrip("#＃")
+        escaped_tag = tag_word.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        canonical = aliases.get(key(tag_word), tag_word)
+        matches.append("(cards.content LIKE ? ESCAPE '\\' OR EXISTS (SELECT 1 FROM card_tags WHERE card_tags.card_id=cards.id AND (card_tags.tag LIKE ? ESCAPE '\\' OR card_tags.tag=?)))")
+        match_params.extend([f"%{escaped}%", f"%{escaped_tag}%", canonical])
+    if matches:
+        clauses.append("(" + (" OR " if match_any else " AND ").join(matches) + ")")
+        params.extend(match_params)
     if tag:
         canonical = normalize_tags([tag], load_tags())[0]
         clauses.append("EXISTS (SELECT 1 FROM card_tags WHERE card_tags.card_id = cards.id AND card_tags.tag = ?)")
         params.append(canonical)
     where = " WHERE " + " AND ".join(clauses) if clauses else ""
+    ranking = " + ".join("CASE WHEN " + item + " THEN 1 ELSE 0 END" for item in matches) if match_any and matches else "0"
+    order = "(" + ranking + ") DESC, updated_at DESC, id DESC" if match_any else "updated_at DESC, id DESC"
+    order_params = match_params if match_any and matches else []
     try:
         with contextlib.closing(_index_connection()) as db:
             total = db.execute(f"SELECT COUNT(*) FROM cards{where}", params).fetchone()[0]
-            rows = db.execute(f"SELECT * FROM cards{where} ORDER BY updated_at DESC, id DESC LIMIT ? OFFSET ?", [*params, limit, offset]).fetchall()
+            rows = db.execute(f"SELECT * FROM cards{where} ORDER BY {order} LIMIT ? OFFSET ?", [*params, *order_params, limit, offset]).fetchall()
             ids = [row["id"] for row in rows]
             tags_by_id = {card_id: [] for card_id in ids}
             if ids:
@@ -944,9 +970,15 @@ def query_cards(search: str = "", tag: str = "", limit: int = 50, offset: int = 
                     tags_by_id[tag_row["card_id"]].append(tag_row["tag"])
     except sqlite3.Error:
         rebuild_index()
-        return query_cards(search, tag, limit, offset, created_on)
+        return query_cards(search, tag, limit, offset, created_on, created_from, created_to, terms, match_any)
     cards = [{"id": row["id"], "content": row["content"], "created_at": row["created_at"], "updated_at": row["updated_at"], "tags": tags_by_id[row["id"]]} for row in rows]
     return {"cards": cards, "count": total, "limit": limit, "offset": offset, "has_more": offset + len(cards) < total}
+
+
+def search_candidates(terms: list[str], tag: str = "", created_on: str = "", created_from: str = "", created_to: str = "", limit: int = 30) -> dict[str, Any]:
+    if not 1 <= len(terms) <= 6 or any(not isinstance(t, str) or not t.strip() or len(t) > 80 for t in terms) or not 1 <= limit <= 40:
+        raise ValueError("candidate search needs 1-6 terms (up to80 characters) and limit1-40")
+    return query_cards(tag=tag, limit=limit, created_on=created_on, created_from=created_from, created_to=created_to, terms=list(dict.fromkeys(terms)), match_any=True)
 
 
 def tag_add(name: str, aliases: list[str], description: str) -> dict[str, Any]:
@@ -1195,12 +1227,21 @@ def parser() -> argparse.ArgumentParser:
     listing.add_argument("--created-on", default="")
     listing.add_argument("--limit", type=int, default=50)
     listing.add_argument("--offset", type=int, default=0)
+    candidates = command("search-candidates")
+    candidates.add_argument("--term", action="append", required=True)
+    candidates.add_argument("--tag", default="")
+    candidates.add_argument("--created-on", default="")
+    candidates.add_argument("--limit", type=int, default=30)
     search = command("search")
     search.add_argument("query")
     search.add_argument("--tag", default="")
     search.add_argument("--created-on", default="")
     search.add_argument("--limit", type=int, default=50)
     search.add_argument("--offset", type=int, default=0)
+    for filtered in [listing, search, candidates]:
+        filtered.add_argument("--created-from", default="")
+        filtered.add_argument("--created-to", default="")
+
     show = command("show")
     show.add_argument("id")
     edit = command("edit")
@@ -1244,8 +1285,9 @@ def parser() -> argparse.ArgumentParser:
 def dispatch(args: argparse.Namespace) -> Any:
     if args.command == "init": return initialize()
     if args.command == "add": return add_card(args.content, args.tags)
-    if args.command == "list": return query_cards(tag=args.tag, limit=args.limit, offset=args.offset, created_on=args.created_on)
-    if args.command == "search": return query_cards(search=args.query, tag=args.tag, limit=args.limit, offset=args.offset, created_on=args.created_on)
+    if args.command == "list": return query_cards(tag=args.tag, limit=args.limit, offset=args.offset, created_on=args.created_on, created_from=args.created_from, created_to=args.created_to)
+    if args.command == "search-candidates": return search_candidates(args.term, args.tag, args.created_on, args.created_from, args.created_to, args.limit)
+    if args.command == "search": return query_cards(search=args.query, tag=args.tag, limit=args.limit, offset=args.offset, created_on=args.created_on, created_from=args.created_from, created_to=args.created_to)
     if args.command == "show": return show_card(args.id)
     if args.command == "edit": return edit_card(args.id, args.content, args.tags, args.clear_tags)
     if args.command == "delete": return delete_card(args.id, args.expected)

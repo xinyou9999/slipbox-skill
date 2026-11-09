@@ -1,5 +1,11 @@
 # Changelog
 
+## Portable Skill0.1.3 / DSH plugin0.1.13 — 2026-11-09
+
+- Add visible keyword/AI search modes with tag and inclusive date-range filters.
+- Local multi-term retrieval matches body, tags and exact aliases; bounded candidate CLI supports all compatible agents.
+- Explicit DSH default-model query expansion/reranking returns original cards plus grounded reasons. Bounded excerpts only, no automatic typing uploads or note writes; ordinary search remains usable on model failure.
+
 ## DSH plugin0.1.12 — 2026-11-09
 
 - Restore deliberate outer breathing room: responsive28–96px horizontal gutters and a1600px content ceiling.
