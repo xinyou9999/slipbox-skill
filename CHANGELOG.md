@@ -1,5 +1,11 @@
 # Changelog
 
+## DSH plugin0.1.12 — 2026-11-09
+
+- Restore deliberate outer breathing room: responsive28–96px horizontal gutters and a1600px content ceiling.
+- Balance the right navigation panel proportionally with the note column (3:1), scaling its padding,48px controls and spacing together.
+- Keep the prominent year calendar and both themes; stack the workspace at900px and below. Portable0.1.2 remains unchanged.
+
 ## DSH plugin0.1.11 — 2026-11-09
 
 - Expand the native workspace with measured responsive gutters, removing the fixed centered width limit.

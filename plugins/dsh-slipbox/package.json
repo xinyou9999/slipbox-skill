@@ -1,6 +1,6 @@
 {
   "name": "dsh-slipbox",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "slipbox · 跨智能体的 AI 卡片笔记。记录、整理和检索本地 Markdown 卡片。",
   "type": "module",
   "main": "index.mjs",

@@ -41,7 +41,7 @@ export function apply(ctx, config = {}) {
         const body = await request.text();
         if (body.length > 512000) throw new Error('Request too large');
         const input = JSON.parse(body);
-        const result = input.action === 'status' ? { library: settings().home, version: '0.1.11' }
+        const result = input.action === 'status' ? { library: settings().home, version: '0.1.12' }
           : input.action === 'ai-tag' ? await tagger().tag(input)
           : input.action === 'ai-maintain' ? await tagger().maintain()
           : await run(input);
