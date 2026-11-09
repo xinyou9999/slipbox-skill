@@ -1,5 +1,10 @@
 # Changelog
 
+## DSH plugin0.1.14 — 2026-11-10
+
+- Replace the visible search heading and mode tabs with one shared query field and two direct-action icons: magnifier for local search, sparkle for AI search. Enter stays local.
+- Use icon-only clear/navigation shortcuts, accessible names/tooltips and42px targets; retain a compact AI disclosure, filters and stale-result protections. Portable0.1.3 unchanged.
+
 ## Portable Skill0.1.3 / DSH plugin0.1.13 — 2026-11-09
 
 - Add visible keyword/AI search modes with tag and inclusive date-range filters.
