@@ -1,6 +1,6 @@
 {
   "name": "dsh-slipbox",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "slipbox · 跨智能体的 AI 卡片笔记。记录、整理和检索本地 Markdown 卡片。",
   "type": "module",
   "main": "index.mjs",
@@ -21,7 +21,8 @@
     "cordis.patch.yml",
     "skill",
     "README.md",
-    "portability.mjs"
+    "portability.mjs",
+    "synthesis.mjs"
   ],
   "engines": {
     "node": ">=22",

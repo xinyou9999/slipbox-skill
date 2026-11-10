@@ -10,7 +10,7 @@ Save locally first, then let the DSH default model add relevant tags in the back
 
 Open **标签列表 → AI 整理标签库** for metadata-only descriptions, aliases and duplicate proposals. Changes require explicit application, with a second confirmation for merges. No automatic merging/deletion, body rewrite, model tools, new conversation or separate key. Calls are limited to800 vocabulary entries,96,000 input characters, two concurrent requests per library and60 seconds.
 
-Download `dsh-slipbox-0.2.0.tgz` and `SHA256SUMS` from the [0.2.0 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.0), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
+Download `dsh-slipbox-0.2.1.tgz` and `SHA256SUMS` from the [0.2.1 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.1), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
 
 Version0.1.5 places the note editor and collection on the left, with compact navigation on the right. Narrow screens retain navigation above the notes. Both themes and languages share this layout.
 
@@ -113,3 +113,16 @@ Version0.1.10 adds a recent84-day calendar below navigation. Darker squares mean
 ## Keyword search and AI search (0.2.0)
 
 Use the magnifier shortcut in the right navigation or the shared query field above the editor. Click the magnifier for local keyword search, or the sparkle for explicit AI search; Enter always runs keyword search. There are no text tabs or visible search heading. Keyword search is local and matches multiple space-separated terms across text/tags/exact aliases; expand search scope for inclusive creation-date bounds, or choose a tag. AI search runs only on explicit submit, using the current DSH default model: it expands your question, locally recalls up to30 candidates, then ranks their bounded excerpts and returns real cards with matching reasons. Your query and candidate excerpts go to that model; typing sends nothing. No library-wide embedding upload, new credentials or data writes. Results are bounded, not exhaustive semantic indexing; try shorter keywords or different wording if nothing matches. Model errors do not prevent ordinary search. Switching views/modes preserves the note draft.
+# Search results → AI organization (native0.2.1)
+
+Keep using the magnifier for local keyword search and the sparkle for AI-assisted
+retrieval. Once results are available, **AI 整理 / Organize with AI** sends the
+first up to12 current result cards to your configured default model. It presents
+an overview and grouped key points with clickable source-card references.
+
+This is an explicit additional model request. Long cards use bounded excerpts;
+the page discloses the number and excerpt limit. Original cards and the editor
+draft are not modified. Changed queries, filters, libraries, refreshed results or
+changed source cards invalidate the organization. AI text is a synthesis to check
+against the originals, not a guarantee of factual correctness. It is not saved
+automatically. The portable0.2.0 core is unchanged.

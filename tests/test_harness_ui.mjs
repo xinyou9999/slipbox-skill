@@ -17,13 +17,14 @@ function mounted(preferences=new Map(), options={}) {
   const local=preferences;
   const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>{if(options.storageFails)throw new Error('storage denied');return local.get(k)||null;},setItem:(k,v)=>{if(options.storageFails)throw new Error('storage denied');local.set(k,v);},removeItem:k=>{if(options.storageFails)throw new Error('storage denied');local.delete(k);}},console,AbortController,atob,btoa,Uint8Array,Blob,setTimeout:fn=>fn(),URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:synthetic';},revokeObjectURL(){}},document:{createElement:()=>({click(){}})},
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
-      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.0'};
+      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.1'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
       else if(input.action==='ai-search'){if(options.aiSearch)value=await options.aiSearch(input);else value={cards:[],reasons:{},count:0,candidate_count:0,matched_total:0,terms:['sleep']};}
+      else if(input.action==='ai-organize')value=options.organize?await options.organize(input):organization(input.cards);
       else if(input.action==='trash-list')value={cards:[...trash],count:trash.length};
       else if(input.action==='history')value={id:input.id,versions:[{version_id:'version-1',recorded_at:'2026-11-06T00:00:00Z',card:{content:'Historical content',tags:[]}}]};
-      else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
+      else if(input.action==='list'||input.action==='search')value=options.readResults?await options.readResults(input,cards):{cards:[...cards],count:cards.length,has_more:false};
       else {writes.push(input);
         if(input.action==='tag-add'){tags.push({name:input.name});value={name:input.name};}
         else if(input.action==='add'||input.action==='edit'){if(options.save)await options.save(input);value={id:input.id||'a'.repeat(32),updated_at:'2026-11-07T01:00:00Z',content:input.content,tags:input.tags};if(input.action==='edit'){const index=cards.findIndex(c=>c.id===input.id);if(index>=0)cards.splice(index,1);}cards.unshift(value);}
@@ -466,4 +467,49 @@ test('complete backup ignores selected context cards',async()=>{
   ui.button('Select notes').props.onClick();ui.render();ui.input('Select this note').props.onChange();ui.render();
   await ui.button('Download backup').props.onClick();await ui.settle();
   const input=ui.writes.find(x=>x.action==='export');assert.equal(input.format,'backup');assert.ok(!input.ids?.length);
+});
+
+function organization(cards){return {overview:{text:'Overview grounded in saved notes',sourceIds:[cards[0].id]},sections:[{title:'Useful points',text:'<script>inert output</script>\nA grounded point',sourceIds:[cards[0].id]}],sources:cards.map(card=>({...card,created_at:card.updated_at,tags:[],excerpt:'Original source excerpt',truncated:false})),count:cards.length,truncated:false};}
+const sourceCard={id:'a'.repeat(32),content:'Original source note',tags:[],created_at:'2026-11-09T00:00:00Z',updated_at:'2026-11-10T00:00:00Z'};
+
+test('search results organize only after explicit request, cite originals and leave composer untouched',async()=>{
+  const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard]});await ui.settle();
+  assert.ok(!ui.nodes().some(n=>n.type==='button'&&ui.text(n)==='Organize with AI'));
+  ui.input('sbx-note').props.onChange({target:{value:'Keep my draft'}});ui.render();
+  ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='ai-organize').length,0);
+  await ui.button('Organize with AI').props.onClick();await ui.settle();
+  const request=ui.requests.find(r=>r.action==='ai-organize');assert.equal(request.library,'synthetic-library');assert.deepEqual(request.cards,[{id:sourceCard.id,updated_at:sourceCard.updated_at}]);assert.ok(!JSON.stringify(request).includes(sourceCard.content));
+  assert.ok(ui.text(ui.render()).includes('Overview grounded'));assert.ok(ui.text(ui.render()).includes('<script>inert output</script>'));assert.equal(ui.input('sbx-note').props.value,'Keep my draft');assert.equal(ui.writes.length,0);
+  assert.ok(ui.nodes().some(n=>n.props.id==='sbx-card-'+sourceCard.id));assert.ok(ui.nodes().some(n=>n.props['aria-label']==='View source 1'));
+});
+
+test('AI result organization uses only AI-returned cards and is a separate explicit call',async()=>{
+  const returned={...sourceCard,id:'b'.repeat(32),content:'AI retrieved original'};
+  const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],aiSearch:async()=>({cards:[returned],count:1,reasons:{}})});await ui.settle();
+  ui.input('Search notes').props.onChange({target:{value:'related idea'}});ui.render();await ui.settle();ui.button('AI search').props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>r.action==='ai-organize').length,0);await ui.button('Organize with AI').props.onClick();await ui.settle();assert.deepEqual(ui.requests.find(r=>r.action==='ai-organize').cards.map(c=>c.id),[returned.id]);
+});
+
+test('query changes, refresh and cancellation invalidate late organized output',async()=>{
+  for(const action of ['query','refresh','cancel']){
+    let finish;const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],organize:()=>new Promise(r=>finish=r)});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();const pending=ui.button('Organize with AI').props.onClick();ui.render();
+    if(action==='query')ui.input('Search notes').props.onChange({target:{value:'different'}});else ui.button(action==='refresh'?'Refresh':'Cancel organization').props.onClick();ui.render();await ui.settle();finish(organization([sourceCard]));await pending;await ui.settle();assert.ok(!ui.text(ui.render()).includes('Overview grounded'));
+  }
+});
+
+test('organization is bounded to first twelve visible results with explicit disclosure',async()=>{
+  const cards=Array.from({length:20},(_,i)=>({...sourceCard,id:i.toString(16).padStart(32,'0')}));const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();assert.ok(ui.text(ui.render()).includes('first 12 current results'));await ui.button('Organize with AI').props.onClick();await ui.settle();assert.equal(ui.requests.find(r=>r.action==='ai-organize').cards.length,12);
+});
+
+test('organization error and changed source keep original results available',async()=>{
+  for(const error of ['model unavailable','AI_NOTES_CHANGED']){const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],organize:()=>{throw new Error(error);}});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();assert.ok(ui.text(ui.render()).includes('Original source note'));assert.ok(ui.button('Organize with AI'));assert.ok(ui.nodes().some(n=>n.props.role==='alert'));assert.equal(ui.writes.length,0);}
+});
+
+test('refresh invalidates organization immediately even if the next result load is delayed',async()=>{
+  let delay=false,finish;const pending=new Promise(r=>finish=r);const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],readResults:async(_input,cards)=>{if(delay)await pending;return {cards:[...cards],count:cards.length,has_more:false};}});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();assert.ok(ui.text(ui.render()).includes('Overview grounded'));delay=true;ui.button('Refresh').props.onClick();ui.render();assert.ok(!ui.text(ui.render()).includes('Overview grounded'));finish();await ui.settle();
+});
+
+test('a failed new search cannot organize old results under the new query',async()=>{
+  let fail=false;const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],readResults:async(_input,cards)=>{if(fail)throw new Error('offline');return {cards:[...cards],count:cards.length,has_more:false};}});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();assert.equal(ui.button('Organize with AI').props.disabled,false);fail=true;ui.input('Search notes').props.onChange({target:{value:'unrelated query'}});ui.render();const before=ui.nodes().find(n=>n.type==='button'&&ui.text(n)==='Organize with AI');if(before)assert.equal(before.props.disabled,true);await ui.settle();assert.ok(!ui.nodes().some(n=>n.type==='button'&&ui.text(n)==='Organize with AI'));assert.equal(ui.requests.filter(r=>r.action==='ai-organize').length,0);
 });

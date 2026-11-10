@@ -9,6 +9,7 @@ import { BlockAssembler, createUserMessage } from '@deepseek-ai/dsh-llm';
 import { createTaggingService, createHostCompletion } from './ai.mjs';
 import { createSearchService } from './search.mjs';
 import { createPortability } from './portability.mjs';
+import { createSynthesisService } from './synthesis.mjs';
 
 export const name = 'slipbox';
 export const inject = ['connection', 'tools'];
@@ -25,6 +26,16 @@ export function apply(ctx, config = {}) {
   const run = input => createBridge(settings())(input);
   const taggers = new Map();
   const searchers = new Map();
+  const organizers = new Map();
+  async function organizeCurrentLibrary(input,signal){
+    const snapshot=settings(),key=JSON.stringify(snapshot);
+    if(input.library!==snapshot.home)throw new Error('AI_LIBRARY_CHANGED');
+    for(const [old,service] of organizers)if(old!==key){service.close();organizers.delete(old);}
+    if(!organizers.has(key))organizers.set(key,createSynthesisService({run:createBridge(snapshot),complete,isCurrent:()=>JSON.stringify(settings())===key}));
+    const result=await organizers.get(key).organize({query:input.query,cards:input.cards,language:input.language},{signal});
+    if(JSON.stringify(settings())!==key)throw new Error('AI_LIBRARY_CHANGED');
+    return {...result,library:snapshot.home};
+  }
   function searcher(){const snapshot=settings(),key=JSON.stringify(snapshot);for(const [old,service] of searchers)if(old!==key){service.close();searchers.delete(old);}if(!searchers.has(key))searchers.set(key,createSearchService({run:createBridge(snapshot),complete,isCurrent:()=>JSON.stringify(settings())===key}));return searchers.get(key);}
   async function searchCurrentLibrary(input){const snapshot=settings(),key=JSON.stringify(snapshot);if(input.library!==snapshot.home)throw new Error('AI_LIBRARY_CHANGED');const result=await searcher().search(input);if(JSON.stringify(settings())!==key)throw new Error('AI_LIBRARY_CHANGED');return {...result,library:snapshot.home};}
 
@@ -38,7 +49,7 @@ export function apply(ctx, config = {}) {
     }
     return taggers.get(key);
   };
-  ctx.effect(() => () => { for (const service of [...taggers.values(),...searchers.values()]) service.close(); });
+  ctx.effect(() => () => { for (const service of [...taggers.values(),...searchers.values(),...organizers.values()]) service.close(); });
   ctx.connection.fetch.register({
     path: '/api/slipbox/cards', methods: ['POST'], requestBody: 'buffered',
     fetch: async request => {
@@ -49,9 +60,10 @@ export function apply(ctx, config = {}) {
         const input = JSON.parse(body);
         const snapshot=settings();
         if(input.library!==undefined&&input.library!==snapshot.home)throw new Error('AI_LIBRARY_CHANGED');
-        const result = input.action === 'status' ? { library: snapshot.home, version: '0.2.0' }
+        const result = input.action === 'status' ? { library: snapshot.home, version: '0.2.1' }
           : ['export','import-preview','import-apply'].includes(input.action) ? await createPortability(snapshot)(input)
           : input.action === 'ai-search' ? await searchCurrentLibrary(input)
+          : input.action === 'ai-organize' ? await organizeCurrentLibrary(input,request.signal)
           : input.action === 'ai-tag' ? await tagger().tag(input)
           : input.action === 'ai-maintain' ? await tagger().maintain()
           : await createBridge(snapshot)(input);

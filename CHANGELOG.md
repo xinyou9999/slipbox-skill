@@ -1,5 +1,11 @@
 # Changelog
 
+## DSH0.2.1 — 2026-11-10
+
+- Explicitly organize ordinary or AI search results into a grounded overview and grouped key points with clickable original-card references.
+- Limit input to12 current results, disclose excerpts, keep original notes/drafts unchanged and invalidate stale scope/results.
+- Add total deadline, cancellation forwarding and strict reference/response validation. Portable0.2.0 unchanged.
+
 ## 0.2.0 — 2026-11-10
 
 - Persistent per-library drafts, scoped shortcuts, quick filters, recoverable deletion and text history.
