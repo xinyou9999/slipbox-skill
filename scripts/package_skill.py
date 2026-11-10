@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.1.3"
+VERSION = "0.2.0"
 # Never replace this list with directory traversal or a repository-wide glob.
 FILES = (
     "LICENSE",
@@ -25,6 +25,7 @@ FILES = (
     "docs/QUICKSTART.md",
     "docs/AI_INSTALL.md",
     "docs/capabilities.json",
+    "docs/RECOVERY_AND_PORTABILITY.md",
 )
 WORKBUDDY_FIELDS = {
     "display_name": "slipbox｜跨智能体的 AI 卡片笔记",

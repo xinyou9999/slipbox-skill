@@ -36,7 +36,7 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 ## 开始使用
 
-1. 从 [v0.1.3 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.1.3)获取 ZIP，或从源码构建。
+1. 从 [v0.2.0 发布页](https://github.com/xinyou9999/slipbox-skill/releases/tag/v0.2.0)获取 ZIP，或从源码构建。
 2. 按[安装文档](docs/INSTALL.md)选择宿主。
 3. 先做[隔离的三分钟体验](docs/QUICKSTART.md)，再请 Agent 真正记一张卡并找回来。
 
@@ -44,14 +44,14 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 
 | 安装包 | 简体中文 | English |
 |---|---|---|
-| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/slipbox-0.1.3-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/slipbox-0.1.3-generic-en.zip) |
-| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/slipbox-0.1.3-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/slipbox-0.1.3-workbuddy-en.zip) |
+| Codex / Hermes / OpenClaw 通用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/slipbox-0.2.0-generic-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/slipbox-0.2.0-generic-en.zip) |
+| WorkBuddy 专用包 | [下载 ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/slipbox-0.2.0-workbuddy-zh.zip) | [Download ZIP](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/slipbox-0.2.0-workbuddy-en.zip) |
 
-[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
+[SHA-256 校验清单](https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/SHA256SUMS)。当前产品是安装到智能体里的 Skill；本页面提供说明和演示，并非在线笔记编辑器。平台验证状态见下表。
 
 ## 宿主状态
 
-**DeepSeek Harness：**添加我们的[市场索引](https://xinyou9999.github.io/slipbox-skill/dsh/index.json)，搜索 **slipbox** 后即可从固定 GitHub 提交安装0.1.5。[完整步骤](docs/HARNESS_PLUGIN.md) · [旧版预构建0.1.3](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.3)。默认中文“卡片笔记”“我的笔记”，提供中英文切换；完整标签在独立列表中查找与整理。**Hermes：**把[安装请求](docs/HERMES_INSTALL_REQUEST.md)整段发给实际运行的智能体即可。
+**DeepSeek Harness：**添加我们的[市场索引](https://xinyou9999.github.io/slipbox-skill/dsh/index.json)，搜索 **slipbox** 后即可从固定 GitHub 提交安装0.2.0。[完整步骤](docs/HARNESS_PLUGIN.md) · [预构建0.2.0](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.0)。默认中文“卡片笔记”“我的笔记”，提供中英文切换；完整标签在独立列表中查找与整理。**Hermes：**把[安装请求](docs/HERMES_INSTALL_REQUEST.md)整段发给实际运行的智能体即可。
 
 | 宿主 | 安装入口 | 当前证据 |
 |---|---|---|
@@ -59,7 +59,7 @@ Agent 理解语义并选择已有标签，脚本负责校验、保存和字面�
 | Hermes | 当前 profile 的 Skill 目录 | 文档核查；未实机验证 |
 | OpenClaw | 共享/工作区 Skill 目录 | 文档核查；未实机验证 |
 | WorkBuddy | 上传专用 ZIP | 文档核查；未实机验证 |
-| DeepSeek Harness | Git 市场插件0.1.5；另有通用 Skill | Windows 原生大量标签界面和0.1.5中英文命名已验证；默认模型与Git安装历史证据见安装文档；其他系统未实机验证 |
+| DeepSeek Harness | Git 市场插件0.2.0；另有通用 Skill | Windows 原生大量标签界面和0.1.5中英文命名已验证；默认模型与Git安装历史证据见安装文档；其他系统未实机验证 |
 
 本地包检查不等于平台兼容认证。欢迎提供宿主、版本和实际安装报告，帮助改进这些路径。
 
@@ -87,3 +87,8 @@ python scripts/package_skill.py --target workbuddy --language en
 如果它对你有帮助，欢迎 Star；一条真实的安装反馈或使用案例，同样能帮助项目进步。
 
 MIT 开源。[许可证](LICENSE) · [版本记录](CHANGELOG.md)
+
+
+## Recovery and portable reuse / 备份与复用
+
+DSH0.2.0 and Skill0.2.0 add recoverable deletion, text history, selected-card context export, full backup and previewed Slipbox/flomo import. Ordinary search remains local; AI features use your host model. [Recovery and portability guide](docs/RECOVERY_AND_PORTABILITY.md). Cross-device automatic sync is not included.

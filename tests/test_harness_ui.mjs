@@ -7,7 +7,7 @@ function mounted(preferences=new Map(), options={}) {
   const states=[],refs=[],deps=[],themeListeners=[];let cursor=0,refCursor=0,effectCursor=0,component,tree,pageProps={};const pending=[];
   const tags=Array.from({length:500},(_,i)=>({name:'标签'+String(i+1).padStart(4,'0')}));
   const writes=[],requests=[];
-  const cards=[];
+  const cards=[...(options.cards||[])],trash=[];const downloads=[];
   const React={
     createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity).filter(x=>x!==false&&x!==null&&x!==undefined)}),
     useState(initial){const i=cursor++;if(!(i in states))states[i]=typeof initial==='function'?initial():initial;return [states[i],v=>{states[i]=typeof v==='function'?v(states[i]):v;}];},
@@ -15,19 +15,27 @@ function mounted(preferences=new Map(), options={}) {
     useEffect(fn,values){const i=effectCursor++;if(!deps[i]||values.some((v,n)=>v!==deps[i][n])){deps[i]=values;pending.push(fn);}},
   };
   const local=preferences;
-  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>local.get(k)||null,setItem:(k,v)=>local.set(k,v)},console,AbortController,
+  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>{if(options.storageFails)throw new Error('storage denied');return local.get(k)||null;},setItem:(k,v)=>{if(options.storageFails)throw new Error('storage denied');local.set(k,v);},removeItem:k=>{if(options.storageFails)throw new Error('storage denied');local.delete(k);}},console,AbortController,atob,btoa,Uint8Array,Blob,setTimeout:fn=>fn(),URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:synthetic';},revokeObjectURL(){}},document:{createElement:()=>({click(){}})},
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
-      if(input.action==='status')value={library:'synthetic-library',version:options.version||'0.1.14'};
+      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.0'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
       else if(input.action==='ai-search'){if(options.aiSearch)value=await options.aiSearch(input);else value={cards:[],reasons:{},count:0,candidate_count:0,matched_total:0,terms:['sleep']};}
+      else if(input.action==='trash-list')value={cards:[...trash],count:trash.length};
+      else if(input.action==='history')value={id:input.id,versions:[{version_id:'version-1',recorded_at:'2026-11-06T00:00:00Z',card:{content:'Historical content',tags:[]}}]};
       else if(input.action==='list'||input.action==='search')value={cards:[...cards],count:cards.length,has_more:false};
       else {writes.push(input);
         if(input.action==='tag-add'){tags.push({name:input.name});value={name:input.name};}
-        else if(input.action==='add'||input.action==='edit'){value={id:input.id||'a'.repeat(32),updated_at:'2026-11-07T01:00:00Z',content:input.content,tags:input.tags};cards.unshift(value);}
+        else if(input.action==='add'||input.action==='edit'){if(options.save)await options.save(input);value={id:input.id||'a'.repeat(32),updated_at:'2026-11-07T01:00:00Z',content:input.content,tags:input.tags};if(input.action==='edit'){const index=cards.findIndex(c=>c.id===input.id);if(index>=0)cards.splice(index,1);}cards.unshift(value);}
         else if(input.action==='ai-tag')value=options.tag?await options.tag(input):{applied:true,card:cards[0]};
         else if(input.action==='ai-maintain')value=options.maintenance||{updates:[],merges:[]};
-        else if(input.action==='delete'){const i=cards.findIndex(c=>c.id===input.id);if(i>=0)cards.splice(i,1);value={deleted:i>=0,id:input.id};}
+        else if(input.action==='delete'){const i=cards.findIndex(c=>c.id===input.id);if(i>=0){trash.push({...cards[i],deleted_at:'2026-11-10T00:00:00Z'});cards.splice(i,1);}value={deleted:i>=0,id:input.id};}
+        else if(input.action==='restore'){const index=trash.findIndex(c=>c.id===input.id);value=trash[index];cards.push(value);trash.splice(index,1);}
+        else if(input.action==='purge'){const index=trash.findIndex(c=>c.id===input.id);if(index>=0)trash.splice(index,1);value={purged:true,id:input.id};}
+        else if(input.action==='restore-version')value={...cards.find(c=>c.id===input.id),content:'Historical content'};
+        else if(input.action==='export')value={content:btoa('synthetic export'),filename:'slipbox-backup.json',mime:'application/json'};
+        else if(input.action==='import-preview')value=options.importPreview?await options.importPreview(input):{digest:'digest-1',cards:[{content:'Imported note',status:'new'}],count:1,new_count:1,duplicate_count:0,conflict_count:0,warnings:[]};
+        else if(input.action==='import-apply')value={imported:1,skipped:0,conflicts:0,ids:['imported-id']};
       }
       return {ok:true,json:async()=>({ok:true,value})};}};
   vm.runInNewContext(readFileSync(new URL('../plugins/dsh-slipbox/client.js',import.meta.url),'utf8'),context);
@@ -39,7 +47,7 @@ function mounted(preferences=new Map(), options={}) {
   function input(label){return one(n=>n.props['aria-label']===label||n.props.id===label);}
   async function settle(){for(let i=0;i<4;i++){for(let j=0;j<8;j++)await Promise.resolve();render();}}
   render();
-  return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners};
+  return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners,cards,downloads};
 }
 
 test('one shared search field has no visible heading or tabs; icons act directly and Enter stays local',async()=>{
@@ -323,7 +331,7 @@ test('card action icons expose names and deletion requires confirmation or can b
   let restoredFocus=false;
   ui.button('删除笔记').props.onClick({currentTarget:{focus(){restoredFocus=true;}}});ui.render();
   assert.equal(ui.writes.filter(x=>x.action==='delete').length,0);
-  assert.ok(ui.text(ui.render()).includes('删除后无法恢复'));
+  assert.ok(ui.text(ui.render()).includes('可在回收站恢复'));
   const confirm=ui.nodes().find(n=>n.props.className==='sbx-delete-confirm');
   let escaped=false;confirm.props.onKeyDown({key:'Escape',preventDefault(){escaped=true;}});ui.render();
   assert.equal(escaped,true);
@@ -354,4 +362,108 @@ test('an empty model result is explained and can be retried rather than called t
   await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await ui.settle();
   assert.ok(ui.text(ui.render()).includes('暂无合适标签'));
   assert.ok(ui.button('重试 AI 标签'));
+});
+
+
+test('composer drafts persist only composer data per library and restore manual tags',async()=>{
+  const prefs=new Map();const ui=mounted(prefs);await ui.settle();
+  ui.input('sbx-note').props.onChange({target:{value:'Persistent draft #标签0001 text'}});ui.render();
+  ui.button('添加标签').props.onClick();ui.render();ui.input('搜索要添加的标签').props.onChange({target:{value:'标签0500'}});ui.render();ui.button('选择标签 标签0500').props.onClick();ui.render();
+  const draft=JSON.parse(prefs.get('slipbox.plugin.draft:synthetic-library'));
+  assert.equal(typeof draft.owner,'string');
+  const {owner,...payload}=draft;
+  assert.deepEqual(payload,{version:1,content:'Persistent draft #标签0001 text',chosen:['标签0500'],editing:'',baseRevision:''});
+  assert.ok(!prefs.get('slipbox.plugin.draft:synthetic-library').includes('标签0499'));
+  const next=mounted(prefs);await next.settle();assert.equal(next.input('sbx-note').props.value,draft.content);assert.ok(next.button('移除标签 标签0500'));
+  await next.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await next.settle();assert.equal(prefs.has('slipbox.plugin.draft:synthetic-library'),false);
+});
+
+test('library changes restore the matching draft and retain the previous one',async()=>{
+  let library='first';const prefs=new Map([['slipbox.plugin.draft:second',JSON.stringify({version:1,content:'Second draft',chosen:[],editing:'',baseRevision:''})]]);const ui=mounted(prefs,{library:()=>library});await ui.settle();
+  ui.input('sbx-note').props.onChange({target:{value:'First draft'}});ui.render();library='second';ui.button('刷新').props.onClick();await ui.settle();
+  assert.equal(ui.input('sbx-note').props.value,'Second draft');assert.equal(JSON.parse(prefs.get('slipbox.plugin.draft:first')).content,'First draft');
+});
+
+test('stale restored edit keeps its base revision, blocks overwrite and can save as new',async()=>{
+  const id='a'.repeat(32),prefs=new Map([['slipbox.plugin.draft:synthetic-library',JSON.stringify({version:1,content:'Unsaved edit',chosen:[],editing:id,baseRevision:'old-revision'})]]);
+  const ui=mounted(prefs,{cards:[{id,content:'Newer original',tags:[],updated_at:'new-revision'}]});await ui.settle();assert.equal(ui.input('sbx-note').props.value,'Unsaved edit');assert.equal(ui.button('保存修改').props.disabled,true);
+  await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});assert.equal(ui.writes.filter(r=>r.action==='edit').length,0);
+  ui.button('另存为新笔记').props.onClick();ui.render();await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await ui.settle();assert.equal(ui.writes.filter(r=>r.action==='add').length,1);
+});
+
+test('edit uses captured expected revision and drafts typed during save survive success',async()=>{
+  const id='a'.repeat(32);let finish;const promise=new Promise(resolve=>finish=resolve);const ui=mounted(new Map(),{cards:[{id,content:'Original',tags:[],updated_at:'base-revision'}],save:()=>promise});await ui.settle();
+  ui.button('编辑').props.onClick();ui.render();ui.input('sbx-note').props.onChange({target:{value:'First edit'}});ui.render();const saving=ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await Promise.resolve();
+  ui.input('sbx-note').props.onChange({target:{value:'New typing while saving'}});ui.render();finish();await saving;await ui.settle();assert.equal(ui.writes.find(r=>r.action==='edit').expected,'base-revision');assert.equal(ui.input('sbx-note').props.value,'New typing while saving');assert.equal(JSON.parse(ui.local.get('slipbox.plugin.draft:synthetic-library')).content,'New typing while saving');
+});
+
+test('storage failure is visible and does not stop local note saving',async()=>{
+  const ui=mounted(new Map(),{storageFails:true});await ui.settle();assert.ok(ui.text(ui.render()).includes('无法保存本机草稿'));
+  ui.input('sbx-note').props.onChange({target:{value:'Save despite storage failure'}});ui.render();await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await ui.settle();assert.equal(ui.writes.filter(r=>r.action==='add').length,1);
+});
+
+test('shortcuts are scoped to page events, skip IME and save only in composer',async()=>{
+  const ui=mounted();await ui.settle();const editorNode={focus(){}};ui.input('sbx-note').props.ref.current=editorNode;
+  ui.input('sbx-note').props.onChange({target:{value:'Shortcut note'}});ui.render();let prevented=0,stopped=0;const shortcut=event=>ui.nodes().find(n=>n.props.className==='sbx').props.onKeyDown({ctrlKey:true,preventDefault(){prevented++;},stopPropagation(){stopped++;},...event});
+  shortcut({key:'Enter',target:editorNode,isComposing:true});shortcut({key:'Enter',target:{}});assert.equal(ui.writes.length,0);
+  shortcut({key:'Enter',target:editorNode});await ui.settle();assert.equal(ui.writes.filter(r=>r.action==='add').length,1);assert.equal(prevented,1);assert.equal(stopped,1);
+  let focused=false;ui.input('搜索卡片').props.ref.current={focus(){focused=true;},scrollIntoView(){}};shortcut({key:'k',target:{}});ui.render();assert.equal(focused,true);
+});
+
+test('compact quick filters send exact filter fields without discarding the composer',async()=>{
+  const ui=mounted();await ui.settle();ui.input('sbx-note').props.onChange({target:{value:'Keep draft'}});ui.render();ui.button('无标签').props.onClick();ui.render();await ui.settle();assert.equal(ui.requests.filter(r=>r.action==='list').at(-1).untagged,true);
+  ui.input('排除标签').props.onChange({target:{value:'标签0001'}});ui.render();await ui.settle();assert.deepEqual(ui.requests.filter(r=>r.action==='list').at(-1).excludeTags,['标签0001']);
+  ui.button('最近 7 天').props.onClick();ui.render();await ui.settle();const request=ui.requests.filter(r=>r.action==='list').at(-1);assert.equal((Date.parse(request.createdTo)-Date.parse(request.createdFrom))/86400000,6);
+  ui.button('本月').props.onClick();ui.render();await ui.settle();assert.ok(ui.requests.filter(r=>r.action==='list').at(-1).createdFrom.endsWith('-01'));assert.equal(ui.input('sbx-note').props.value,'Keep draft');
+});
+
+test('trash supports undo, restore and guarded permanent deletion',async()=>{
+  const ui=mounted(new Map(),{cards:[{id:'a'.repeat(32),content:'Trash test',tags:[],updated_at:'base-revision'}]});await ui.settle();ui.button('删除笔记').props.onClick();ui.render();await ui.button('确认删除').props.onClick();await ui.settle();await ui.button('撤销删除').props.onClick();await ui.settle();assert.equal(ui.cards.length,1);assert.equal(ui.writes.find(r=>r.action==='restore').expected,'base-revision');
+  ui.button('删除笔记').props.onClick();ui.render();await ui.button('确认删除').props.onClick();await ui.settle();ui.button('回收站').props.onClick();ui.render();await ui.settle();assert.ok(ui.text(ui.render()).includes('Trash test'));ui.button('永久删除').props.onClick();ui.render();assert.equal(ui.writes.filter(r=>r.action==='purge').length,0);
+  await ui.button('永久删除这条笔记及其历史？此操作无法撤销。').props.onClick();await ui.settle();assert.equal(ui.writes.find(r=>r.action==='purge').confirmed,true);assert.ok(ui.text(ui.render()).includes('回收站为空'));
+});
+
+test('history restoration sends version id and current captured revision',async()=>{
+  const ui=mounted(new Map(),{cards:[{id:'a'.repeat(32),content:'Current',tags:[],updated_at:'current-revision'}]});await ui.settle();await ui.button('编辑历史').props.onClick();await ui.settle();assert.ok(ui.text(ui.render()).includes('Historical content'));assert.equal(ui.writes.filter(r=>r.action==='restore-version').length,0);await ui.button('恢复此版本').props.onClick();await ui.settle();const request=ui.writes.find(r=>r.action==='restore-version');assert.equal(request.version,'version-1');assert.equal(request.expected,'current-revision');
+});
+
+test('selection exports explicit ids and import requires preview confirmation with digest',async()=>{
+  const id='a'.repeat(32),ui=mounted(new Map(),{cards:[{id,content:'Select me',tags:[],updated_at:'revision'}]});await ui.settle();assert.equal(ui.button('导出所选上下文').props.disabled,true);ui.button('选择笔记').props.onClick();ui.render();ui.input('选择这条笔记').props.onChange();ui.render();await ui.button('导出所选上下文').props.onClick();await ui.settle();assert.deepEqual(ui.writes.find(r=>r.action==='export').ids,[id]);assert.equal(ui.downloads.length,1);
+  await ui.input('导入备份或 flomo 文件').props.onChange({target:{files:[{name:'flomo.html',size:20,arrayBuffer:async()=>new TextEncoder().encode('Synthetic HTML').buffer}],value:'file'}});await ui.settle();assert.ok(ui.text(ui.render()).includes('新增 1'));assert.equal(ui.writes.filter(r=>r.action==='import-apply').length,0);await ui.button('确认导入').props.onClick();await ui.settle();const request=ui.writes.find(r=>r.action==='import-apply');assert.equal(request.digest,'digest-1');assert.equal(request.confirmed,true);assert.equal(request.filename,'flomo.html');assert.equal(atob(request.content),'Synthetic HTML');assert.ok(!('path' in request));
+});
+
+test('selection controls stay hidden until requested and selecting edit again protects a changed draft',async()=>{
+  const ui=mounted(new Map(),{cards:[{id:'a'.repeat(32),content:'Original note',tags:[],updated_at:'revision'}]});await ui.settle();
+  assert.ok(!ui.nodes().some(n=>n.props['aria-label']==='选择这条笔记'));assert.ok(!ui.nodes().some(n=>n.props.className==='sbx-selection'));
+  ui.button('编辑').props.onClick();ui.render();ui.input('sbx-note').props.onChange({target:{value:'Changed edit draft'}});ui.render();ui.button('编辑').props.onClick();ui.render();
+  assert.equal(ui.input('sbx-note').props.value,'Changed edit draft');assert.ok(ui.button('保留当前草稿'));ui.button('保留当前草稿').props.onClick();ui.render();assert.equal(ui.input('sbx-note').props.value,'Changed edit draft');
+});
+
+test('a failed save retains the draft and library metadata stays on lifecycle requests',async()=>{
+  const ui=mounted(new Map(),{cards:[{id:'a'.repeat(32),content:'Existing card',tags:[],updated_at:'revision'}],save:()=>{throw new Error('disk unavailable');}});await ui.settle();
+  ui.input('sbx-note').props.onChange({target:{value:'Must survive failure'}});ui.render();await ui.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await ui.settle();
+  assert.equal(ui.input('sbx-note').props.value,'Must survive failure');assert.equal(JSON.parse(ui.local.get('slipbox.plugin.draft:synthetic-library')).content,'Must survive failure');
+  await ui.button('编辑历史').props.onClick();await ui.settle();assert.equal(ui.requests.find(r=>r.action==='history').library,'synthetic-library');
+});
+
+test('oversized import files and stale previews cannot apply',async()=>{
+  let library='first',finish;const pending=new Promise(resolve=>finish=resolve);const ui=mounted(new Map(),{library:()=>library,importPreview:()=>pending});await ui.settle();await ui.input('导入备份或 flomo 文件').props.onChange({target:{files:[{size:11*1024*1024}],value:''}});await ui.settle();assert.equal(ui.writes.filter(r=>r.action==='import-preview').length,0);
+  const preview=ui.input('导入备份或 flomo 文件').props.onChange({target:{files:[{name:'notes.json',size:2,arrayBuffer:async()=>new Uint8Array([123,125]).buffer}],value:''}});await Promise.resolve();library='second';ui.button('刷新').props.onClick();await ui.settle();finish({digest:'old',cards:[],new_count:1});await preview;await ui.settle();assert.ok(!ui.nodes().some(n=>n.type==='button'&&ui.text(n)==='确认导入'));
+});
+
+test('saving in one editor does not remove the other editor durable draft',async()=>{
+  const prefs=new Map([['slipbox.plugin.language','en']]),a=mounted(prefs),b=mounted(prefs);await a.settle();await b.settle();
+  a.input('sbx-note').props.onChange({target:{value:'A draft'}});a.render();
+  b.input('sbx-note').props.onChange({target:{value:'B newer draft'}});b.render();
+  const before=JSON.parse(prefs.get('slipbox.plugin.draft:synthetic-library'));assert.equal(before.content,'B newer draft');
+  await a.nodes().find(n=>n.props.className==='sbx-compose').props.onSubmit({preventDefault(){}});await a.settle();
+  assert.equal(JSON.parse(prefs.get('slipbox.plugin.draft:synthetic-library:'+before.owner)).content,'B newer draft');
+  assert.equal(JSON.parse(prefs.get('slipbox.plugin.draft:synthetic-library')).content,'B newer draft');
+});
+
+test('complete backup ignores selected context cards',async()=>{
+  const id='a'.repeat(32),ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[{id,content:'selected',tags:[],updated_at:'v'}]});await ui.settle();
+  ui.button('Select notes').props.onClick();ui.render();ui.input('Select this note').props.onChange();ui.render();
+  await ui.button('Download backup').props.onClick();await ui.settle();
+  const input=ui.writes.find(x=>x.action==='export');assert.equal(input.format,'backup');assert.ok(!input.ids?.length);
 });

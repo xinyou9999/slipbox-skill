@@ -28,6 +28,9 @@ export function makeArgs(input) {
       const limit = input.limit ?? (input.action==='search-candidates'?30:50), offset = input.offset ?? 0;
       if (!Number.isInteger(limit) || limit < 1 || limit > 100 || !Number.isInteger(offset) || offset < 0) throw new Error('Invalid pagination');
       args = [input.action];
+      if(input.untagged===true)args.push('--untagged');
+      if(input.untagged!==undefined&&typeof input.untagged!=='boolean')throw new Error('Invalid untagged filter');
+      if(input.excludeTags!==undefined){if(!Array.isArray(input.excludeTags)||input.excludeTags.length>20)throw new Error('Invalid excluded tags');args.push(...input.excludeTags.map(t=>'--exclude-tag='+text(t,'excluded tag',64)));}
       if(input.action==='search-candidates'){if(!Array.isArray(input.terms)||input.terms.length<1||input.terms.length>6||limit>40)throw new Error('Invalid retrieval terms');args.push(...input.terms.map(term=>'--term='+text(term,'term',80)));}
       for(const [field,option] of [['createdFrom','created-from'],['createdTo','created-to']])if(input[field]){if(typeof input[field]!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(input[field]))throw new Error('Invalid date');args.push('--'+option+'='+input[field]);}
       if (input.action === 'search') positional.push(text(input.query, 'query', 1000));
@@ -36,6 +39,16 @@ export function makeArgs(input) {
       args.push('--limit',String(limit));if(input.action!=='search-candidates')args.push('--offset',String(offset));break;
     }
     case 'show': args = ['show']; positional=[id(input.id)]; break;
+    case 'trash-list': args=['trash-list','--limit','100'];break;
+    case 'history': args=['history'];positional=[id(input.id)];break;
+    case 'restore': case 'purge': {
+      if(input.action==='purge'&&input.confirmed!==true)throw new Error('Confirm permanent deletion first');
+      args=[input.action,'--expected='+text(input.expected,'expected',100),...(input.action==='purge'?['--confirm']:[])];positional=[id(input.id)];break;
+    }
+    case 'restore-version': {
+      args=['restore-version','--expected='+text(input.expected,'expected',100)];
+      positional=[id(input.id),text(input.version,'version',100)];break;
+    }
     case 'delete': {
       if(input.confirmed!==true)throw new Error('Confirm deletion first');
       args=['delete','--expected='+text(input.expected,'expected',100)];positional=[id(input.id)];break;
@@ -44,6 +57,7 @@ export function makeArgs(input) {
     case 'edit': {
       const options = input.tags === undefined ? [] : tags(input.tags);
       args = ['edit', ...(input.tags !== undefined && options.length === 0 ? ['--clear-tags'] : options)];
+      if(input.expected!==undefined)args.push('--expected='+text(input.expected,'expected',100));
       positional=[id(input.id),text(input.content, 'content', 20000)]; break;
     }
     case 'tag-add': args = ['tag-add', '--description=' + text(input.description ?? '', 'description', 1000, true)]; positional=[text(input.name, 'tag name', 64)]; break;

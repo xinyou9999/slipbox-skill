@@ -6,9 +6,9 @@
 请在你自己实际运行的环境里安装并验证 slipbox：跨智能体的 AI 卡片笔记。
 
 可信项目：https://github.com/xinyou9999/slipbox-skill
-版本：v0.1.3
-中文通用包：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/slipbox-0.1.3-generic-zh.zip
-校验清单：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/SHA256SUMS
+版本：v0.2.0
+中文通用包：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/slipbox-0.2.0-generic-zh.zip
+校验清单：https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/SHA256SUMS
 此中文包预期SHA256：20d2aeba7b86adc1347ccb1c69a8aaf1f14b96edb588aaff14e500a72153d511
 
 请直接执行安装：

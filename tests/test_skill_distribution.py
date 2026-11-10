@@ -22,6 +22,7 @@ EXPECTED_FILES = {
     "slipbox/docs/QUICKSTART.md",
     "slipbox/docs/AI_INSTALL.md",
     "slipbox/docs/capabilities.json",
+    "slipbox/docs/RECOVERY_AND_PORTABILITY.md",
     "slipbox/PACKAGE_SHA256SUMS",
 }
 
@@ -41,7 +42,7 @@ class SkillDistributionTests(unittest.TestCase):
             cwd=cwd or self.base, text=True, encoding="utf-8", capture_output=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        archive = self.base / "dist" / f"slipbox-0.1.3-{target}-{language}.zip"
+        archive = self.base / "dist" / f"slipbox-0.2.0-{target}-{language}.zip"
         self.assertTrue(archive.is_file(), result.stdout)
         return archive
 
@@ -99,7 +100,7 @@ class SkillDistributionTests(unittest.TestCase):
                     fields = dict(line.split(":", 1) for line in frontmatter.strip().splitlines())
                     for key in ("display_name", "display_name_en", "description_zh", "description_en"):
                         self.assertTrue(json.loads(fields[key].strip()))
-                    self.assertEqual(json.loads(fields["version"].strip()), "0.1.3")
+                    self.assertEqual(json.loads(fields["version"].strip()), "0.2.0")
                     self.assertEqual(json.loads(fields["author"].strip()), "Slipbox contributors")
                     self.assertEqual(fields["name"].strip(), "slipbox")
                     self.assertEqual(generic_skill.split("---", 2)[2], market_skill.split("---", 2)[2])

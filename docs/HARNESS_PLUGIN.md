@@ -4,23 +4,23 @@
 
 The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and background tagging through your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
 
-## Current version0.1.14: automatic and manual tags
+## Current version0.2.0: automatic and manual tags
 
 Save locally first, then let the DSH default model add relevant tags in the background. Manual `#标签` entry and search/create buttons share canonical tags and aliases, without a per-note tag count limit. Turn **自动 AI 标签** off per library, or use **保存并用 AI 打标签** explicitly. When enabled, the saved note and vocabulary are sent to your configured provider; typing alone sends nothing. Failures preserve the note and offer retry, and stale responses cannot overwrite later edits.
 
 Open **标签列表 → AI 整理标签库** for metadata-only descriptions, aliases and duplicate proposals. Changes require explicit application, with a second confirmation for merges. No automatic merging/deletion, body rewrite, model tools, new conversation or separate key. Calls are limited to800 vocabulary entries,96,000 input characters, two concurrent requests per library and60 seconds.
 
-Download `dsh-slipbox-0.1.14.tgz` and `SHA256SUMS` from the [0.1.14 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.1.14), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
+Download `dsh-slipbox-0.2.0.tgz` and `SHA256SUMS` from the [0.2.0 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.0), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
 
 Version0.1.5 places the note editor and collection on the left, with compact navigation on the right. Narrow screens retain navigation above the notes. Both themes and languages share this layout.
 
 Version0.1.4 defaults to Chinese: page title **卡片笔记**, navigation **我的笔记**. Use **English** in the header for the English view (**slipbox · Card Notes**, **My Notes**); use **简体中文** to return. The preference is remembered. Switching preserves drafts, selected tags, filters and themes, and never translates or rewrites your actual notes or tag names. The package identifier remains `dsh-slipbox`.
 
-Version0.1.3 keeps the homepage card-first: it shows selected tags only, with an on-demand tag search capped at8 results. Open **标签列表** to search all tags, page through48 at a time or explicitly create a tag. Switching views preserves the current draft. This UI was checked in the native Windows app with371 tags;500-tag interaction regressions also cover the selection limit and avoiding accidental draft submission on Enter.
+Version0.2.0 keeps the homepage card-first: it shows selected tags only, with an on-demand tag search capped at8 results. Open **标签列表** to search all tags, page through48 at a time or explicitly create a tag. Switching views preserves the current draft. This UI was checked in the native Windows app with371 tags;500-tag interaction regressions also cover the selection limit and avoiding accidental draft submission on Enter.
 
-Version0.1.14 places **Writing activity / 记录足迹** prominently below the header and uses the available window width with measured wider gutters and a proportional right navigation panel. The calendar defaults to the last year (365 days), with a last12weeks switch, month/weekday guides and an accessible date picker. Smaller screens scroll the year chart within its panel; notes/drafts and counting rules remain unchanged.
+Version0.2.0 places **Writing activity / 记录足迹** prominently below the header and uses the available window width with measured wider gutters and a proportional right navigation panel. The calendar defaults to the last year (365 days), with a last12weeks switch, month/weekday guides and an accessible date picker. Smaller screens scroll the year chart within its panel; notes/drafts and counting rules remain unchanged.
 
-## Install from the custom Git market (0.1.14)
+## Install from the custom Git market (0.2.0)
 
 Add this index URL to your actual DSH profile:
 
@@ -31,7 +31,7 @@ https://xinyou9999.github.io/slipbox-skill/dsh/index.json
 1. Open **插件**, open the menu beside **实验性插件**, and enable **自定义插件市场**.
 2. Open **发现 → 添加索引源**, paste the URL above and save. Keep your existing sources.
 3. Search **slipbox** or **卡片笔记**, open the result and choose **安装** (or **更新** when0.1.1 is already installed).
-4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `e40dbdf9c56f6d912935392fa4c97425bceba8b0`, directory `packages/dsh-slipbox`, version0.1.14. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
+4. Check the confirmation: GitHub repository `xinyou9999/slipbox-skill`, fixed commit `e40dbdf9c56f6d912935392fa4c97425bceba8b0`, directory `packages/dsh-slipbox`, version0.2.0. Confirm and follow any restart notice. Open **卡片笔记** in the sidebar afterward.
 
 This self-contained package includes its Python core and needs no installation build script or separate model key. The market source is hosted on GitHub Pages and pins an immutable GitHub commit. Every other computer/profile must add the index once; it is not part of a universal built-in catalog. No npm account is needed.
 
@@ -84,7 +84,7 @@ The command prints the current source version's archive path under ignored `.loc
 
 According to the [official market documentation](https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market), DSH currently ships **no built-in index source**. Its experimental custom market reads JSON indexes selected by each profile. Publishing this GitHub repository or a Release does not make the plugin searchable on every DSH installation.
 
-slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, exact0.1.5 version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
+slipbox now supplies its own [HTTPS index](https://xinyou9999.github.io/slipbox-skill/dsh/index.json), including bilingual metadata, icon, the published native version, engine range and the full package commit. Add it using the steps above. The documented schema accepts npm and Git sources; this index uses Git, not a fabricated tarball source type.
 
 For wider discovery, maintainers of an existing community index may include this package at their discretion. There is no automatic universal listing. npm and npmmirror distribution are available; no third-party curated-index submission has been made. See the [official bundle installation guide](https://deepseek-harness.github.io/deepseek-harness/develop/basic/publish).
 
@@ -104,12 +104,12 @@ Hermes 使用通用 Skill，而不是这个 DSH `.tgz`。把[安装请求](HERME
 
 不同智能体复用要求能访问同一个实际资料库，或手动迁移 Markdown 与 `tags.json` 后重建索引。本插件不包含自动跨设备同步。AI 可能将卡片交给宿主配置的模型服务，请使用适合资料隐私要求的宿主设置。
 
-Native appearance in0.1.14: dark colors follow the DSH theme service and built-in color tokens; switching the page theme switches host appearance too. The light lavender page remains. Deletion uses a compact inline strip with Cancel focused, Escape cancellation and focus returned to the trash icon.
+Native appearance in0.2.0: dark colors follow the DSH theme service and built-in color tokens; switching the page theme switches host appearance too. The light lavender page remains. Deletion uses a compact inline strip with Cancel focused, Escape cancellation and focus returned to the trash icon.
 
 ## Writing activity / 记录足迹
 
 Version0.1.10 adds a recent84-day calendar below navigation. Darker squares mean more notes created that day. Select a day to filter notes; use arrow keys to move and clear the date to return. Counts cover existing notes in the library host local timezone, including notes written by other agents. Edits and AI tagging do not inflate counts; deleting a note reduces its original day. This is local library statistics, not visit tracking. Portable Skills expose `activity --days 84` and `list/search --created-on YYYY-MM-DD`.
 
-## Keyword search and AI search (0.1.14)
+## Keyword search and AI search (0.2.0)
 
 Use the magnifier shortcut in the right navigation or the shared query field above the editor. Click the magnifier for local keyword search, or the sparkle for explicit AI search; Enter always runs keyword search. There are no text tabs or visible search heading. Keyword search is local and matches multiple space-separated terms across text/tags/exact aliases; expand search scope for inclusive creation-date bounds, or choose a tag. AI search runs only on explicit submit, using the current DSH default model: it expands your question, locally recalls up to30 candidates, then ranks their bounded excerpts and returns real cards with matching reasons. Your query and candidate excerpts go to that model; typing sends nothing. No library-wide embedding upload, new credentials or data writes. Results are bounded, not exhaustive semantic indexing; try shorter keywords or different wording if nothing matches. Model errors do not prevent ordinary search. Switching views/modes preserves the note draft.

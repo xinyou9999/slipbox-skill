@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 — 2026-11-10
+
+- Persistent per-library drafts, scoped shortcuts, quick filters, recoverable deletion and text history.
+- Selected-card context export, full JSON backup and previewed Slipbox/flomo HTML/ZIP import with deduplication and conflict reporting.
+- Native0.2.0 and portable Skill0.2.0 share the same core. No automatic cross-device sync.
+
 ## DSH plugin0.1.14 — 2026-11-10
 
 - Replace the visible search heading and mode tabs with one shared query field and two direct-action icons: magnifier for local search, sparkle for AI search. Enter stays local.

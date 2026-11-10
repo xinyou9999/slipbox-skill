@@ -79,3 +79,25 @@ Back up `cards/` and `tags.json` together. The index can always be rebuilt.
 - **Index replacement while another process holds the file (Windows).** `rebuild-index` builds the new database and swaps it in with `os.replace`. Windows refuses to replace a file that another process has open, so a second process holding `index.sqlite3` (a viewer, an editor preview, antivirus scanning) makes the swap fail; POSIX has no such restriction and renames over an open database. The failure is reported and nothing authoritative is touched, because the index is always rebuildable from Markdown: close the other handle and retry, or simply delete `index.sqlite3` and run `rebuild-index`.
 - **One trailing newline is the canonical content form.** Card content is stored as the text followed by exactly one newline. Content that ends with several newlines, or with none, is normalized on its first write, and `show` returns the canonical text. This is deliberate file-format normalization, not a lost edit.
 - **A journal that cannot be closed or quarantined is reported, not resolved.** If both the closing rename and the manifest removal fail (a broken or permission-less filesystem), `tag-merge` returns a structured error telling the caller to remove the journal manually; an already committed merge is never rolled back, but the leftover journal needs that manual step.
+# Recovery and transfer additions (0.2.0)
+
+Active `cards/*.md` and `tags.json` remain authoritative. Additive private
+`trash/` stores recoverable Markdown and deletion metadata; `history/<id>/`
+stores validated text revision snapshots. No automatic purge runs. User-confirmed
+permanent purge removes that card's retained history, but is logical deletion,
+not secure erasure of disks or external backups. Older untouched cards acquire
+history when first edited, tagged, merged or deleted after this upgrade.
+
+Restore/import use recovery transactions and revision checks. A damaged recovery
+journal blocks mutations rather than applying untrusted snapshots. Complete JSON
+backup includes retained history/trash/vocabulary; copying only active cards and
+tags no longer preserves recoverable deleted content or history. Selected context
+exports omit unrelated vocabulary and retained private history.
+
+Imports are additive and do not overwrite conflicting IDs. Preview is read-only,
+including for an empty destination; apply validates the source digest again and
+initializes an empty library under the local kernel lock. HTML is inert text;
+flomo attachments are not imported, naive dates use the destination host's local
+timezone, and unsupported data is reported. File size is limited to10 MiB;
+ZIP expanded data to40 MiB/2000entries; import records to10000. Large backups
+are rejected rather than exported in a form that cannot be re-imported.
