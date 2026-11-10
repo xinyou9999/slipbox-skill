@@ -60,7 +60,7 @@ export function apply(ctx, config = {}) {
         const input = JSON.parse(body);
         const snapshot=settings();
         if(input.library!==undefined&&input.library!==snapshot.home)throw new Error('AI_LIBRARY_CHANGED');
-        const result = input.action === 'status' ? { library: snapshot.home, version: '0.2.1' }
+        const result = input.action === 'status' ? { library: snapshot.home, version: '0.2.2' }
           : ['export','import-preview','import-apply'].includes(input.action) ? await createPortability(snapshot)(input)
           : input.action === 'ai-search' ? await searchCurrentLibrary(input)
           : input.action === 'ai-organize' ? await organizeCurrentLibrary(input,request.signal)

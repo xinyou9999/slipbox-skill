@@ -10,7 +10,7 @@ Save locally first, then let the DSH default model add relevant tags in the back
 
 Open **标签列表 → AI 整理标签库** for metadata-only descriptions, aliases and duplicate proposals. Changes require explicit application, with a second confirmation for merges. No automatic merging/deletion, body rewrite, model tools, new conversation or separate key. Calls are limited to800 vocabulary entries,96,000 input characters, two concurrent requests per library and60 seconds.
 
-Download `dsh-slipbox-0.2.1.tgz` and `SHA256SUMS` from the [0.2.1 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.1), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
+Download `dsh-slipbox-0.2.2.tgz` and `SHA256SUMS` from the [0.2.2 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.2), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
 
 Version0.1.5 places the note editor and collection on the left, with compact navigation on the right. Narrow screens retain navigation above the notes. Both themes and languages share this layout.
 
@@ -126,3 +126,16 @@ draft are not modified. Changed queries, filters, libraries, refreshed results o
 changed source cards invalidate the organization. AI text is a synthesis to check
 against the originals, not a guarantee of factual correctness. It is not saved
 automatically. The portable0.2.0 core is unchanged.
+# Copy organized results (native0.2.2)
+
+Use the copy icon at the top right of an organized result to copy its overview,
+grouped points, limitations and numbered source excerpts as readable text. Editor
+drafts, local library paths and interface instructions are not included. A success
+message appears only after copying succeeds; a local browser fallback is attempted
+when the modern clipboard API is unavailable. If both methods fail, select and
+copy the text manually.
+
+The model instructions now emphasize direct everyday language: answer first,
+merge repetition, keep distinct relevant facts, important conditions and
+disagreements, and avoid boilerplate. This is a writing preference, not a factual
+quality guarantee; original references and uncertainty remain available.

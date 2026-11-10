@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 function mounted(preferences=new Map(), options={}) {
   const states=[],refs=[],deps=[],themeListeners=[];let cursor=0,refCursor=0,effectCursor=0,component,tree,pageProps={};const pending=[];
   const tags=Array.from({length:500},(_,i)=>({name:'标签'+String(i+1).padStart(4,'0')}));
-  const writes=[],requests=[];
+  const writes=[],requests=[],copied=[];let legacySelection='',cleanups=0,focusRestored=0;
   const cards=[...(options.cards||[])],trash=[];const downloads=[];
   const React={
     createElement:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity).filter(x=>x!==false&&x!==null&&x!==undefined)}),
@@ -15,9 +15,9 @@ function mounted(preferences=new Map(), options={}) {
     useEffect(fn,values){const i=effectCursor++;if(!deps[i]||values.some((v,n)=>v!==deps[i][n])){deps[i]=values;pending.push(fn);}},
   };
   const local=preferences;
-  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>{if(options.storageFails)throw new Error('storage denied');return local.get(k)||null;},setItem:(k,v)=>{if(options.storageFails)throw new Error('storage denied');local.set(k,v);},removeItem:k=>{if(options.storageFails)throw new Error('storage denied');local.delete(k);}},console,AbortController,atob,btoa,Uint8Array,Blob,setTimeout:fn=>fn(),URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:synthetic';},revokeObjectURL(){}},document:{createElement:()=>({click(){}})},
+  const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>{if(options.storageFails)throw new Error('storage denied');return local.get(k)||null;},setItem:(k,v)=>{if(options.storageFails)throw new Error('storage denied');local.set(k,v);},removeItem:k=>{if(options.storageFails)throw new Error('storage denied');local.delete(k);}},console,AbortController,atob,btoa,Uint8Array,Blob,setTimeout:fn=>fn(),URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:synthetic';},revokeObjectURL(){}},navigator:options.clipboardAbsent?{}:{clipboard:options.clipboard||{writeText:async text=>{if(options.clipboardFails)throw new Error('denied');copied.push(text);}}},document:{activeElement:{focus(){focusRestored++;}},body:{appendChild(){}},execCommand:()=>{if(options.legacyCopy){copied.push(legacySelection);return true;}return false;},createElement:tag=>tag==='textarea'?{style:{},setAttribute(){},select(){legacySelection=this.value;},remove(){cleanups++;}}:{click(){}}},
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
-      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.1'};
+      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.2'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
       else if(input.action==='ai-search'){if(options.aiSearch)value=await options.aiSearch(input);else value={cards:[],reasons:{},count:0,candidate_count:0,matched_total:0,terms:['sleep']};}
@@ -48,7 +48,7 @@ function mounted(preferences=new Map(), options={}) {
   function input(label){return one(n=>n.props['aria-label']===label||n.props.id===label);}
   async function settle(){for(let i=0;i<4;i++){for(let j=0;j<8;j++)await Promise.resolve();render();}}
   render();
-  return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners,cards,downloads};
+  return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners,cards,downloads,copied,clipboardState:()=>({cleanups,focusRestored})};
 }
 
 test('one shared search field has no visible heading or tabs; icons act directly and Enter stays local',async()=>{
@@ -512,4 +512,25 @@ test('refresh invalidates organization immediately even if the next result load 
 
 test('a failed new search cannot organize old results under the new query',async()=>{
   let fail=false;const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],readResults:async(_input,cards)=>{if(fail)throw new Error('offline');return {cards:[...cards],count:cards.length,has_more:false};}});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();assert.equal(ui.button('Organize with AI').props.disabled,false);fail=true;ui.input('Search notes').props.onChange({target:{value:'unrelated query'}});ui.render();const before=ui.nodes().find(n=>n.type==='button'&&ui.text(n)==='Organize with AI');if(before)assert.equal(before.props.disabled,true);await ui.settle();assert.ok(!ui.nodes().some(n=>n.type==='button'&&ui.text(n)==='Organize with AI'));assert.equal(ui.requests.filter(r=>r.action==='ai-organize').length,0);
+});
+
+test('one click copies organized content and numbered sources without UI boilerplate or drafts',async()=>{
+  const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard]});await ui.settle();ui.input('sbx-note').props.onChange({target:{value:'Unrelated private draft'}});ui.render();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();const calls=ui.requests.length;await ui.button('Copy organized results').props.onClick();await ui.settle();
+  assert.equal(ui.copied.length,1);const text=ui.copied[0];assert.ok(text.includes('Overview grounded in saved notes [1]'));assert.ok(text.includes('Useful points\n<script>inert output</script>'));assert.ok(text.includes('Source cards\n[1] Original source excerpt'));assert.ok(!text.includes('Unrelated private draft'));assert.ok(!text.includes('synthetic-library'));assert.ok(!text.includes('Send the first'));assert.ok(ui.text(ui.render()).includes('Copied'));assert.equal(ui.requests.length,calls);assert.equal(ui.input('sbx-note').props.value,'Unrelated private draft');
+});
+
+test('copy falls back locally when modern clipboard is unavailable and restores focus',async()=>{
+  const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],clipboardAbsent:true,legacyCopy:true});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();await ui.button('Copy organized results').props.onClick();await ui.settle();assert.equal(ui.copied.length,1);assert.deepEqual(ui.clipboardState(),{cleanups:1,focusRestored:1});assert.ok(ui.text(ui.render()).includes('Copied'));
+});
+
+test('copy denial is visible and never reports success',async()=>{
+  const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],clipboardFails:true});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();await ui.button('Copy organized results').props.onClick();await ui.settle();assert.equal(ui.copied.length,0);assert.ok(ui.text(ui.render()).includes('Could not copy'));assert.ok(!ui.text(ui.render()).includes('Copied'));assert.equal(ui.clipboardState().cleanups,1);
+});
+
+test('a late clipboard response does not mark a new search as copied',async()=>{
+  let finish;const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],clipboard:{writeText:()=>new Promise(r=>finish=r)}});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();const copying=ui.button('Copy organized results').props.onClick();ui.render();assert.equal(ui.button('Copy organized results').props.disabled,true);ui.input('Search notes').props.onChange({target:{value:'different'}});ui.render();await ui.settle();finish();await copying;await ui.settle();assert.ok(!ui.text(ui.render()).includes('Copied'));
+});
+
+test('copied source previews keep Unicode characters intact at the excerpt limit',async()=>{
+  const result=organization([sourceCard]);result.sources[0].excerpt='a'.repeat(99)+'😀tail';const ui=mounted(new Map([['slipbox.plugin.language','en']]),{cards:[sourceCard],organize:async()=>result});await ui.settle();ui.input('Search notes').props.onChange({target:{value:'source'}});ui.render();await ui.settle();await ui.button('Organize with AI').props.onClick();await ui.settle();await ui.button('Copy organized results').props.onClick();await ui.settle();assert.ok(ui.copied[0].includes('😀'));assert.ok(!ui.copied[0].includes('tail'));assert.ok(!ui.copied[0].includes('\ufffd'));
 });

@@ -1,5 +1,10 @@
 # Changelog
 
+## DSH0.2.2 — 2026-11-10
+
+- Copy organized results in one click, including grouped points and numbered sources, with clipboard fallback and honest success/failure feedback.
+- Ask the host model for direct everyday language, merged repetitions and complete relevant facts/conditions/disagreements rather than filler. Portable0.2.0 unchanged.
+
 ## DSH0.2.1 — 2026-11-10
 
 - Explicitly organize ordinary or AI search results into a grounded overview and grouped key points with clickable original-card references.
