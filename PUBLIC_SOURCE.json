@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "8956cf86b6e4606973aee569fd0485aaf1a5ea0b",
+  "source_commit": "250265a9fab7de92fae4e1d45f6fc34313485d8c",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "06018656de0a4750478137229a3395533a20c9e797aed9b303ed41932ecebd9b"
+      "sha256": "0a9cee17d91a5bac3591d089e751c1c972a1c908aa003c9752346c5ae395de86"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
@@ -330,7 +330,7 @@
     },
     {
       "path": "site/dsh/index.json",
-      "sha256": "4699034b7cc691c522d165ef0e89277f7609e0b5c11401188e8c8ccac2828412"
+      "sha256": "de0df03ed977e217a9be12f64bd8dc8bd2c1e756b8ee1ba466ffd10e016956bb"
     },
     {
       "path": "site/favicon.svg",
@@ -338,7 +338,7 @@
     },
     {
       "path": "site/index.html",
-      "sha256": "2d77e44fb6e00c5b9905f8ca1481a136ac44bd49cbccc1b9938cf4a37b22640f"
+      "sha256": "f26bc840fa27f2e71d6e350cfeb2fe59bf17537b836dce44d626d16aedefc54d"
     },
     {
       "path": "site/style.css",
@@ -390,7 +390,7 @@
     },
     {
       "path": "tests/test_site.js",
-      "sha256": "c30c384a7d278a57716b2ee156baeb63976f3b52bed7efda44ee278a2ea95594"
+      "sha256": "039f15d35dace02d63f00e0dd6f3a16714dc6e176d5a51e741b3710b25c2854d"
     },
     {
       "path": "tests/test_skill_ai_tags.py",

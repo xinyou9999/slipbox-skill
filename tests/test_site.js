@@ -54,7 +54,7 @@ test('rendering uses text nodes, static page has accessible forms and exact asse
   const html = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
   assert.match(html, /aria-live="polite"/);
   for (const bundle of ['generic-zh', 'generic-en', 'workbuddy-zh', 'workbuddy-en']) {
-    assert.ok(html.includes(`https://github.com/xinyou9999/slipbox-skill/releases/download/v0.1.3/slipbox-0.1.3-${bundle}.zip`));
+    assert.ok(html.includes(`https://github.com/xinyou9999/slipbox-skill/releases/download/v0.2.0/slipbox-0.2.0-${bundle}.zip`));
   }
 });
 
