@@ -28,15 +28,15 @@
       },
       "versions": [
         {
-          "version": "0.2.2",
-          "publishTimestamp": 1794325513,
+          "version": "0.2.3",
+          "publishTimestamp": 1795217009,
           "engines": {
             "dsh": ">=0.2.1-rc.3 <0.3.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/xinyou9999/slipbox-skill",
-            "commit": "5582c80a425293e5c05787652fe202f89a7c12fd",
+            "commit": "68b3f223bdb54a83edd0906e84d9fc786d7e4aef",
             "path": "packages/dsh-slipbox"
           }
         }
