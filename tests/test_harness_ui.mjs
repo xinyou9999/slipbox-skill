@@ -17,7 +17,7 @@ function mounted(preferences=new Map(), options={}) {
   const local=preferences;
   const context={window:{__ModuleLoader__:{load(module){const result=module.factory(()=>React);result.apply({effect(){},theme:options.hostTheme,on(event,listener){if(event==='theme/change')themeListeners.push(listener);return()=>{};},slots:{inject(_slot,fn){fn();},register(options,view){if(options.key==='slipbox'){component=view;pageProps=options.inject?.()||{};}}},sessions:{},uiWorkspace:{}});}}},localStorage:{getItem:k=>{if(options.storageFails)throw new Error('storage denied');return local.get(k)||null;},setItem:(k,v)=>{if(options.storageFails)throw new Error('storage denied');local.set(k,v);},removeItem:k=>{if(options.storageFails)throw new Error('storage denied');local.delete(k);}},console,AbortController,atob,btoa,Uint8Array,Blob,setTimeout:fn=>fn(),URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:synthetic';},revokeObjectURL(){}},navigator:options.clipboardAbsent?{}:{clipboard:options.clipboard||{writeText:async text=>{if(options.clipboardFails)throw new Error('denied');copied.push(text);}}},document:{activeElement:{focus(){focusRestored++;}},body:{appendChild(){}},execCommand:()=>{if(options.legacyCopy){copied.push(legacySelection);return true;}return false;},createElement:tag=>tag==='textarea'?{style:{},setAttribute(){},select(){legacySelection=this.value;},remove(){cleanups++;}}:{click(){}}},
     fetch:async(_url,requestOptions)=>{const input=JSON.parse(requestOptions.body);requests.push(input);let value={};
-      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.2'};
+      if(input.action==='status')value={library:options.library?.()||'synthetic-library',version:options.version||'0.2.3'};
       else if(input.action==='tag-list')value={tags};
       else if(input.action==='activity'){if(options.activityFails)throw new Error('activity unavailable');value={start:'2026-11-06',end:'2026-11-08',total:3,active_days:2,days:[{date:'2026-11-06',count:1},{date:'2026-11-07',count:0},{date:'2026-11-08',count:2}]};}
       else if(input.action==='ai-search'){if(options.aiSearch)value=await options.aiSearch(input);else value={cards:[],reasons:{},count:0,candidate_count:0,matched_total:0,terms:['sleep']};}
@@ -50,6 +50,29 @@ function mounted(preferences=new Map(), options={}) {
   render();
   return {render,settle,nodes,text,button,input,writes,requests,local,themeListeners,cards,downloads,copied,clipboardState:()=>({cleanups,focusRestored})};
 }
+
+test('card tags filter locally with an accessible button and preserve the draft',async()=>{
+  const ui=mounted(new Map(),{cards:[{id:'a'.repeat(32),content:'Saved idea',tags:['阅读'],updated_at:'2026-11-20T00:00:00Z'}]});await ui.settle();
+  ui.input('sbx-note').props.onChange({target:{value:'未保存的想法'}});ui.render();
+  const tag=ui.nodes().find(n=>n.type==='button'&&n.props.className==='sbx-tag');
+  assert.ok(tag,'Card tags must be real buttons');
+  assert.equal(tag.props['aria-label'],'查看标签 阅读 的卡片');
+  tag.props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.requests.filter(r=>['list','search'].includes(r.action)).at(-1).tag,'阅读');
+  assert.equal(ui.requests.filter(r=>r.action==='ai-search').length,0);
+  assert.equal(ui.input('sbx-note').props.value,'未保存的想法');
+});
+
+test('clicking an AI result tag returns to local matching cards without another model request',async()=>{
+  const card={id:'a'.repeat(32),content:'Saved idea',tags:['阅读'],updated_at:'2026-11-20T00:00:00Z'};
+  const ui=mounted(new Map(),{cards:[card],aiSearch:async()=>({cards:[card],count:1,reasons:{},candidate_count:1})});await ui.settle();
+  ui.input('搜索卡片').props.onChange({target:{value:'idea'}});ui.render();
+  ui.button('AI 智能搜索').props.onClick();ui.render();await ui.settle();
+  ui.nodes().find(n=>n.type==='button'&&n.props.className==='sbx-tag').props.onClick();ui.render();await ui.settle();
+  assert.equal(ui.nodes().filter(n=>n.props.className==='sbx-card').length,1);
+  assert.equal(ui.requests.filter(r=>r.action==='ai-search').length,1);
+  assert.equal(ui.requests.filter(r=>['list','search'].includes(r.action)).at(-1).tag,'阅读');
+});
 
 test('one shared search field has no visible heading or tabs; icons act directly and Enter stays local',async()=>{
   const ui=mounted();await ui.settle();

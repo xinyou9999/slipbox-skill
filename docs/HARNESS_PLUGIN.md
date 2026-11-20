@@ -4,13 +4,17 @@
 
 The native plugin adds a permanent **卡片笔记** page, local Markdown cards, tags, search, editing, light/dark themes and background tagging through your existing host default model. It shares the portable Skill's storage format and requires no separate model key.
 
-## Current version0.2.0: automatic and manual tags
+## Native0.2.3: write, find and reuse
+
+The current native version combines automatic/manual tags, local/AI search, source-linked AI organization with one-click copy, writing activity, history and recovery. The latest refinement makes the calendar more compact, the editor simpler and the notes easier to read. Click a card tag to filter locally.
+
+### Automatic and manual tags
 
 Save locally first, then let the DSH default model add relevant tags in the background. Manual `#标签` entry and search/create buttons share canonical tags and aliases, without a per-note tag count limit. Turn **自动 AI 标签** off per library, or use **保存并用 AI 打标签** explicitly. When enabled, the saved note and vocabulary are sent to your configured provider; typing alone sends nothing. Failures preserve the note and offer retry, and stale responses cannot overwrite later edits.
 
 Open **标签列表 → AI 整理标签库** for metadata-only descriptions, aliases and duplicate proposals. Changes require explicit application, with a second confirmation for merges. No automatic merging/deletion, body rewrite, model tools, new conversation or separate key. Calls are limited to800 vocabulary entries,96,000 input characters, two concurrent requests per library and60 seconds.
 
-Download `dsh-slipbox-0.2.2.tgz` and `SHA256SUMS` from the [0.2.2 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.2), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
+Download `dsh-slipbox-0.2.3.tgz` and `SHA256SUMS` from the [0.2.3 release](https://github.com/xinyou9999/slipbox-skill/releases/tag/dsh-v0.2.3), verify the checksum, then run `dsh plugin --profile desktop add <absolute-tgz-path> --ignore-scripts` and normally restart DSH. The custom Git index below also provides the version advertised in its live index; npm/mirror/community npm listing still provide0.1.5. Windows DSH0.2.1-rc.3 isolated upgrade and production-model interface were validated using a deterministic test adapter, and additional real configured-model calls on synthetic notes with371 synthetic tags. Individual suggestions still need review.
 
 Version0.1.5 places the note editor and collection on the left, with compact navigation on the right. Narrow screens retain navigation above the notes. Both themes and languages share this layout.
 
@@ -139,3 +143,10 @@ The model instructions now emphasize direct everyday language: answer first,
 merge repetition, keep distinct relevant facts, important conditions and
 disagreements, and avoid boilerplate. This is a writing preference, not a factual
 quality guarantee; original references and uncertainty remain available.
+
+
+## Native0.2.3: a quieter writing space
+
+The annual writing calendar remains visible above your notes, with a compact layout that fits desktop widths. The editor uses one writing surface, navigation is lighter, and note text has more room to breathe. Select a tag on a card to filter locally; your current draft stays in place. The local library path is still available under “本地资料库 / Local library”. Search, AI organization, copy, history, recovery and import/export are unchanged. Light lavender and host-native dark mode are retained.
+
+Channel check (2026-11-21): the project’s custom Git index and GitHub release provide0.2.3 after this release; the independent community index at dshopen.org still pins0.1.8, and npm/mirrors remain0.1.5. Community inclusion does not automatically track our latest release. Use the custom index or the release archive for the current version.

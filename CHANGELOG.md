@@ -1,5 +1,11 @@
 # Changelog
 
+## DSH0.2.3 — 2026-11-21
+
+- A compact, prominent annual calendar; a single writing surface; lighter navigation and clearer note typography.
+- Click card tags to filter locally without losing the draft or triggering an AI request.
+- Library path remains available in an expandable disclosure. Approved lavender light and host-native dark are preserved; portable0.2.0 unchanged.
+
 ## DSH0.2.2 — 2026-11-10
 
 - Copy organized results in one click, including grouped points and numbered sources, with clipboard fallback and honest success/failure feedback.

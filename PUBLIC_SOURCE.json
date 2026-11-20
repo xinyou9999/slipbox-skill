@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repo": "xinyou9999/slipbox",
-  "source_commit": "47ff0355d0c2e2207c1125bcfbb5a8b9124a8bc2",
+  "source_commit": "a069ba92159fb847ff5f889bbbcfaa679edf102b",
   "public_repo": "xinyou9999/slipbox-skill",
   "files": [
     {
@@ -34,7 +34,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "73119d74c9abe811f513f2e53602be4a432127f5747b2689bb799350f23460fd"
+      "sha256": "0e11a80bad57f9ed566f91977def9c687f11bd37516cf6dab139ec247527a850"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
@@ -50,11 +50,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "ff8902f548c342441fe49b1176fe583f438ff7dffcb2850c583cc1d922ee3753"
+      "sha256": "e59f25eaa8cd59b1ceff6bbce6922793052ad8ac78546974ca61d54772734449"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "27fca84676dd868712155f9da4cfc372d7aea635d334c14c5ca88194df502327"
+      "sha256": "69d7e0f521d508530aa0e26e80dbb6b44c6513577d2bc10e9c9c75cd835afa1d"
     },
     {
       "path": "ROADMAP.md",
@@ -110,7 +110,7 @@
     },
     {
       "path": "docs/HARNESS_PLUGIN.md",
-      "sha256": "f6458e579ee220213f3cbcdf25e7bac891f88570c14f796cf4a2e19cabf9031a"
+      "sha256": "a8bc7a0906258cde3b5accf6ceec5d0654225ecbb8a82cc1fb6808a0f3a75696"
     },
     {
       "path": "docs/HERMES_INSTALL_REQUEST.md",
@@ -150,7 +150,7 @@
     },
     {
       "path": "packages/dsh-slipbox/README.md",
-      "sha256": "3975c06e989874d9dd4ee7d99e86963e485f0a5f4ea5aac72134d30c2220f0e0"
+      "sha256": "6d13b90f0fdf9479bc5a6bc6dd502a2a3242d9c9cc5d67f6894fa5c8fd5dcc0a"
     },
     {
       "path": "packages/dsh-slipbox/ai.mjs",
@@ -162,7 +162,7 @@
     },
     {
       "path": "packages/dsh-slipbox/client.js",
-      "sha256": "e183ae203e9e3a88ee697b8950d2d9a94de9a5551a17c6207d65a2dff5cadfcf"
+      "sha256": "e18036e2f1bad6d7bc3d501a0cd47d2f6c86b7cd977c4c3b0f8dd0e502a4f4c6"
     },
     {
       "path": "packages/dsh-slipbox/cordis.patch.yml",
@@ -174,7 +174,7 @@
     },
     {
       "path": "packages/dsh-slipbox/index.mjs",
-      "sha256": "80aaafcd82a7d5a4ebc33eeaf077f3d1068c7ead205ad47825178b5fb5d74316"
+      "sha256": "c6d990bb6e7f942bb324c89afb2c07163d63330a5686e615b64b88a21b448bb4"
     },
     {
       "path": "packages/dsh-slipbox/locale/en.json",
@@ -186,7 +186,7 @@
     },
     {
       "path": "packages/dsh-slipbox/package.json",
-      "sha256": "e16200ceb7869b2e49f9ab94de0cedcd46942162369f5037937bed1fec122aa5"
+      "sha256": "5deb5c40427224f2478f67f44c3bc1aa168471bfa0d50d5fc63d1d79daf56d10"
     },
     {
       "path": "packages/dsh-slipbox/portability.mjs",
@@ -246,7 +246,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/README.md",
-      "sha256": "3975c06e989874d9dd4ee7d99e86963e485f0a5f4ea5aac72134d30c2220f0e0"
+      "sha256": "6d13b90f0fdf9479bc5a6bc6dd502a2a3242d9c9cc5d67f6894fa5c8fd5dcc0a"
     },
     {
       "path": "plugins/dsh-slipbox/ai.mjs",
@@ -258,7 +258,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/client.js",
-      "sha256": "e183ae203e9e3a88ee697b8950d2d9a94de9a5551a17c6207d65a2dff5cadfcf"
+      "sha256": "e18036e2f1bad6d7bc3d501a0cd47d2f6c86b7cd977c4c3b0f8dd0e502a4f4c6"
     },
     {
       "path": "plugins/dsh-slipbox/cordis.patch.yml",
@@ -270,7 +270,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/index.mjs",
-      "sha256": "80aaafcd82a7d5a4ebc33eeaf077f3d1068c7ead205ad47825178b5fb5d74316"
+      "sha256": "c6d990bb6e7f942bb324c89afb2c07163d63330a5686e615b64b88a21b448bb4"
     },
     {
       "path": "plugins/dsh-slipbox/locale/en.json",
@@ -282,7 +282,7 @@
     },
     {
       "path": "plugins/dsh-slipbox/package.json",
-      "sha256": "e16200ceb7869b2e49f9ab94de0cedcd46942162369f5037937bed1fec122aa5"
+      "sha256": "5deb5c40427224f2478f67f44c3bc1aa168471bfa0d50d5fc63d1d79daf56d10"
     },
     {
       "path": "plugins/dsh-slipbox/portability.mjs",
@@ -382,7 +382,7 @@
     },
     {
       "path": "tests/test_harness_ui.mjs",
-      "sha256": "b5626e097e3501c15e8f437c5f19cdf401949f24b6aa3ab814cc4adf42a464ee"
+      "sha256": "ac5c261ec3edd70aa5bbfb20dd77d789962f5537e27eafdffed4d16e497bc178"
     },
     {
       "path": "tests/test_note_lifecycle.py",
